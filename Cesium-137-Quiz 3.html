@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cesium-137 Gamma Dose Rate Quiz</title>
+<style>
+  :root { --cyan: #00ffff; --dark: #0d0d0d; --gray: #1a1a1a; }
+  body { background: var(--dark); color: #ccc; font-family: 'Segoe UI', Arial, sans-serif; margin:0; padding:20px; text-align:center; }
+  h1 { color: var(--cyan); margin:30px 0 40px; }
+
+  .selection-box {
+    background: var(--gray);
+    border: 2px solid var(--cyan);
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  h2 { color: var(--cyan); margin: 25px 0 15px; }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .option-card {
+    background: #222;
+    border: 2px solid #444;
+    border-radius: 10px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .option-card:hover, .option-card.selected {
+    border-color: var(--cyan);
+    background: #2a2a2a;
+  }
+  .option-card.selected { box-shadow: 0 0 15px var(--cyan); }
+
+  .number-input {
+    width: 140px;
+    padding: 12px;
+    font-size: 1.4em;
+    background: #111;
+    color: var(--cyan);
+    border: 2px solid var(--cyan);
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .btn {
+    padding: 14px 32px;
+    margin: 15px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--cyan); color: #000; font-weight: bold; }
+  .btn-secondary { background: transparent; border: 2px solid var(--cyan); color: var(--cyan); }
+
+  /* Quiz styles */
+  .quiz-container { display: none; }
+  .question-box {
+    background: var(--gray);
+    max-width: 720px;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 12px;
+    border: 2px solid var(--cyan);
+  }
+  .question { font-size: 1.35em; line-height: 1.6; margin-bottom: 25px; }
+    .hoverable { 
+    color: var(--cyan); 
+    cursor: help; 
+    border-bottom: 1px dotted var(--cyan); 
+    position: relative;
+  }
+  .hoverable:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    background: #000;
+    color: var(--cyan);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.95em;
+    white-space: nowrap;
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid var(--cyan);
+    z-index: 100;
+    pointer-events: none;
+  }
+  .options { display: grid; gap: 12px; max-width: 520px; margin: 30px auto; }
+  button {
+    padding: 14px;
+    font-size: 1.1em;
+    background: #222;
+    color: #ccc;
+    border: 2px solid #444;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  button:hover { background: #333; border-color: var(--cyan); }
+  button.correct { background: #004d00; border-color: #00ff88; color: #00ff88; }
+  button.wrong { background: #4d0000; border-color: #ff4444; color: #ff8888; }
+  #result { margin-top: 20px; font-size: 1.4em; font-weight: bold; min-height: 40px; }
+.tooltip {
+  position: relative;
+}
+.tooltip:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  background: #000;
+  color: var(--cyan);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.95em;
+  white-space: nowrap;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid var(--cyan);
+  pointer-events: none;
+  z-index: 100;
+}
+.new-btn {
+  margin-top: 20px;
+  padding: 12px 30px;
+  font-size: 1.1em;
+  background: var(--cyan);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.results-container { max-width: 950px; margin: 30px auto; text-align: left; }
+.result-item { background: #222; padding: 20px; margin-bottom: 20px; border-radius: 12px; border-left: 5px solid; }
+</style>
+</head>
+<body>
+
+<!-- ==================== SELECTION SCREEN ==================== -->
+<div class="container" id="selection-screen">
+  <h1>Cesium-137 Gamma Dose Rate Quiz</h1>
+
+  <div class="selection-box">
+    <h2>Formula Type</h2>
+    <div class="options-grid" id="formula-options">
+      <div class="option-card selected" data-value="rate">Rate Calculation</div>
+      <div class="option-card" data-value="inverse">Inverse Distance</div>
+      <div class="option-card" data-value="pure-inverse">Pure Inverse Square</div>
+      <div class="option-card" data-value="mixed">Mixed Sources</div>
+      <div class="option-card" data-value="conversion">Unit Conversion Challenge</div>
+    </div>
+
+    <h2>Difficulty (select one)</h2>
+    <div class="options-grid" id="difficulty-options">
+      <div class="option-card selected" data-value="easy">Easy</div>
+      <div class="option-card" data-value="normal">Normal</div>
+      <div class="option-card" data-value="hard">Hard</div>
+      <div class="option-card" data-value="extreme">Extreme</div>
+    </div>
+
+    <h2>Number of Questions</h2>
+    <input type="number" id="num-questions" class="number-input" value="10" min="5" max="50">
+
+    <div style="margin-top:40px;">
+      <button class="btn btn-primary" onclick="startQuiz()">Start Selected Quiz</button>
+      <button class="btn btn-secondary" onclick="startRandomMix()">Random Mix (All Formulas)</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== QUIZ SCREEN ==================== -->
+<div class="container quiz-container" id="quiz-screen">
+    <h1 id="mode-title">Cesium-137 Quiz</h1>
+  <div class="score" id="score" style="font-size:1.3em;color:var(--cyan);margin:15px 0;">Score: 0 / 0</div>
+  <div class="question-box">
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div id="result"></div>
+  </div>
+  <button class="btn btn-secondary" onclick="backToSelection()" style="margin-top:20px;">← Back to Selection</button>
+</div>
+<!-- RESULTS SCREEN -->
+<div class="container" id="results-screen" style="display:none;">
+  <h1 style="color:var(--cyan);">Quiz Complete!</h1>
+  <div id="final-score" style="font-size:2.8em;color:var(--cyan);margin:30px 0;font-weight:bold;"></div>
+  <div id="review-list" class="results-container"></div>
+  <button class="new-btn" onclick="backToSelection()">← Back to Selection Screen</button>
+</div>
+<script>
+// ==================== SELECTION LOGIC ====================
+let selectedFormulas = ["rate"];
+let selectedDifficulty = "easy";
+let numQuestionsTotal = 10;
+let currentQuestionNum = 0;
+let score = 0;
+let quizHistory = [];
+document.querySelectorAll('#formula-options .option-card').forEach(card => {
+  card.addEventListener('click', () => {
+    card.classList.toggle('selected');
+    selectedFormulas = Array.from(document.querySelectorAll('#formula-options .selected')).map(c => c.dataset.value);
+    if (selectedFormulas.length === 0) selectedFormulas = ["rate"];
+  });
+});
+
+document.querySelectorAll('#difficulty-options .option-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('#difficulty-options .option-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    selectedDifficulty = card.dataset.value;
+  });
+});
+
+function startRandomMix() {
+  selectedFormulas = ["rate","inverse","pure-inverse","mixed","conversion"];
+  selectedDifficulty = "normal";
+  startQuiz();
+}
+
+function backToSelection() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('selection-screen').style.display = 'block';
+}
+
+// ==================== QUIZ LOGIC (Multiple Formula Types) ====================
+const GAMMA = 0.087;
+const CI_TO_MBQ = 37000;
+
+function updateScore() {
+  document.getElementById('score').textContent = `Score: ${score} / ${numQuestionsTotal}`;
+}
+
+function getRandomActivity() {
+  if (selectedDifficulty === "easy") return [740,1480,2960,3700,5550,7400,11100][Math.floor(Math.random()*7)];
+  if (selectedDifficulty === "normal") return Math.round(Math.random()*20000 + 1000);
+  return Math.random() * 50000 + 500;
+}
+
+function getRandomDistance() {
+  if (selectedDifficulty === "easy") return [0.3,0.5,0.8,1.0,1.5][Math.floor(Math.random()*5)];
+  if (selectedDifficulty === "normal") return Math.random()*3 + 0.4;
+  return Math.random()*8 + 0.3;
+}
+
+// === KEEP YOUR ORIGINAL FORMAT FUNCTIONS (updated for new variable) ===
+function formatActivity(mbq) {
+  const ci = mbq / CI_TO_MBQ;
+  if (ci >= 1) return ci.toFixed(2).replace(/\.?0+$/, "") + " Ci";
+  if (ci >= 0.01) return ci.toFixed(3).replace(/\.?0+$/, "") + " Ci";
+  if (ci >= 0.00001) return Math.round(ci*1000) + " mCi";
+  return Math.round(ci*1000000) + " µCi";
+}
+
+function formatDistance(m) {
+  if (selectedDifficulty === "hard" || selectedDifficulty === "extreme") {
+    // Hard/Extreme: always precise meters, NEVER cm, clean trailing zeros
+    return m.toFixed(3).replace(/\.?0+$/, "") + " m";
+  }
+  
+  // Easy / Normal only
+  if (m < 1) {
+    return Math.round(m * 100) + " cm";
+  } else {
+    return m.toFixed(3).replace(/\.?0+$/, "") + " m";
+  }
+}
+// ====================== GLOBAL HOVER CONTROL ======================
+// Completely disables every tooltip/conversion in Hard & Extreme modes
+function createHoverable(text, tooltip) {
+  // STRICT: NEVER create hover span if tooltip is empty, falsy, or whitespace
+  if (selectedDifficulty === "hard" || selectedDifficulty === "extreme" ||
+      !tooltip || tooltip.trim() === "") {
+    return text;   // plain text only — no <span>, no CSS hover
+  }
+  return `<span class="hoverable" data-tooltip="${tooltip}">${text}</span>`;
+}
+// Only add hover tooltip when distance is shown as cm; meters = plain text
+function getDistanceHTML(m) {
+  const display = formatDistance(m);
+  
+  // Hard & Extreme: ZERO conversion treatment → plain text, no hover ever
+  if (selectedDifficulty === "hard" || selectedDifficulty === "extreme") {
+    return display;
+  }
+  
+  // Easy / Normal: hover only when shown in cm
+  if (display.includes("cm")) {
+    return `<span class="hoverable" data-tooltip="${m.toFixed(3)} m">${display}</span>`;
+  }
+  
+  // Already in meters → plain text, no hover
+  return display;
+}
+function getAnswerTooltip(val, unit) {
+  // NO tooltip if already in the primary unit of the formula
+  if (unit === "µSv/h" || unit === "m") {
+    return "";   // ← this stops the redundant hover on meter answers and on µSv/h rates
+  }
+  if (unit === "mrem/h") {
+    return (val * 10).toFixed(1) + " µSv/h";
+  }
+  if (unit === "Ci") {
+    return Math.round(val * 37000).toLocaleString() + " MBq";
+  }
+  return "";
+}
+// ==================== 5 FORMULA GENERATORS ====================
+function generateRateQuestion() {
+  const a = getRandomActivity();
+  const d = getRandomDistance();
+  const rate = GAMMA * a / (d * d);
+  let opts = [rate];
+  const m = [8.5,12,0.12,0.35,3.2,0.08,25,0.4];
+  while (opts.length < 4) {
+    const cand = rate * m[Math.floor(Math.random()*m.length)];
+    if (!opts.some(r => r.toFixed(1) === cand.toFixed(1))) opts.push(cand);
+  }
+  return {
+    type:"rate",
+    q:`A Cesium-137 source = ${createHoverable(formatActivity(a), a.toLocaleString() + " MBq")}.<br>What is the gamma dose rate at ${getDistanceHTML(d)}?`,
+    ans:rate,
+    opts:opts,
+    unit:"µSv/h",
+    expl:"Dose rate = Γ × A / d²"
+  };
+}
+
+function generateInverseQuestion() {
+  const a = getRandomActivity();
+  const targetRate = [5,12,25,40,80,150,300][Math.floor(Math.random()*7)];
+  const d = Math.sqrt(GAMMA * a / targetRate);
+  let opts = [d];
+  const m = [0.6,1.4,2.1,0.45,3.2];
+  while (opts.length < 4) {
+    const cand = d * m[Math.floor(Math.random()*m.length)];
+    if (cand > 0.1 && !opts.some(r => Math.abs(r-cand)<0.03)) opts.push(cand);
+  }
+    return {
+    type:"inverse",
+    q:`What distance from a ${createHoverable(formatActivity(a), a.toLocaleString() + " MBq")} Cs-137 source gives exactly ${targetRate} µSv/h?`,
+    ans:d,
+    opts:opts,
+    unit:"m",
+    expl:"d = √(Γ × A / Rate)"
+  };
+}
+
+function generatePureInverseQuestion() {
+  const isHard = (selectedDifficulty === "hard" || selectedDifficulty === "extreme");
+  
+  let d1, r1, ratio;
+  
+  if (isHard) {
+    // Hard/Extreme: wider range, more realistic values, higher precision
+    d1 = Number((0.3 + Math.random() * 7.7).toFixed(2));
+    r1 = Math.round(25 + Math.random() * 975);
+    ratio = Number((1.3 + Math.random() * 4.7).toFixed(2));
+  } else {
+    // Easy/Normal: original fixed arrays for familiarity
+    d1 = [0.5, 1.0, 1.5, 2.0][Math.floor(Math.random()*4)];
+    r1 = [40, 60, 80, 120, 200, 300, 500][Math.floor(Math.random()*7)];
+    ratio = [1.8, 2.2, 2.6, 3.0, 3.5, 4.0][Math.floor(Math.random()*6)];
+  }
+  
+  const d2 = Number((d1 * ratio).toFixed(isHard ? 2 : 1));
+  const r2 = r1 * Math.pow(d1 / d2, 2);
+
+  let opts = [r2];
+  const multipliers = isHard 
+    ? [0.28, 0.62, 1.52, 2.75, 0.19, 4.8] 
+    : [0.35, 0.65, 1.55, 2.8, 0.22, 4.5];
+  
+  while (opts.length < 4) {
+    let cand = r2 * multipliers[Math.floor(Math.random()*multipliers.length)];
+    if (cand > 0.5 && !opts.some(r => Math.abs(r - cand) < Math.max(1, r2 * 0.09))) {
+      opts.push(cand);
+    }
+  }
+
+  return {
+    type:"pure-inverse",
+    q:`Dose rate is ${r1} µSv/h at ${d1} m.<br>What is it at ${d2} m?`,
+    ans:r2,
+    opts:opts,
+    unit:"µSv/h",
+    expl:"Rate₂ = Rate₁ × (d₁/d₂)²"
+  };
+}
+
+function generateMixedQuestion() {
+  const a1 = getRandomActivity(), d1 = getRandomDistance();
+  const a2 = getRandomActivity() * 0.6, d2 = d1 * (1.6 + Math.random()*1.5);
+  const total = GAMMA*a1/(d1*d1) + GAMMA*a2/(d2*d2);
+  let opts = [total];
+  const m = [0.7,1.35,2.4,0.55,3.8];
+  while (opts.length < 4) {
+    const cand = total * m[Math.floor(Math.random()*m.length)];
+    if (!opts.some(r => Math.abs(r-cand)<0.5)) opts.push(cand);
+  }
+  return {type:"mixed", q:`Two Cs-137 sources:<br>• ${formatActivity(a1)} at ${getDistanceHTML(d1)}<br>• ${formatActivity(a2)} at ${getDistanceHTML(d2)}<br><br>Total gamma dose rate?`, ans:total, opts:opts, unit:"µSv/h", expl:"Total = (Γ×A1/d1²) + (Γ×A2/d2²)"};
+}
+
+function generateConversionQuestion() {
+  if (Math.random() > 0.5) {
+    const mbq = getRandomActivity();
+    const ci = mbq / CI_TO_MBQ;
+    let opts = [ci];
+    while (opts.length < 4) opts.push(ci * [0.8,1.25,3,0.04][Math.floor(Math.random()*4)]);
+    return {type:"conversion", q:`${mbq.toLocaleString()} MBq = how many Ci?`, ans:ci, opts:opts, unit:"Ci", expl:"1 Ci = 37 000 MBq"};
+  } else {
+    const usvh = [10,25,50,120,250,500][Math.floor(Math.random()*6)];
+    const mrem = usvh * 0.1;
+    let opts = [mrem];
+    while (opts.length < 4) opts.push(mrem * [0.5,2,5,0.25][Math.floor(Math.random()*4)]);
+    return {type:"conversion", q:`${usvh} µSv/h = how many mrem/h?`, ans:mrem, opts:opts, unit:"mrem/h", expl:"1 µSv/h = 0.1 mrem/h"};
+  }
+}
+
+// ==================== MAIN QUIZ ENGINE ====================
+function generateQuestion() {
+  const type = selectedFormulas[Math.floor(Math.random() * selectedFormulas.length)];
+  let qData;
+  switch(type) {
+    case "rate": qData = generateRateQuestion(); break;
+    case "inverse": qData = generateInverseQuestion(); break;
+    case "pure-inverse": qData = generatePureInverseQuestion(); break;
+    case "mixed": qData = generateMixedQuestion(); break;
+    case "conversion": qData = generateConversionQuestion(); break;
+    default: qData = generateRateQuestion();
+  }
+  let questionHTML = qData.q;
+if (qData.showGamma !== false) {
+  questionHTML += `<br><small style="color:#666">Γ = 0.087 µSv·m²/(h·MBq)</small>`;
+}
+document.getElementById("question").innerHTML = questionHTML;
+  const optsDiv = document.getElementById("options");
+  optsDiv.innerHTML = "";
+  const formatted = qData.opts.map(v => {
+    if (qData.unit === "m") return v.toFixed(2) + " m";
+    if (qData.unit === "Ci") return v.toFixed(3) + " Ci";
+    if (qData.unit === "mrem/h") return v.toFixed(1) + " mrem/h";
+    return (v < 10 ? v.toFixed(2) : v.toFixed(1)) + " µSv/h";
+  });
+  const shuffled = [...formatted].sort(() => Math.random() - 0.5);
+  window.currentCorrectIndex = shuffled.indexOf(formatted[0]);
+  window.currentQuestionData = qData;
+    shuffled.forEach((optText, i) => {
+    const btn = document.createElement("button");
+    const originalVal = qData.opts[formatted.indexOf(optText)];
+    const tooltipText = getAnswerTooltip(originalVal, qData.unit);
+    
+    btn.innerHTML = createHoverable(optText, tooltipText);
+    btn.onclick = () => checkAnswer(i, window.currentCorrectIndex, btn);
+    optsDiv.appendChild(btn);
+  });
+  document.getElementById("result").innerHTML = "";
+}
+
+// === REPLACE updateScore() ===
+function updateScore() {
+  document.getElementById('score').textContent = `Score: ${score} / ${numQuestionsTotal}`;
+}
+function startQuiz() {
+  numQuestionsTotal = parseInt(document.getElementById('num-questions').value) || 10;
+  document.getElementById('selection-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  score = 0; currentQuestionNum = 0; quizHistory = [];
+  updateScore();
+  document.getElementById('mode-title').textContent = `${selectedDifficulty.toUpperCase()} - Cesium-137`;
+  
+  // FIXED: Removed Hard/Extreme override. 
+  // All 5 formula types (Rate, Inverse, Pure Inverse Square, Mixed Sources, Unit Conversion) 
+  // now work in EVERY difficulty level. Selection state is fully preserved when switching modes.
+  
+  generateQuestion();
+}
+
+function nextQuestion() {
+  generateQuestion();
+}
+function checkAnswer(selected, correct, btn) {
+  const resultEl = document.getElementById("result");
+  const q = window.currentQuestionData;
+  currentQuestionNum++;
+  const isCorrect = selected === correct;
+  if (isCorrect) {
+    score++;
+    resultEl.innerHTML = `✅ Correct!<br><small>${q.expl}</small>`;
+    resultEl.style.color = "#00ff88";
+    btn.classList.add("correct");
+  } else {
+    resultEl.innerHTML = `❌ Wrong<br><small>Correct: ${q.opts[0].toFixed(2)} ${q.unit}<br>${q.expl}</small>`;
+    resultEl.style.color = "#ff4444";
+    btn.classList.add("wrong");
+  }
+  quizHistory.push({
+    questionHTML: document.getElementById("question").innerHTML,
+    userAnswer: btn.textContent.trim(),
+    correctAnswer: `${q.opts[0].toFixed(q.unit==="m"?2:1)} ${q.unit}`,
+    isCorrect: isCorrect,
+    expl: q.expl
+  });
+  updateScore();
+  document.querySelectorAll('#options button').forEach(b => b.disabled = true);
+  // === AUTO ADVANCE ON 1800ms TIMER ===
+  if (currentQuestionNum >= numQuestionsTotal) {
+    setTimeout(showResultsScreen, 1800);
+  } else {
+    setTimeout(nextQuestion, 1800);
+  }
+}
+
+function showResultsScreen() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  const rs = document.getElementById('results-screen');
+  rs.style.display = 'block';
+  document.getElementById('final-score').innerHTML = `Final Score: <strong>${score} / ${numQuestionsTotal}</strong> (${Math.round(score/numQuestionsTotal*100)}%)`;
+  let reviewHTML = '';
+  quizHistory.forEach((item, i) => {
+    const color = item.isCorrect ? '#00ff88' : '#ff4444';
+    reviewHTML += `<div class="result-item" style="border-left-color:${color};"><strong style="color:#ccc">Question ${i+1}</strong><br><br>${item.questionHTML}<br><br><strong>Your answer:</strong> <span style="color:${color}">${item.userAnswer}</span><br><strong>Correct answer:</strong> <span style="color:#00ff88">${item.correctAnswer}</span><br><small style="color:#aaa">${item.expl}</small></div>`;
+  });
+  document.getElementById('review-list').innerHTML = reviewHTML;
+}
+function backToSelection() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('results-screen').style.display = 'none';
+  document.getElementById('selection-screen').style.display = 'block';
+}
+
+function startRandomMix() {
+  selectedFormulas = ["rate","inverse","pure-inverse","mixed","conversion"];
+  selectedDifficulty = "normal";
+  document.getElementById('num-questions').value = 15;
+  startQuiz();
+}
+</script>
+</body>
+</html>
