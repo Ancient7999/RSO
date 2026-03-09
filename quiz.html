@@ -6,8 +6,32 @@
 <style>
   /* ==================== GLOBAL DESIGN CONSTANTS ==================== */
   :root {
+    /* --- Accent Color System (10 levels, driven by color picker) --- */
+    --accent-0: #00ffff;
+    --accent-0-rgb: 0, 255, 255;
+    --accent-1: #00e5e5;
+    --accent-1-rgb: 0, 229, 229;
+    --accent-2: #00cccc;
+    --accent-2-rgb: 0, 204, 204;
+    --accent-3: #00aaaa;
+    --accent-3-rgb: 0, 170, 170;
+    --accent-4: #008888;
+    --accent-4-rgb: 0, 136, 136;
+    --accent-5: #004444;
+    --accent-5-rgb: 0, 68, 68;
+    --accent-6: #0096ff;
+    --accent-6-rgb: 0, 150, 255;
+    --accent-7: #0064ff;
+    --accent-7-rgb: 0, 100, 255;
+    --accent-8: #00b4ff;
+    --accent-8-rgb: 0, 180, 255;
+    --accent-9: #0082b4;
+    --accent-9-rgb: 0, 130, 180;
+
+    /* --- Legacy alias (maps to accent-0 for compatibility) --- */
+    --col-primary: var(--accent-0);
+
     /* --- Colors --- */
-    --col-primary: #00ffff;
     --col-text-main: #ccc;
     --col-text-muted: #888;
     --col-bg-main: #0d0d0d;
@@ -105,7 +129,7 @@
     background: var(--col-bg-card);
     border-color: var(--col-primary);
     color: var(--col-primary);
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 15px rgba(var(--accent-0-rgb), 0.3);
   }
 
   .tab-content {
@@ -211,7 +235,7 @@
   }
 
   .btn-primary:hover {
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    box-shadow: 0 0 20px rgba(var(--accent-0-rgb), 0.5);
   }
 
   .btn-secondary {
@@ -221,7 +245,7 @@
   }
 
   .btn-secondary:hover {
-    background: rgba(0, 255, 255, 0.1);
+    background: rgba(var(--accent-0-rgb), 0.1);
   }
 
   .btn-group {
@@ -575,7 +599,7 @@
   .section-card.selected {
     border-color: var(--col-primary);
     background: var(--col-bg-selected);
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+    box-shadow: 0 0 10px rgba(var(--accent-0-rgb), 0.2);
   }
 
   .section-info {
@@ -622,7 +646,7 @@
   width: 90%;
   max-height: 85vh;
   overflow-y: auto;
-  box-shadow: 0 0 40px rgba(0, 255, 255, 0.3);
+  box-shadow: 0 0 40px rgba(var(--accent-0-rgb), 0.3);
   position: relative;
   animation: popupFadeIn 0.3s ease;
 }
@@ -716,7 +740,7 @@
   border: none;
   font-size: 1.4em;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+  box-shadow: 0 4px 15px rgba(var(--accent-0-rgb), 0.4);
   transition: all 0.3s;
   z-index: 100;
   display: none;
@@ -730,7 +754,7 @@
 
 .popup-trigger-btn:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 25px rgba(0, 255, 255, 0.6);
+  box-shadow: 0 6px 25px rgba(var(--accent-0-rgb), 0.6);
 }
 /* ==================== NUMPAD HINT ==================== */
 .numpad-hint {
@@ -968,7 +992,7 @@
   max-height: 85vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+  box-shadow: 0 0 30px rgba(var(--accent-0-rgb), 0.2);
 }
 
 .help-modal-header {
@@ -1025,7 +1049,7 @@
 .help-info-btn:hover {
   border-color: var(--col-primary);
   color: var(--col-primary);
-  background: rgba(0, 255, 255, 0.1);
+  background: rgba(var(--accent-0-rgb), 0.1);
 }
 
 .code-block {
@@ -1098,7 +1122,7 @@
 
 .toggle-switch input:checked + .toggle-slider {
   border-color: var(--col-primary);
-  background-color: rgba(0, 255, 255, 0.1);
+  background-color: rgba(var(--accent-0-rgb), 0.1);
 }
 
 .toggle-switch input:checked + .toggle-slider:before {
@@ -1124,9 +1148,654 @@
   border-radius: var(--radius-sm);
   border: 1px solid var(--col-success);
 }
+
+/* ==================== RSO-STYLE STANDARD VIEW ==================== */
+.rso-quiz-header {
+  position: sticky;
+  top: 0;
+  background: var(--col-bg-card);
+  z-index: 101;
+  box-shadow: 0 0 20px rgba(var(--accent-0-rgb), 0.35);
+  padding: 10px 20px;
+  border-radius: 0 0 10px 10px;
+  margin-bottom: 20px;
+}
+.rso-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.rso-header-title {
+  color: var(--col-primary);
+  margin: 0;
+  font-size: 1.6em;
+  flex: 1;
+  text-align: center;
+}
+.rso-score-timer {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.rso-score-timer .rso-score {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--col-primary);
+}
+.rso-progress-container {
+  border: 2px solid var(--col-primary);
+  border-radius: 8px;
+  background: transparent;
+  padding: 2px;
+  box-shadow: 0 0 10px rgba(var(--accent-0-rgb), 0.35);
+  margin-top: 8px;
+}
+.rso-progress-bar {
+  height: 18px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--accent-0), var(--accent-1), var(--accent-2));
+  transition: width 0.5s ease-out;
+  width: 0%;
+}
+
+/* RSO Quiz Container */
+.rso-quiz-container {
+  background-color: var(--col-bg-card);
+  padding: 20px;
+  border-radius: 16px;
+  max-width: 900px;
+  margin: 0 auto 20px;
+  box-shadow: 0 0 20px rgba(var(--accent-0-rgb), 0.25);
+}
+
+/* RSO Question Card */
+.rso-question {
+  position: relative;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #111;
+  border-radius: 8px;
+  border-left: 4px solid var(--col-primary);
+  animation: rsoFadeIn 0.4s ease-out;
+}
+@keyframes rsoFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rso-question .rso-question-text {
+  font-size: 1.1em;
+  margin-bottom: 15px;
+  color: #e0e0e0;
+  text-align: left;
+}
+
+/* RSO Answer Buttons */
+.rso-question .rso-answer-container {
+  position: relative;
+  margin-bottom: 10px;
+}
+.rso-question .rso-answer-container .rso-status-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 26px;
+  font-weight: bold;
+  opacity: 1;
+}
+.rso-status-icon.correct {
+  color: var(--accent-2);
+  text-shadow: 0 0 5px var(--col-primary), 0 0 15px var(--col-primary), 0 0 25px rgba(var(--accent-0-rgb),0.6);
+  animation: rsoCorrectGlow 2s infinite ease-in-out;
+}
+@keyframes rsoCorrectGlow {
+  0%, 100% { text-shadow: 0 0 6px rgba(var(--accent-2-rgb),0.7); }
+  50% { text-shadow: 0 0 12px rgba(var(--accent-0-rgb),0.9); }
+}
+.rso-status-icon.incorrect {
+  color: var(--accent-4);
+  text-shadow: 0 0 4px rgba(var(--accent-4-rgb),0.7), 0 0 10px rgba(var(--accent-3-rgb),0.4);
+  animation: rsoWrongGlow 2.8s infinite ease-in-out;
+}
+@keyframes rsoWrongGlow {
+  0%, 100% { text-shadow: 0 0 4px rgba(var(--accent-4-rgb),0.7); }
+  50% { text-shadow: 0 0 6px rgba(var(--accent-3-rgb),0.9); }
+}
+
+.rso-question .rso-option-btn {
+  background-color: #222;
+  border: 1px solid var(--col-primary);
+  padding: 12px 18px;
+  margin: 0 0 10px 0;
+  border-radius: 8px;
+  color: #ccc;
+  font-weight: normal;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  display: block;
+  width: 100%;
+  text-align: left;
+  box-sizing: border-box;
+}
+.rso-question:not([data-answered="true"]) .rso-option-btn:hover {
+  background-color: var(--accent-5);
+  color: var(--col-primary);
+  box-shadow: 0 0 12px rgba(var(--accent-0-rgb),0.6);
+}
+.rso-question[data-answered="true"] .rso-option-btn {
+  cursor: default;
+  pointer-events: none;
+}
+.rso-question .rso-option-btn.correct {
+  background-color: rgba(var(--accent-2-rgb),0.65);
+  border-color: var(--accent-1);
+  color: var(--col-primary);
+  box-shadow: 0 0 12px rgba(var(--accent-1-rgb),0.7);
+  animation: rsoCorrectBtnGlow 2.2s infinite ease-in-out;
+}
+@keyframes rsoCorrectBtnGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(var(--accent-2-rgb),0.6), inset 0 0 6px rgba(var(--accent-0-rgb),0.3); }
+  50% { box-shadow: 0 0 14px rgba(var(--accent-0-rgb),0.9), 0 0 28px rgba(var(--accent-0-rgb),0.7), inset 0 0 10px rgba(var(--accent-0-rgb),0.5); }
+}
+.rso-question .rso-option-btn.incorrect {
+  background-color: rgba(var(--accent-5-rgb),0.78);
+  border-color: var(--accent-4);
+  color: var(--accent-2);
+  box-shadow: inset 0 0 8px rgba(var(--accent-4-rgb),0.45);
+  filter: brightness(0.95) contrast(1.1);
+}
+.rso-question .rso-option-btn.dimmed {
+  opacity: 0.48;
+  filter: brightness(0.88) saturate(0.75);
+  transition: opacity 0.7s ease, filter 0.75s ease;
+}
+
+/* RSO Explanation */
+.rso-explanation {
+  font-size: 0.9em;
+  color: #b0b0b0;
+  margin-top: 8px;
+  padding-left: 10px;
+  border-left: 2px solid #555;
+  display: none;
+  text-align: left;
+}
+.rso-explanation.visible {
+  display: block;
+}
+
+/* RSO Back button */
+.rso-back-btn {
+  background-color: var(--col-primary) !important;
+  color: #0d0d0d !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  font-weight: bold !important;
+}
+.rso-restart-btn {
+  background-color: var(--col-primary) !important;
+  color: #0d0d0d !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  margin-left: 10px !important;
+}
+
+/* Hide the original one-at-a-time view when in RSO mode */
+#knowledge-quiz-screen.rso-mode .knowledge-single-view {
+  display: none !important;
+}
+#knowledge-quiz-screen:not(.rso-mode) .rso-view {
+  display: none !important;
+}
+
+/* Reward animation for score */
+@keyframes rsoRewardPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.rso-score.reward {
+  animation: rsoRewardPulse 0.5s ease;
+}
+  /* ==================== SETTINGS BUTTON & MODAL ==================== */
+/* ==================== SETTINGS: OPTIONS LIMIT SELECTOR ==================== */
+  .opt-limit-group {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  .opt-limit-btn {
+    width: 54px !important;
+    height: 54px !important;
+    font-size: 1.4em !important;
+    font-weight: bold !important;
+    background: var(--col-bg-input) !important;
+    color: var(--col-text-muted) !important;
+    border: 2px solid var(--col-border) !important;
+    border-radius: var(--radius-lg) !important;
+    cursor: pointer !important;
+    transition: all 0.3s !important;
+    padding: 0 !important;
+  }
+  .opt-limit-btn:hover {
+    border-color: var(--accent-0) !important;
+    color: var(--col-text-main) !important;
+  }
+  .opt-limit-btn.active {
+    border-color: var(--accent-0) !important;
+    color: var(--accent-0) !important;
+    background: rgba(var(--accent-0-rgb), 0.1) !important;
+    box-shadow: 0 0 12px rgba(var(--accent-0-rgb), 0.3) !important;
+  }
+
+/* ==================== HISTORY TAB ==================== */
+  .history-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .history-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--col-text-muted);
+  }
+  .history-empty-icon {
+    font-size: 3em;
+    margin-bottom: 15px;
+    opacity: 0.4;
+  }
+  .history-row {
+    background: var(--col-bg-card);
+    border: 1px solid var(--col-border-light);
+    border-radius: var(--radius-lg);
+    margin-bottom: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .history-row:hover {
+    border-color: var(--col-border);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  }
+  .history-row.expanded {
+    border-color: var(--accent-0);
+    box-shadow: 0 0 15px rgba(var(--accent-0-rgb), 0.15);
+  }
+  .history-row-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    gap: 12px;
+  }
+  .history-result-bar {
+    width: 4px;
+    height: 48px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .history-result-bar.win { background: var(--col-success); }
+  .history-result-bar.loss { background: var(--col-error); }
+  .history-result-bar.partial { background: #ffaa00; }
+  .history-result-bar.incomplete { background: var(--col-text-muted); }
+  .history-info {
+    flex: 1;
+    text-align: left;
+    min-width: 0;
+  }
+  .history-title {
+    font-weight: bold;
+    color: var(--col-text-main);
+    font-size: 0.95em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .history-meta {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .history-badge {
+    font-size: 0.7em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .history-badge.badge-conventional { background: rgba(0, 150, 255, 0.15); color: #0096ff; border: 1px solid rgba(0, 150, 255, 0.25); }
+  .history-badge.badge-steps { background: rgba(180, 0, 255, 0.15); color: #b44dff; border: 1px solid rgba(180, 0, 255, 0.25); }
+  .history-badge.badge-knowledge { background: rgba(0, 200, 120, 0.15); color: #00c878; border: 1px solid rgba(0, 200, 120, 0.25); }
+  .history-badge.badge-standard { background: rgba(255,255,255,0.06); color: var(--col-text-muted); border: 1px solid var(--col-border-light); }
+  .history-badge.badge-progressive { background: rgba(255, 170, 0, 0.12); color: #ffaa00; border: 1px solid rgba(255, 170, 0, 0.2); }
+  .history-badge.badge-rso { background: rgba(255, 80, 80, 0.12); color: #ff6666; border: 1px solid rgba(255, 80, 80, 0.2); }
+  .history-detail-small {
+    font-size: 0.75em;
+    color: var(--col-text-muted);
+  }
+  .history-score {
+    text-align: right;
+    flex-shrink: 0;
+    min-width: 60px;
+  }
+  .history-score-pct {
+    font-size: 1.3em;
+    font-weight: bold;
+  }
+  .history-score-pct.good { color: var(--col-success); }
+  .history-score-pct.mid { color: #ffaa00; }
+  .history-score-pct.low { color: var(--col-error); }
+  .history-score-pct.na { color: var(--col-text-muted); font-size: 1em; }
+  .history-score-detail {
+    font-size: 0.72em;
+    color: var(--col-text-muted);
+  }
+  .history-action-btn {
+    flex-shrink: 0;
+    padding: 8px 16px !important;
+    font-size: 0.78em !important;
+    font-weight: bold !important;
+    border-radius: var(--radius-md) !important;
+    min-width: 90px !important;
+    text-align: center !important;
+  }
+  .history-action-btn.btn-continue {
+    background: transparent !important;
+    border: 2px solid var(--accent-0) !important;
+    color: var(--accent-0) !important;
+  }
+  .history-action-btn.btn-continue:hover {
+    background: rgba(var(--accent-0-rgb), 0.1) !important;
+    box-shadow: 0 0 10px rgba(var(--accent-0-rgb), 0.3) !important;
+  }
+  .history-action-btn.btn-completed {
+    background: rgba(0, 255, 136, 0.08) !important;
+    border: 2px solid rgba(0, 255, 136, 0.25) !important;
+    color: var(--col-success) !important;
+    cursor: default !important;
+    opacity: 0.7 !important;
+  }
+  /* Expanded Detail */
+  .history-detail-panel {
+    display: none;
+    padding: 0 16px 16px;
+    border-top: 1px solid var(--col-border-light);
+  }
+  .history-row.expanded .history-detail-panel {
+    display: block;
+  }
+  .history-detail-stats {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin: 12px 0;
+  }
+  .history-detail-stat {
+    background: var(--col-bg-main);
+    border: 1px solid var(--col-border-light);
+    border-radius: var(--radius-sm);
+    padding: 8px 14px;
+    text-align: center;
+  }
+  .history-detail-stat-val {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--accent-0);
+  }
+  .history-detail-stat-lbl {
+    font-size: 0.7em;
+    color: var(--col-text-muted);
+    margin-top: 2px;
+  }
+  .history-q-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .history-q-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--col-border-light);
+    font-size: 0.85em;
+  }
+  .history-q-item:last-child { border-bottom: none; }
+  .history-q-marker {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75em;
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .history-q-marker.correct { background: rgba(0, 255, 136, 0.15); color: var(--col-success); }
+  .history-q-marker.wrong { background: rgba(255, 68, 68, 0.15); color: var(--col-error); }
+  .history-q-content { flex: 1; min-width: 0; }
+  .history-q-text {
+    color: var(--col-text-main);
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+  .history-q-answer {
+    font-size: 0.88em;
+    color: var(--col-text-muted);
+  }
+  .history-q-answer .correct-ans { color: var(--col-success); font-weight: bold; }
+  .history-q-answer .wrong-ans { color: var(--col-error); text-decoration: line-through; }
+  .history-q-opts {
+    list-style: none;
+    padding: 0;
+    margin: 6px 0 0;
+    display: grid;
+    gap: 4px;
+  }
+  .history-q-opt {
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9em;
+    border: 1px solid var(--col-border-light);
+    background: var(--col-bg-card);
+  }
+  .history-q-opt.opt-correct {
+    border-color: var(--col-success);
+    background: rgba(0, 255, 136, 0.08);
+    color: var(--col-success);
+  }
+  .history-q-opt.opt-wrong-chosen {
+    border-color: var(--col-error);
+    background: rgba(255, 68, 68, 0.08);
+    color: var(--col-error);
+    text-decoration: line-through;
+  }
+  .history-q-opt.opt-neutral {
+    opacity: 0.5;
+  }
+  .history-q-expl {
+    font-size: 0.82em;
+    color: var(--col-text-muted);
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid var(--col-border-light);
+    font-style: italic;
+  }
+  /* Pagination */
+  .history-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .history-page-btn {
+    padding: 6px 14px !important;
+    font-size: 0.82em !important;
+    background: var(--col-bg-btn) !important;
+    color: var(--col-text-muted) !important;
+    border: 1px solid var(--col-border-light) !important;
+    border-radius: var(--radius-sm) !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+  }
+  .history-page-btn:hover {
+    border-color: var(--accent-0) !important;
+    color: var(--col-text-main) !important;
+  }
+  .history-page-btn.active {
+    background: rgba(var(--accent-0-rgb), 0.1) !important;
+    border-color: var(--accent-0) !important;
+    color: var(--accent-0) !important;
+  }
+  .history-per-page {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .history-per-page-label {
+    font-size: 0.75em;
+    color: var(--col-text-muted);
+    align-self: center;
+  }
+  .history-clear-btn {
+    margin-top: 20px;
+    padding: 8px 18px !important;
+    font-size: 0.8em !important;
+    background: transparent !important;
+    border: 1px solid var(--col-border-light) !important;
+    color: var(--col-text-muted) !important;
+    border-radius: var(--radius-sm) !important;
+    cursor: pointer !important;
+  }
+  .history-clear-btn:hover {
+    border-color: var(--col-error) !important;
+    color: var(--col-error) !important;
+  }
+
+  .settings-btn {
+    position: fixed !important;
+    top: 25px !important;
+    right: 30px !important;
+    background: transparent !important;
+    border: 2px solid var(--accent-0) !important;
+    color: var(--accent-0) !important;
+    font-size: 28px !important;
+    width: 52px !important;
+    height: 52px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    cursor: pointer !important;
+    transition: all 0.4s ease !important;
+    box-shadow: 0 0 15px rgba(var(--accent-0-rgb), 0.6) !important;
+    z-index: 200 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .settings-btn:hover {
+    background: rgba(var(--accent-0-rgb), 0.15) !important;
+    transform: rotate(90deg) scale(1.15) !important;
+    box-shadow: 0 0 25px rgba(var(--accent-0-rgb), 0.9) !important;
+  }
+  .settings-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(13,13,13,0.95);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .settings-modal-content {
+    background: #1a1a1a;
+    border: 3px solid var(--accent-0);
+    border-radius: 16px;
+    padding: 35px 45px;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 0 50px rgba(var(--accent-0-rgb), 0.8);
+    text-align: center;
+    color: #ccc;
+    position: relative;
+  }
+  .settings-modal-content h2 {
+    color: var(--accent-0);
+    margin-top: 0;
+  }
+  .settings-close-modal {
+    position: absolute !important;
+    top: 12px !important;
+    right: 20px !important;
+    font-size: 2.4em !important;
+    cursor: pointer !important;
+    color: var(--accent-0) !important;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    width: auto !important;
+    height: auto !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  .settings-close-modal:hover { 
+    color: #ff00ff !important; 
+    transform: scale(1.3); 
+    border: none !important; 
+    background: none !important; 
+    box-shadow: none !important;
+  }
+  .setting-item { margin: 30px 0; }
+  .setting-item > label {
+    font-size: 1.15em;
+    color: var(--accent-0);
+    display: block;
+    margin-bottom: 10px;
+  }
+  /* Math Equation Styling */
+.math-equation {
+  display: block;
+  text-align: center;
+  font-family: 'Times New Roman', serif;
+  font-style: italic;
+  background: rgba(var(--accent-0-rgb), 0.05);
+  padding: 8px 12px;
+  margin: 8px 0;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent-0);
+  font-size: 1.1em;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.math-inline {
+  font-family: 'Times New Roman', serif;
+  font-style: italic;
+  background: rgba(var(--accent-0-rgb), 0.08);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.95em;
+}
 </style>
 </head>
 <body>
+
+<!-- Settings Gear Button -->
+<button class="settings-btn" id="settings-btn">⚙</button>
 
 <h1>Radiation Protection Calculations Quiz</h1>
 
@@ -1134,7 +1803,8 @@
 <div class="tab-nav">
   <button class="tab-btn active" data-tab="conventional" onclick="switchTab('conventional')">Conventional</button>
   <button class="tab-btn" data-tab="steps" onclick="switchTab('steps')">Single/Multi Steps</button>
-  <button class="tab-btn" data-tab="knowledge" onclick="switchTab('knowledge')">Knowledge</button>
+  <button class="tab-btn" data-tab="knowledge" onclick="switchTab('knowledge')">Question Bank</button>
+  <button class="tab-btn" data-tab="history" onclick="switchTab('history')">History</button>
 </div>
 
 
@@ -1241,7 +1911,7 @@
   </div>
 
   <!-- RESULTS SCREEN -->
-  <div class="container" id="results-screen">
+    <div class="container hidden" id="results-screen">
     <h1 class="text-primary">Quiz Complete!</h1>
     <div class="final-score-display" id="final-score"></div>
     <div id="review-list" class="results-container"></div>
@@ -1373,32 +2043,72 @@
 
   <!-- QUIZ SCREEN -->
   <div class="container hidden" id="knowledge-quiz-screen">
-    <h1 id="knowledge-mode-title">Knowledge Quiz</h1>
-    <div class="score-display" id="knowledge-score">Score: 0 / 0</div>
-    
-    <div class="question-box">
-      <div class="question" id="knowledge-question"></div>
-      <div class="options" id="knowledge-options"></div>
-<div class="numpad-hint">💡 Use Numpad to select your answer</div>
-<div id="knowledge-result"></div>
+
+    <!-- === SINGLE QUESTION VIEW (Progressive + fallback) === -->
+    <div class="knowledge-single-view">
+      <h1 id="knowledge-mode-title">Question Bank</h1>
+      <div class="score-display" id="knowledge-score">Score: 0 / 0</div>
+      
+      <div class="question-box">
+        <div class="question" id="knowledge-question"></div>
+        <div class="options" id="knowledge-options"></div>
+        <div class="numpad-hint">💡 Use Numpad to select your answer</div>
+        <div id="knowledge-result"></div>
+      </div>
+
+      <button class="btn btn-secondary" onclick="backToSelection()">← Back to Selection</button>
     </div>
 
-    <button class="btn btn-secondary" onclick="backToSelection()">← Back to Selection</button>
+    <!-- === RSO-STYLE ALL-AT-ONCE VIEW (Standard mode) === -->
+    <div class="rso-view">
+      <div class="rso-quiz-header">
+        <div class="rso-header-content">
+          <button class="rso-back-btn" onclick="backToSelection()">← Back to Sections</button>
+          <h2 class="rso-header-title" id="rso-section-title">Question Bank</h2>
+          <div class="rso-score-timer">
+            <div class="rso-score" id="rso-scoreboard">Score: <span id="rso-correct">0</span>/<span id="rso-total">0</span></div>
+            <button class="rso-restart-btn" onclick="restartRSOQuiz()">Restart</button>
+          </div>
+        </div>
+        <div class="rso-progress-container">
+          <div class="rso-progress-bar" id="rso-progress-bar"></div>
+        </div>
+      </div>
+      <div class="rso-quiz-container">
+        <div id="rso-quiz"></div>
+      </div>
+    </div>
+
   </div>
 
   <!-- RESULTS SCREEN -->
   <div class="container hidden" id="knowledge-results-screen">
-    <h1 class="text-primary">Knowledge Quiz Complete!</h1>
+    <h1 class="text-primary">Question Bank Complete!</h1>
     <div class="final-score-display" id="knowledge-final-score"></div>
     <div id="knowledge-review-list" class="results-container"></div>
     <button class="new-btn" onclick="backToSelection()">← Back to Selection Screen</button>
   </div>
 
 </div>
+
+<!-- ==================== HISTORY TAB ==================== -->
+<div class="tab-content" id="tab-history">
+  <div class="container">
+    <div class="selection-box" style="max-width:920px;">
+      <h2 style="margin-top:0;">Quiz History</h2>
+      <p style="color:var(--col-text-muted); margin-bottom:20px; font-size:0.9em;">Your recent quiz sessions. Click a row to view details.</p>
+      <div id="history-list" class="history-container"></div>
+      <div id="history-pagination" class="history-pagination"></div>
+      <div id="history-per-page-controls" class="history-per-page"></div>
+      <div style="text-align:center;">
+        <button class="history-clear-btn" onclick="clearAllHistory()">Clear All History</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- IMPORT HELP MODAL -->
 <div class="help-modal-overlay" id="import-help-overlay" onclick="closeImportHelpOnOverlay(event)">
-  <div class="help-modal-container" onclick="event.stopPropagation()">
-    <div class="help-modal-header">
         <div class="help-modal-container" onclick="event.stopPropagation()">
     <div class="help-modal-header">
       <div class="help-modal-title">JSON Import Guide</div>
@@ -1524,7 +2234,122 @@ window.USE_BUILDUP_FACTOR = true;
 let isStepsMode = false;    // Flag for Single/Multi Steps Mode behavior
 let isFocusMode = false; // Flag for Focus Mode
 const KNOWLEDGE_STORAGE_KEY = 'rp_knowledge_v1';
+const THEME_STORAGE_KEY = 'rp_theme_color_v1';
+const SETTINGS_STORAGE_KEY = 'rp_settings_v1';
+const HISTORY_STORAGE_KEY = 'rp_history_v1';
+// ==================== GLOBAL PREFERENCES ====================
+window.maxOptionsPerQuestion = 4; // Default: 4 options (user configurable: 4, 5, or 6)
 
+// ==================== QUIZ SESSION TIMER ====================
+let activeQuizTimer = {
+  sessionId: null,
+  startedAt: 0,
+  accumulated: 0,  // ms already banked
+  isPaused: true
+};
+
+function startQuizTimer(sessionId) {
+  activeQuizTimer.sessionId = sessionId;
+  activeQuizTimer.startedAt = Date.now();
+  activeQuizTimer.accumulated = 0;
+  activeQuizTimer.isPaused = false;
+}
+
+function pauseQuizTimer() {
+  if (!activeQuizTimer.isPaused && activeQuizTimer.startedAt) {
+    activeQuizTimer.accumulated += Date.now() - activeQuizTimer.startedAt;
+    activeQuizTimer.isPaused = true;
+  }
+}
+
+function resumeQuizTimer() {
+  if (activeQuizTimer.isPaused && activeQuizTimer.sessionId) {
+    activeQuizTimer.startedAt = Date.now();
+    activeQuizTimer.isPaused = false;
+  }
+}
+
+function getElapsedTime() {
+  let total = activeQuizTimer.accumulated;
+  if (!activeQuizTimer.isPaused && activeQuizTimer.startedAt) {
+    total += Date.now() - activeQuizTimer.startedAt;
+  }
+  return total;
+}
+
+function formatDuration(ms) {
+  const totalSec = Math.floor(ms / 1000);
+  const hrs = Math.floor(totalSec / 3600);
+  const mins = Math.floor((totalSec % 3600) / 60);
+  const secs = totalSec % 60;
+  if (hrs > 0) return `${hrs}h ${mins}m ${secs}s`;
+  if (mins > 0) return `${mins}m ${secs}s`;
+  return `${secs}s`;
+}
+let pendingMerge = null; // Holds merge analysis results until user confirms
+// ==================== HISTORY LOG ====================
+let quizHistoryLog = []; // Array of session records
+
+function loadHistoryLog() {
+  try {
+    const s = localStorage.getItem(HISTORY_STORAGE_KEY);
+    if (s) quizHistoryLog = JSON.parse(s);
+  } catch(e) { quizHistoryLog = []; }
+}
+
+function saveHistoryLog() {
+  try {
+    // Keep max 200 entries
+    if (quizHistoryLog.length > 200) quizHistoryLog = quizHistoryLog.slice(-200);
+    localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(quizHistoryLog));
+  } catch(e) { console.warn("History save failed:", e); }
+}
+
+function createHistoryEntry(type, mode, sections, author) {
+  const entry = {
+    id: 'ses_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+    type: type,           // 'conventional', 'steps', 'knowledge'
+    mode: mode,           // 'standard', 'progressive', 'rso'
+    sections: sections,   // Array of section/formula names
+    author: author || '',
+    startTime: Date.now(),
+    endTime: null,
+    timeSpent: 0,
+    score: 0,
+    total: 0,
+    currentQuestion: 0,
+    isCompleted: false,
+    history: [],          // Individual question results
+    resumeState: null     // For continuing unfinished quizzes
+  };
+  quizHistoryLog.push(entry);
+  saveHistoryLog();
+  return entry.id;
+}
+
+function updateHistoryEntry(sessionId, updates) {
+  const entry = quizHistoryLog.find(e => e.id === sessionId);
+  if (!entry) return;
+  Object.assign(entry, updates);
+  saveHistoryLog();
+}
+
+function finalizeHistoryEntry(sessionId, score, total, history, isCompleted) {
+  pauseQuizTimer();
+  const entry = quizHistoryLog.find(e => e.id === sessionId);
+  if (!entry) return;
+  entry.endTime = Date.now();
+  entry.timeSpent = getElapsedTime();
+  entry.score = score;
+  entry.total = total;
+  entry.history = history;
+  entry.isCompleted = isCompleted;
+  if (isCompleted) entry.resumeState = null;
+  saveHistoryLog();
+}
+
+// Active session ID tracking
+let currentSessionId = null;
 // ==================== TRANSMISSION & SHIELDING DATA ====================
 const TRANSMISSION_FACTORS = [0.0001, 0.0006, 0.001, 0.002, 0.003, 0.004, 0.006, 0.01, 0.02, 0.04, 0.05, 0.1];
 const DEFAULT_ISOTOPES = ["cs137", "co60", "au198", "i131", "ir192", "ra226", "na24"];
@@ -2994,13 +3819,15 @@ function getAnswerTooltip(val, unit, sourceUnit = null) {
 }
 // ==================== ARTICLE HELPER (A/An) ====================
 // Returns correct indefinite article based on first letter pronunciation
-function getArticle(symbol) {
-  const firstChar = symbol.charAt(0).toUpperCase();
-  // Letters requiring "An" (vowel sounds):
-  // - Vowels: A, E, I, O (U = "you" → consonant sound)
-  // - Consonants with vowel pronunciation: F, H, L, M, N, R, S, X
-  const anLetters = ['A', 'E', 'F', 'H', 'I', 'L', 'M', 'N', 'O', 'R', 'S', 'X'];
-  return anLetters.includes(firstChar) ? "An" : "A";
+function getArticle(word) {
+  const firstChar = word.charAt(0).toUpperCase();
+  
+  // Words starting with A, E, I, O usually have a vowel sound (An Americium, An Iodine)
+  // Words starting with U usually have a "You" sound (A Uranium)
+  // Words starting with other consonants (R, S, F, H, etc.) have consonant sounds (A Radium, A Strontium)
+  const vowelLetters = ['A', 'E', 'I', 'O'];
+  
+  return vowelLetters.includes(firstChar) ? "An" : "A";
 }
 // ==================== 5 FORMULA GENERATORS ====================
 function generateRateQuestion() {
@@ -3079,7 +3906,7 @@ function generateRateQuestion() {
   const opts = [ans];
   const multipliers = [0.25, 0.5, 2, 4, 0.125, 8, 0.33, 3];
   let attempts = 0;
-  while (opts.length < 4 && attempts < 50) {
+  while (opts.length < window.maxOptionsPerQuestion && attempts < 50) {
     const cand = ans * multipliers[Math.floor(Math.random() * multipliers.length)];
     const minDiff = Math.max(0.0000001, ans * 0.05);
     if (cand > 0 && !opts.some(o => Math.abs(o - cand) < minDiff)) {
@@ -3087,7 +3914,7 @@ function generateRateQuestion() {
     }
     attempts++;
   }
-  while (opts.length < 4) {
+  while (opts.length < window.maxOptionsPerQuestion) {
     opts.push(ans * (1 + (Math.random() * 2)));
   }
 
@@ -3139,6 +3966,7 @@ function generateInverseQuestion() {
   }
   
   let a, targetRate, d, actDisplay, targetDisplay, gammaDisplay, explLine;
+  let aCi = null;
 
   if (scenario === 0) {
     // --- SCENARIO A: SI ---
@@ -3154,7 +3982,7 @@ function generateInverseQuestion() {
   } else if (scenario === 1) {
     // --- SCENARIO B: TRADITIONAL ---
     // Force Number type
-    const aCi = Number((Math.random() * 5 + 0.1).toFixed(2));
+    aCi = Number((Math.random() * 5 + 0.1).toFixed(2));
     const targetR = [0.1, 0.5, 1.0, 2.0, 5.0][Math.floor(Math.random() * 5)]; 
     
     d = Math.sqrt(isotope.gammaR * aCi / targetR);
@@ -3166,7 +3994,7 @@ function generateInverseQuestion() {
     
   } else {
     // --- SCENARIO C: CROSS (Source Ci, Target µSv/h) ---
-    const aCi = Number((Math.random() * 5 + 0.1).toFixed(2));
+    aCi = Number((Math.random() * 5 + 0.1).toFixed(2));
     const targetUSv = [10, 50, 100, 500, 1000][Math.floor(Math.random() * 5)];
     
     const targetR = targetUSv / R_TO_USV;
@@ -3185,7 +4013,7 @@ function generateInverseQuestion() {
   const multipliers = [0.6, 1.4, 2.1, 0.45, 3.2, 0.8, 1.8];
   
   let attempts = 0;
-  while (opts.length < 4 && attempts < 50) {
+  while (opts.length < window.maxOptionsPerQuestion && attempts < 50) {
     const cand = d * multipliers[Math.floor(Math.random() * multipliers.length)];
     
     // FIX: Relative check (5% difference)
@@ -3199,7 +4027,7 @@ function generateInverseQuestion() {
   }
   
   // Fallback
-  while (opts.length < 4) {
+  while (opts.length < window.maxOptionsPerQuestion) {
     opts.push(d * (1 + (Math.random() * 2)));
   }
 
@@ -3270,7 +4098,7 @@ function generateReverseShieldedQuestion() {
   const opts = [ans];
   const multipliers = [0.5, 2, 0.25, 4, 0.1, 10];
   let attempts = 0;
-  while (opts.length < 4 && attempts < 50) {
+  while (opts.length < window.maxOptionsPerQuestion && attempts < 50) {
     const cand = ans * multipliers[Math.floor(Math.random() * multipliers.length)];
     const minDiff = Math.max(0.1, ans * 0.05);
     if (cand > 0 && !opts.some(o => Math.abs(o - cand) < minDiff)) {
@@ -3278,7 +4106,7 @@ function generateReverseShieldedQuestion() {
     }
     attempts++;
   }
-  while (opts.length < 4) {
+  while (opts.length < window.maxOptionsPerQuestion) {
     opts.push(ans * (1 + (Math.random() * 2)));
   }
 
@@ -3345,7 +4173,7 @@ function generatePureInverseQuestion() {
     ? [0.28, 0.62, 1.52, 2.75, 0.19, 4.8] 
     : [0.35, 0.65, 1.55, 2.8, 0.22, 4.5];
 
-  while (opts.length < 4) {
+  while (opts.length < window.maxOptionsPerQuestion) {
     let cand = r2 * multipliers[Math.floor(Math.random()*multipliers.length)];
     if (cand > 0.5 && !opts.some(r => Math.abs(r - cand) < Math.max(1, r2 * 0.09))) {
       opts.push(cand);
@@ -3465,7 +4293,7 @@ function generateMixedQuestion() {
   const opts = [total];
   const multipliers = [0.7, 1.35, 2.4, 0.55, 3.8, 0.4, 2.8];
   let attempts = 0;
-  while (opts.length < 4 && attempts < 50) {
+  while (opts.length < window.maxOptionsPerQuestion && attempts < 50) {
     const cand = total * multipliers[Math.floor(Math.random() * multipliers.length)];
     const minDiff = Math.max(0.0000001, total * 0.05);
     if (cand > 0 && !opts.some(existing => Math.abs(cand - existing) < minDiff)) {
@@ -3473,7 +4301,7 @@ function generateMixedQuestion() {
     }
     attempts++;
   }
-  while (opts.length < 4) {
+  while (opts.length < window.maxOptionsPerQuestion) {
     opts.push(total * (1 + (Math.random() * 2)));
   }
   
@@ -3683,14 +4511,14 @@ function generateConversionQuestion() {
   
   // Fallback: Ensure 4 options
   let safetyCounter = 0;
-  while (opts.length < 4 && safetyCounter < 20) {
+  while (opts.length < window.maxOptionsPerQuestion && safetyCounter < 20) {
     const filler = ansNum * (Math.random() * 5 + 0.1);
     if (isValidOption(filler)) opts.push(filler);
     safetyCounter++;
   }
   
   // Truncate to 4
-  opts = opts.slice(0, 4);
+  opts = opts.slice(0, window.maxOptionsPerQuestion);
 
   // --- EXPLANATION BUILDER (FIX) ---
   let explLines = [];
@@ -4122,7 +4950,7 @@ function generateDecayTimeQuestion() {
     
     opts = [ans, t_correct*2, t_correct/2, halfLifeNative];
     opts = opts.filter((v, i, s) => s.indexOf(v) === i); 
-    while(opts.length < 4) opts.push(t_correct * (Math.random()+0.5));
+    while(opts.length < window.maxOptionsPerQuestion) opts.push(t_correct * (Math.random()+0.5));
     
     expl = `Time = T<sub>½</sub> × log<sub>0.5</sub>(Final/Initial)`;
 
@@ -4403,7 +5231,7 @@ function generateCountingStatsQuestion() {
   opts = [...new Set(opts)];
   
   // Fallback: Generate unique random variations if collisions occurred
-  while (opts.length < 4) {
+  while (opts.length < window.maxOptionsPerQuestion) {
     // Generate a random offset (0.1 to 3.0 times the uncertainty)
     let fillerUnc = unc_total * (Math.random() * 2.9 + 0.1);
     let fillerStr = `(${rateStr} ± ${fillerUnc.toFixed(2).replace(/\.?0+$/, "")})`;
@@ -4415,7 +5243,7 @@ function generateCountingStatsQuestion() {
   }
   
   // Limit to 4 options
-  opts = opts.slice(0, 4);
+  opts = opts.slice(0, window.maxOptionsPerQuestion);
 
   // 6. CONSTRUCT EXPLANATION
   const expl = `σ(N) = √${N} = ${sqrtN.toFixed(2)} counts.<br>
@@ -4604,28 +5432,49 @@ function handleKnowledgeImport(event) {
       // Basic Validation
       if (!data.sections) throw new Error("Invalid JSON: Missing 'sections' object.");
       
-      importedDatabase = data;
-      
-      // Reset Progress for new import (optional: or merge? Let's reset for simplicity/safety)
-      knowledgeQuestionState = {};
+      // --- CASE 1: No existing data — direct load (original behavior) ---
+      if (!importedDatabase || !importedDatabase.sections || Object.keys(importedDatabase.sections).length === 0) {
+        importedDatabase = data;
+        knowledgeQuestionState = {};
 
-      // Update UI
-      const statusEl = document.getElementById('import-status');
-      statusEl.textContent = `✅ Loaded: ${file.name}`;
-      statusEl.style.color = 'var(--col-success)';
+        const statusEl = document.getElementById('import-status');
+        statusEl.textContent = `✅ Loaded: ${file.name}`;
+        statusEl.style.color = 'var(--col-success)';
+        
+        const saveStatus = document.getElementById('save-status');
+        if (saveStatus) saveStatus.classList.remove('hidden');
+        
+        renderKnowledgeSections();
+        
+        document.getElementById('btn-export-knowledge').classList.remove('hidden');
+        document.getElementById('btn-clear-data').classList.remove('hidden');
+        saveKnowledgeState();
+        return;
+      }
       
-      // Show status indicator
-      const saveStatus = document.getElementById('save-status');
-      if (saveStatus) saveStatus.classList.remove('hidden');
+      // --- CASE 2: Data exists — analyze and show merge review ---
+      const plan = analyzeMerge(importedDatabase, data);
       
-      renderKnowledgeSections();
+      // If nothing to review and nothing to add, inform user
+      if (plan.modifiedItems.length === 0 && plan.newQCount === 0 && Object.keys(plan.newSections).length === 0) {
+        const statusEl = document.getElementById('import-status');
+        statusEl.textContent = `ℹ️ All ${plan.skippedCount} question(s) already exist — nothing new to import.`;
+        statusEl.style.color = 'var(--col-text-muted)';
+        document.getElementById('json-upload').value = '';
+        return;
+      }
       
-      // Show Export & Clear buttons
-      document.getElementById('btn-export-knowledge').classList.remove('hidden');
-      document.getElementById('btn-clear-data').classList.remove('hidden');
-
-      // --- NEW: SAVE TO LOCAL STORAGE ---
-      saveKnowledgeState();
+      // If no modified items (only new + skips), apply immediately without modal
+      if (plan.modifiedItems.length === 0) {
+        pendingMerge = plan;
+        applyMerge();
+        return;
+      }
+      
+      // Show merge review modal
+      pendingMerge = plan;
+      renderMergeModal(plan);
+      document.getElementById('merge-modal-overlay').classList.add('active');
       
     } catch (err) {
       alert("Error parsing JSON file: " + err.message);
@@ -4633,6 +5482,396 @@ function handleKnowledgeImport(event) {
     }
   };
   reader.readAsText(file);
+}
+// ==================== MERGE LOGIC HELPERS ====================
+
+/**
+ * Gets the primary question text for comparison purposes.
+ * Prefers the first variant if available, falls back to question field.
+ */
+function getQuestionPrimaryText(q) {
+  if (q.variants && q.variants.length > 0) return q.variants[0];
+  return q.question || '';
+}
+
+/**
+ * Normalizes a question object to a canonical string for deep comparison.
+ * Strips the 'reward' field since scoring weight isn't content.
+ */
+function normalizeQuestionForCompare(q) {
+  const clone = Object.assign({}, q);
+  delete clone.reward; // Reward is scoring metadata, not content
+  return JSON.stringify(clone);
+}
+
+/**
+ * Compares two question objects field by field.
+ * Returns an object with { match: 'identical'|'modified', diffs: [...] }
+ */
+function diffQuestions(oldQ, newQ) {
+  const diffs = [];
+  
+  // Compare question text / variants
+  const oldText = getQuestionPrimaryText(oldQ);
+  const newText = getQuestionPrimaryText(newQ);
+  // We already matched on primary text to get here, but variants array may differ
+  const oldVariants = JSON.stringify(oldQ.variants || []);
+  const newVariants = JSON.stringify(newQ.variants || []);
+  if (oldVariants !== newVariants && (oldQ.variants || newQ.variants)) {
+    diffs.push({ field: 'Variants', old: oldQ.variants ? oldQ.variants.join(' | ') : '(none)', new: newQ.variants ? newQ.variants.join(' | ') : '(none)' });
+  }
+  
+  // Compare question (non-variant)
+  if ((oldQ.question || '') !== (newQ.question || '') && !oldQ.variants && !newQ.variants) {
+    diffs.push({ field: 'Question', old: oldQ.question || '', new: newQ.question || '' });
+  }
+  
+  // Compare options
+  const oldOpts = JSON.stringify(oldQ.options || []);
+  const newOpts = JSON.stringify(newQ.options || []);
+  if (oldOpts !== newOpts) {
+    diffs.push({ field: 'Options', old: formatOptionsForDisplay(oldQ.options), new: formatOptionsForDisplay(newQ.options) });
+  }
+  
+  // Compare correct answer
+  if (JSON.stringify(oldQ.correct) !== JSON.stringify(newQ.correct)) {
+    diffs.push({ field: 'Correct', old: String(oldQ.correct || ''), new: String(newQ.correct || '') });
+  }
+  
+  // Compare explanation(s)
+  const oldExp = oldQ.explanations ? oldQ.explanations.join(' | ') : (oldQ.explanation || '');
+  const newExp = newQ.explanations ? newQ.explanations.join(' | ') : (newQ.explanation || '');
+  if (oldExp !== newExp) {
+    diffs.push({ field: 'Explanation', old: oldExp || '(none)', new: newExp || '(none)' });
+  }
+  
+  // Compare answerGroups
+  if (JSON.stringify(oldQ.answerGroups || null) !== JSON.stringify(newQ.answerGroups || null)) {
+    diffs.push({ field: 'Answer Groups', old: oldQ.answerGroups ? 'Present' : '(none)', new: newQ.answerGroups ? 'Present' : '(none)' });
+  }
+  
+  // Compare reward
+  if ((oldQ.reward || 1) !== (newQ.reward || 1)) {
+    diffs.push({ field: 'Reward', old: String(oldQ.reward || 1), new: String(newQ.reward || 1) });
+  }
+  
+  return {
+    match: diffs.length === 0 ? 'identical' : 'modified',
+    diffs: diffs
+  };
+}
+
+/**
+ * Formats an options array for readable display in the diff panel.
+ */
+function formatOptionsForDisplay(options) {
+  if (!options) return '(none)';
+  return options.map(opt => {
+    if (Array.isArray(opt)) return '[' + opt.join(', ') + ']';
+    return String(opt);
+  }).join(', ');
+}
+
+/**
+ * Analyzes incoming data against existing importedDatabase.
+ * Returns a structured merge plan.
+ */
+function analyzeMerge(existingDB, incomingDB) {
+  const plan = {
+    newSections: {},       // Sections to add directly (key -> section)
+    mergedSections: {},    // Sections that exist — contains new + modified questions
+    skippedCount: 0,       // Identical questions skipped
+    newQCount: 0,          // Brand new questions added
+    modifiedItems: [],     // { sectionKey, index, oldQ, newQ, diffs } — needs review
+    autoAddQuestions: {}   // sectionKey -> [question, ...] — new questions to add without review
+  };
+  
+  for (const [key, incomingSection] of Object.entries(incomingDB.sections)) {
+    const existingSection = existingDB.sections[key];
+    
+    // --- CASE 1: Section doesn't exist yet → add entirely ---
+    if (!existingSection) {
+      plan.newSections[key] = incomingSection;
+      plan.newQCount += (incomingSection.questions ? incomingSection.questions.length : 0);
+      continue;
+    }
+    
+    // --- CASE 2: Section exists, check author match ---
+    const existingAuthor = (existingSection.author || '').trim().toLowerCase();
+    const incomingAuthor = (incomingSection.author || '').trim().toLowerCase();
+    
+    if (existingAuthor !== incomingAuthor) {
+      // Different author — treat as a new section with a modified key
+      let newKey = key;
+      let suffix = 2;
+      while (existingDB.sections[newKey] || plan.newSections[newKey]) {
+        newKey = key + ' (' + suffix + ')';
+        suffix++;
+      }
+      plan.newSections[newKey] = incomingSection;
+      plan.newQCount += (incomingSection.questions ? incomingSection.questions.length : 0);
+      continue;
+    }
+    
+    // --- CASE 3: Same section + same author → merge questions ---
+    if (!incomingSection.questions) continue;
+    
+    const existingQuestions = existingSection.questions || [];
+    plan.autoAddQuestions[key] = [];
+    
+    for (let i = 0; i < incomingSection.questions.length; i++) {
+      const incomingQ = incomingSection.questions[i];
+      const incomingText = getQuestionPrimaryText(incomingQ);
+      
+      // Find matching question in existing section by primary text
+      let matchIndex = -1;
+      for (let j = 0; j < existingQuestions.length; j++) {
+        if (getQuestionPrimaryText(existingQuestions[j]) === incomingText) {
+          matchIndex = j;
+          break;
+        }
+      }
+      
+      if (matchIndex === -1) {
+        // No match found — brand new question, add directly
+        plan.autoAddQuestions[key].push(incomingQ);
+        plan.newQCount++;
+      } else {
+        // Match found — compare content
+        const result = diffQuestions(existingQuestions[matchIndex], incomingQ);
+        
+        if (result.match === 'identical') {
+          plan.skippedCount++;
+        } else {
+          // Modified — needs user review
+          plan.modifiedItems.push({
+            sectionKey: key,
+            sectionTitle: existingSection.title || key,
+            sectionAuthor: existingSection.author || '',
+            existingIndex: matchIndex,
+            oldQ: existingQuestions[matchIndex],
+            newQ: incomingQ,
+            diffs: result.diffs,
+            checked: true // Default to replacing
+          });
+        }
+      }
+    }
+  }
+  
+  return plan;
+}
+
+/**
+ * Renders the merge review modal with the analysis results.
+ */
+function renderMergeModal(plan) {
+  const summaryEl = document.getElementById('merge-summary');
+  const listEl = document.getElementById('merge-modified-list');
+  
+  // --- Summary Stats ---
+  summaryEl.innerHTML = `
+    <div class="merge-stat stat-new">
+      <div class="merge-stat-value">${plan.newQCount}</div>
+      <div class="merge-stat-label">New Questions</div>
+    </div>
+    <div class="merge-stat stat-skip">
+      <div class="merge-stat-value">${plan.skippedCount}</div>
+      <div class="merge-stat-label">Identical (Skipped)</div>
+    </div>
+    <div class="merge-stat stat-mod">
+      <div class="merge-stat-value">${plan.modifiedItems.length}</div>
+      <div class="merge-stat-label">Modified (Review)</div>
+    </div>
+    <div class="merge-stat">
+      <div class="merge-stat-value">${Object.keys(plan.newSections).length}</div>
+      <div class="merge-stat-label">New Sections</div>
+    </div>
+  `;
+  
+  // --- Modified Questions List ---
+  listEl.innerHTML = '';
+  
+  if (plan.modifiedItems.length === 0) {
+    listEl.innerHTML = '<p style="text-align:center; color:var(--col-text-muted); margin:15px 0;">No conflicts to review — all changes will be applied automatically.</p>';
+  } else {
+    // Select All toggle
+    const selectAllDiv = document.createElement('div');
+    selectAllDiv.className = 'merge-select-all';
+    selectAllDiv.innerHTML = `
+      <input type="checkbox" id="merge-select-all-cb" checked onchange="toggleAllMergeItems(this.checked)">
+      <label for="merge-select-all-cb" style="cursor:pointer;">Select/Deselect All Modified</label>
+    `;
+    listEl.appendChild(selectAllDiv);
+    
+    // Group modified items by section
+    const grouped = {};
+    plan.modifiedItems.forEach((item, idx) => {
+      if (!grouped[item.sectionKey]) {
+        grouped[item.sectionKey] = { title: item.sectionTitle, author: item.sectionAuthor, items: [] };
+      }
+      grouped[item.sectionKey].items.push({ ...item, globalIndex: idx });
+    });
+    
+    for (const [sKey, group] of Object.entries(grouped)) {
+      const sectionDiv = document.createElement('div');
+      sectionDiv.className = 'merge-section-group';
+      sectionDiv.innerHTML = `
+        <div class="merge-section-title">${group.title}</div>
+        ${group.author ? '<div class="merge-section-author">by ' + group.author + '</div>' : ''}
+      `;
+      
+      group.items.forEach(item => {
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'merge-item';
+        itemDiv.id = 'merge-item-' + item.globalIndex;
+        
+        const questionPreview = getQuestionPrimaryText(item.newQ);
+        const truncated = questionPreview.length > 90 ? questionPreview.substring(0, 90) + '...' : questionPreview;
+        
+        // Build diff panel content
+        let diffHTML = '<div class="merge-diff-cols">';
+        diffHTML += '<div class="merge-diff-col col-old"><div class="merge-diff-col-title">Current</div>';
+        item.diffs.forEach(d => {
+          diffHTML += `<div class="merge-diff-field"><div class="merge-diff-label">${d.field}</div><div class="merge-diff-value changed">${escapeHTML(d.old)}</div></div>`;
+        });
+        diffHTML += '</div>';
+        diffHTML += '<div class="merge-diff-col col-new"><div class="merge-diff-col-title">Incoming</div>';
+        item.diffs.forEach(d => {
+          diffHTML += `<div class="merge-diff-field"><div class="merge-diff-label">${d.field}</div><div class="merge-diff-value changed">${escapeHTML(d.new)}</div></div>`;
+        });
+        diffHTML += '</div></div>';
+        
+        itemDiv.innerHTML = `
+          <div class="merge-item-header" onclick="toggleMergeItemExpand(${item.globalIndex}, event)">
+            <input type="checkbox" ${item.checked ? 'checked' : ''} data-merge-idx="${item.globalIndex}" onchange="updateMergeItemCheck(${item.globalIndex}, this.checked)" onclick="event.stopPropagation()">
+            <div class="merge-item-question">${escapeHTML(truncated)}</div>
+            <span class="merge-item-badge badge-modified">${item.diffs.length} change${item.diffs.length > 1 ? 's' : ''}</span>
+            <span class="merge-item-toggle">▶</span>
+          </div>
+          <div class="merge-diff-panel">${diffHTML}</div>
+        `;
+        
+        sectionDiv.appendChild(itemDiv);
+      });
+      
+      listEl.appendChild(sectionDiv);
+    }
+  }
+}
+
+/**
+ * Simple HTML escaper for safe display in the diff panel.
+ */
+function escapeHTML(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+/** Toggle expand/collapse for a merge review item */
+function toggleMergeItemExpand(idx, event) {
+  // Don't toggle if clicking the checkbox itself
+  if (event.target.type === 'checkbox') return;
+  const el = document.getElementById('merge-item-' + idx);
+  if (el) el.classList.toggle('expanded');
+}
+
+/** Update the checked state of a merge item */
+function updateMergeItemCheck(idx, checked) {
+  if (pendingMerge && pendingMerge.modifiedItems[idx]) {
+    pendingMerge.modifiedItems[idx].checked = checked;
+  }
+  // Update select-all checkbox state
+  updateSelectAllState();
+}
+
+/** Toggle all merge items checked/unchecked */
+function toggleAllMergeItems(checked) {
+  if (!pendingMerge) return;
+  pendingMerge.modifiedItems.forEach((item, idx) => {
+    item.checked = checked;
+    const cb = document.querySelector('[data-merge-idx="' + idx + '"]');
+    if (cb) cb.checked = checked;
+  });
+}
+
+/** Sync the select-all checkbox with individual states */
+function updateSelectAllState() {
+  if (!pendingMerge) return;
+  const allChecked = pendingMerge.modifiedItems.every(item => item.checked);
+  const selectAllCb = document.getElementById('merge-select-all-cb');
+  if (selectAllCb) selectAllCb.checked = allChecked;
+}
+
+/** Close merge modal without applying */
+function cancelMerge() {
+  pendingMerge = null;
+  document.getElementById('merge-modal-overlay').classList.remove('active');
+  // Reset file input so the same file can be re-selected
+  document.getElementById('json-upload').value = '';
+}
+
+/** Close merge modal if clicking on overlay */
+function closeMergeModalOnOverlay(event) {
+  if (event.target === document.getElementById('merge-modal-overlay')) {
+    cancelMerge();
+  }
+}
+
+/**
+ * Apply the merge plan: add new sections, add new questions, replace checked modified questions.
+ */
+function applyMerge() {
+  if (!pendingMerge) return;
+  const plan = pendingMerge;
+  
+  // 1. Add new sections
+  for (const [key, section] of Object.entries(plan.newSections)) {
+    importedDatabase.sections[key] = section;
+  }
+  
+  // 2. Add auto-add questions (new questions in existing sections)
+  for (const [key, questions] of Object.entries(plan.autoAddQuestions)) {
+    if (questions.length === 0) continue;
+    if (!importedDatabase.sections[key]) continue;
+    if (!importedDatabase.sections[key].questions) {
+      importedDatabase.sections[key].questions = [];
+    }
+    importedDatabase.sections[key].questions.push(...questions);
+  }
+  
+  // 3. Replace checked modified questions
+  plan.modifiedItems.forEach(item => {
+    if (!item.checked) return; // User opted to keep old version
+    const section = importedDatabase.sections[item.sectionKey];
+    if (section && section.questions && section.questions[item.existingIndex]) {
+      section.questions[item.existingIndex] = item.newQ;
+    }
+  });
+  
+  // 4. Update state and UI
+  // Preserve progress — don't reset knowledgeQuestionState
+  const statusEl = document.getElementById('import-status');
+  const replacedCount = plan.modifiedItems.filter(i => i.checked).length;
+  const totalAdded = plan.newQCount;
+  statusEl.textContent = `✅ Merged: +${totalAdded} new, ${replacedCount} replaced, ${plan.skippedCount} unchanged`;
+  statusEl.style.color = 'var(--col-success)';
+  
+  const saveStatus = document.getElementById('save-status');
+  if (saveStatus) saveStatus.classList.remove('hidden');
+  
+  renderKnowledgeSections();
+  
+  document.getElementById('btn-export-knowledge').classList.remove('hidden');
+  document.getElementById('btn-clear-data').classList.remove('hidden');
+  
+  saveKnowledgeState();
+  
+  // Close modal
+  pendingMerge = null;
+  document.getElementById('merge-modal-overlay').classList.remove('active');
+  document.getElementById('json-upload').value = '';
 }
 // ==================== KNOWLEDGE PERSISTENCE LOGIC ====================
 
@@ -4789,49 +6028,85 @@ function startKnowledgeQuiz() {
     return;
   }
 
-  // 3. Initialize State Map
-  knowledgeQuestionState = {};
-  knowledgeQuizPool = []; // Flat list of { qData, id } for standard mode
-  knowledgeProgressivePoints = 0;
+  // 3. Initialize / Merge State
+  // IMPORTANT: Do NOT wipe knowledgeQuestionState. We must preserve loaded progress.
+  // Initialize helper structures
+  knowledgeQuizPool = []; // Used for Standard mode
   knowledgeMaxPossiblePoints = 0;
+  knowledgeProgressivePoints = 0; // Reset running total to recalculate
+
+  // Ensure the state map exists
+  if (!knowledgeQuestionState) knowledgeQuestionState = {};
+
+  // Collect section titles for RSO header
+  let rsoSectionTitles = [];
 
   selectedKeys.forEach(key => {
     const section = importedDatabase.sections[key];
+    if (section.title) rsoSectionTitles.push(section.title);
+    
     if (section.questions) {
       section.questions.forEach((q, index) => {
         // Create Unique ID
         const qID = `${key}_${index}`;
         
-        // Get initial reward (1-4 range, default 1)
-        let initFactor = (typeof q.reward === 'number' && q.reward >= 1 && q.reward <= 4) ? q.reward : 1;
-        
-        // Save to state map
-        knowledgeQuestionState[qID] = {
-          factor: initFactor,
-          questionData: q,
-          sectionTitle: section.title || key
-        };
+        // Check if we already have progress for this question
+        if (!knowledgeQuestionState[qID]) {
+          // NEW QUESTION: Initialize with 0 mastery (factor 0).
+          // The 'reward' field is for scoring weight, NOT starting mastery.
+          knowledgeQuestionState[qID] = {
+            factor: 0,
+            questionData: q,
+            sectionTitle: section.title || key
+          };
+        } else {
+          // EXISTING QUESTION: Update references (data might have changed in JSON)
+          // but PRESERVE the user's 'factor' (progress).
+          knowledgeQuestionState[qID].questionData = q;
+          knowledgeQuestionState[qID].sectionTitle = section.title || key;
+        }
 
-        knowledgeMaxPossiblePoints += 2; // Max factor is 2
+        // Max possible points is always 2 per question for Mastery calculation
+        knowledgeMaxPossiblePoints += 2;
         
-        // For Standard mode, just push to pool
-        knowledgeQuizPool.push({ qData: q, id: qID });
+        // Add to running total of earned points
+        knowledgeProgressivePoints += knowledgeQuestionState[qID].factor;
+
+        // For Standard mode, add to the flat pool
+        knowledgeQuizPool.push({ qData: q, id: qID, sectionTitle: section.title || key });
       });
     }
   });
 
-  // 4. Init Quiz
-  totalKnowledgeQuestions = knowledgeQuizPool.length; // Total unique questions
+  // 4. Init Quiz Variables
+  totalKnowledgeQuestions = knowledgeQuizPool.length; 
   knowledgeScore = 0;
   currentKnowledgeQuestion = 0;
   knowledgeQuizHistory = [];
+
+  // 4b. Create history log entry and start timer
+  const modeName = isKnowledgeProgressive ? 'progressive' : 'rso';
+  const sectionNames = selectedKeys.map(k => importedDatabase.sections[k]?.title || k);
+  const authorNames = selectedKeys.map(k => importedDatabase.sections[k]?.author).filter(Boolean);
+  const authorStr = [...new Set(authorNames)].join(', ');
+  currentSessionId = createHistoryEntry('knowledge', isKnowledgeProgressive ? 'progressive' : 'standard', sectionNames, authorStr);
+  startQuizTimer(currentSessionId);
 
   // 5. UI Switch
   document.getElementById('knowledge-selection-screen').classList.add('hidden');
   document.getElementById('knowledge-quiz-screen').classList.remove('hidden');
   
-  updateKnowledgeScore();
-  nextKnowledgeQuestion();
+  // 6. Branch: RSO-style for Standard, one-at-a-time for Progressive
+  if (!isKnowledgeProgressive) {
+    document.getElementById('knowledge-quiz-screen').classList.add('rso-mode');
+    const titleText = rsoSectionTitles.length > 0 ? rsoSectionTitles.join(' + ') : 'Question Bank';
+    document.getElementById('rso-section-title').textContent = titleText;
+    renderAllQuestionsRSO();
+  } else {
+    document.getElementById('knowledge-quiz-screen').classList.remove('rso-mode');
+    updateKnowledgeScore();
+    nextKnowledgeQuestion();
+  }
 }
 function nextKnowledgeQuestion() {
   // --- PROGRESSIVE MODE LOGIC ---
@@ -4870,7 +6145,7 @@ function nextKnowledgeQuestion() {
 
     // 5. Render
     currentKnowledgeQuestion++; // Just a counter for display
-    document.getElementById('knowledge-mode-title').textContent = stateObj.sectionTitle || "Knowledge Quiz";
+    document.getElementById('knowledge-mode-title').textContent = stateObj.sectionTitle || "Question Bank";
     document.getElementById('knowledge-question').innerHTML = qEngine.questionHTML;
     
     const optsDiv = document.getElementById('knowledge-options');
@@ -4903,7 +6178,7 @@ function nextKnowledgeQuestion() {
   window.currentKnowledgeData = qEngine;
   
   // Render
-  document.getElementById('knowledge-mode-title').textContent = item.qData._sectionTitle || "Knowledge Quiz";
+  document.getElementById('knowledge-mode-title').textContent = item.qData._sectionTitle || "Question Bank";
   document.getElementById('knowledge-question').innerHTML = qEngine.questionHTML;
   
   const optsDiv = document.getElementById('knowledge-options');
@@ -4931,18 +6206,18 @@ function generateKnowledgeQuestionHTML(qData) {
   if (qData.variants && qData.variants.length > 0) {
     // Pick a random variant
     variantIndex = Math.floor(Math.random() * qData.variants.length); // SAVE INDEX
-    questionText = qData.variants[variantIndex];
+    questionText = formatQuestionText(qData.variants[variantIndex]);
   } else {
-    questionText = qData.question || "Missing Question Text";
+    questionText = formatQuestionText(qData.question || "Missing Question Text");
   }
 
   // --- 3. EXPLANATION (Variants Logic) ---
   let explanation = "";
   if (qData.explanations && qData.explanations.length > 0) {
     const idx = Math.floor(Math.random() * qData.explanations.length);
-    explanation = qData.explanations[idx];
+    explanation = formatQuestionText(qData.explanations[idx]);
   } else if (qData.explanation) {
-    explanation = qData.explanation;
+    explanation = formatQuestionText(qData.explanation);
   }
 
   // --- HELPER: RESOLVE OPTION SYNONYMS ---
@@ -4991,9 +6266,9 @@ function generateKnowledgeQuestionHTML(qData) {
       correctAnswerSource = correctGroup.options[rnd];
     }
 
-    // Pick Distractor Sources (Limit 5 to fit 6 total)
+    // Pick Distractor Sources (Limit to maxOptionsPerQuestion-1)
     incorrectGroups.sort(() => Math.random() - 0.5);
-    let needed = 5;
+    let needed = window.maxOptionsPerQuestion - 1;
     for (let i = 0; i < incorrectGroups.length && needed > 0; i++) {
       const group = incorrectGroups[i];
       if (group.options.length > 0) {
@@ -5033,9 +6308,9 @@ function generateKnowledgeQuestionHTML(qData) {
       distractorSources = qData.options.slice(1);
     }
 
-    // Shuffle and Limit (Simple mode typically uses all provided, but we cap at 6)
+    // Shuffle and Limit (cap at user-configured max options)
     distractorSources.sort(() => Math.random() - 0.5);
-    distractorSources = distractorSources.slice(0, 5); // Max 5 distractors
+    distractorSources = distractorSources.slice(0, window.maxOptionsPerQuestion - 1);
 
     finalOptions = [correctAnswerSource, ...distractorSources];
   }
@@ -5132,7 +6407,7 @@ function checkKnowledgeAnswer(btn, index, qEngine) {
     }
 
     btn.classList.add('correct');
-    resultEl.innerHTML = `✅ Correct!`;
+    resultEl.innerHTML = qEngine.explanation ? `<small>${qEngine.explanation}</small>` : '';
     resultEl.style.color = "var(--col-success)";
   } else {
     btn.classList.add('wrong');
@@ -5150,12 +6425,16 @@ function checkKnowledgeAnswer(btn, index, qEngine) {
   if (window.updatePopoutFeedback) window.updatePopoutFeedback();
   
   // History (Optional for Progressive, but good for review)
+  const selectedIndex = qEngine.shuffledOptions.indexOf(selected);
   knowledgeQuizHistory.push({
     q: qEngine.questionHTML,
     userAns: selected.text,
     correctAns: qEngine.correctAnswer,
     isCorrect: isCorrect,
-    expl: qEngine.explanation
+    expl: qEngine.explanation,
+    allOptions: qEngine.shuffledOptions.map(o => o.text),
+    correctIndex: qEngine.shuffledOptions.findIndex(o => o.isCorrect),
+    selectedIndex: selectedIndex
   });
 
   // Auto-advance
@@ -5176,10 +6455,16 @@ function updateKnowledgeScore() {
     scoreEl.textContent = `Score: ${knowledgeScore} / ${currentKnowledgeQuestion}`;
   }
 }
-
 function showKnowledgeResults() {
   document.getElementById('knowledge-quiz-screen').classList.add('hidden');
+  document.getElementById('knowledge-quiz-screen').classList.remove('rso-mode');
   document.getElementById('knowledge-results-screen').classList.remove('hidden');
+
+  // Finalize history log entry
+  if (currentSessionId) {
+    finalizeHistoryEntry(currentSessionId, knowledgeScore, totalKnowledgeQuestions, knowledgeQuizHistory, true);
+    currentSessionId = null;
+  }
 
   let finalDisplayHTML = '';
 
@@ -5188,8 +6473,13 @@ function showKnowledgeResults() {
       ? Math.round((knowledgeProgressivePoints / knowledgeMaxPossiblePoints) * 100) 
       : 0;
     
+    // Format points to remove trailing zeros (e.g. 118.00 -> 118)
+    const displayPoints = knowledgeProgressivePoints % 1 === 0 
+      ? knowledgeProgressivePoints 
+      : knowledgeProgressivePoints.toFixed(2);
+
     finalDisplayHTML = `Mastery Achieved: <strong>${pct}%</strong><br>
-    <small style="color:var(--col-text-muted)">Total Points: ${knowledgeProgressivePoints.toFixed(2)} / ${knowledgeMaxPossiblePoints}</small>`;
+    <small style="color:var(--col-text-muted)">Total Points: ${displayPoints} / ${knowledgeMaxPossiblePoints}</small>`;
   } else {
     const pct = Math.round(knowledgeScore / totalKnowledgeQuestions * 100);
     finalDisplayHTML = `Final Score: <strong>${knowledgeScore} / ${totalKnowledgeQuestions}</strong> (${pct}%)`;
@@ -5197,24 +6487,218 @@ function showKnowledgeResults() {
 
   document.getElementById('knowledge-final-score').innerHTML = finalDisplayHTML;
 
-  // Render Review (Same for both modes)
+  // Render Review (Enhanced — shows all options like conventional results)
   let html = '';
   knowledgeQuizHistory.forEach((item, i) => {
     const color = item.isCorrect ? 'var(--col-success)' : 'var(--col-error)';
+    
+    // Build options list if available
+    let optionsHTML = '';
+    if (item.allOptions) {
+      optionsHTML = '<div class="result-options-list">';
+      item.allOptions.forEach((optText, idx) => {
+        let optClass = 'result-option neutral-opt';
+        let marker = '';
+        
+        if (idx === item.correctIndex) {
+          optClass = 'result-option correct-opt';
+          marker = '✔';
+        } else if (idx === item.selectedIndex && !item.isCorrect) {
+          optClass = 'result-option wrong-opt';
+          marker = '✖';
+        }
+        
+        optionsHTML += `<div class="${optClass}"><span class="option-marker">${marker}</span> ${optText}</div>`;
+      });
+      optionsHTML += '</div>';
+    } else {
+      // Fallback for old-format history entries
+      optionsHTML = `<div style="margin-top:8px;">
+        <span style="color:var(--col-text-muted);">Your Answer:</span> 
+        <span style="color:${color}; font-weight:bold;">${item.userAns}</span>
+      </div>`;
+      if (!item.isCorrect) {
+        optionsHTML += `<div><span style="color:var(--col-text-muted);">Correct Answer:</span> <span style="color:var(--col-success);">${item.correctAns}</span></div>`;
+      }
+    }
+    
     html += `
       <div class="result-item" style="border-left-color:${color};">
-        <strong>Q${i+1}:</strong> ${item.q}<br>
-        <div style="margin-top:8px;">
-          <span style="color:var(--col-text-muted);">Your Answer:</span> 
-          <span style="color:${color}; font-weight:bold;">${item.userAns}</span>
-        </div>
-        ${!item.isCorrect ? `<div><span style="color:var(--col-text-muted);">Correct Answer:</span> <span style="color:var(--col-success);">${item.correctAns}</span></div>` : ''}
+        <strong>Q${i+1}:</strong> ${item.q}
+        ${optionsHTML}
         ${item.expl ? `<small style="display:block; margin-top:8px; color:var(--col-text-muted); border-top:1px solid var(--col-border-light); padding-top:8px;">${item.expl}</small>` : ''}
       </div>
     `;
   });
   document.getElementById('knowledge-review-list').innerHTML = html;
 }
+// ==================== RSO-STYLE ALL-AT-ONCE RENDERING ====================
+let rsoScore = 0;
+let rsoAnsweredCount = 0;
+let rsoTotalQuestions = 0;
+let rsoGeneratedEngines = []; // Store qEngine for each question
+
+function renderAllQuestionsRSO() {
+  const quizEl = document.getElementById('rso-quiz');
+  quizEl.innerHTML = '';
+  
+  rsoScore = 0;
+  rsoAnsweredCount = 0;
+  rsoTotalQuestions = knowledgeQuizPool.length;
+  rsoGeneratedEngines = [];
+  
+  // Update score display
+  document.getElementById('rso-correct').textContent = '0';
+  document.getElementById('rso-total').textContent = rsoTotalQuestions;
+  document.getElementById('rso-progress-bar').style.width = '0%';
+  
+  // Render each question
+  knowledgeQuizPool.forEach((item, qIndex) => {
+    const qEngine = generateKnowledgeQuestionHTML(item.qData);
+    rsoGeneratedEngines.push(qEngine);
+    
+    const qDiv = document.createElement('div');
+    qDiv.className = 'rso-question';
+    qDiv.style.animationDelay = `${qIndex * 0.05}s`;
+    
+    // Question text
+    const questionP = document.createElement('p');
+    questionP.className = 'rso-question-text';
+    questionP.innerHTML = `<strong>${qIndex + 1}.</strong> ${qEngine.questionHTML}`;
+    qDiv.appendChild(questionP);
+    
+    // Options container
+    const optionsContainer = document.createElement('div');
+    optionsContainer.className = 'rso-options-container';
+    
+    qEngine.shuffledOptions.forEach((opt, optIdx) => {
+      const answerContainer = document.createElement('div');
+      answerContainer.className = 'rso-answer-container';
+      
+      const btn = document.createElement('button');
+      btn.className = 'rso-option-btn';
+      btn.textContent = opt.text;
+      btn.onclick = () => handleKnowledgeAnswerRSO(btn, optIdx, qEngine, qDiv);
+      
+      answerContainer.appendChild(btn);
+      optionsContainer.appendChild(answerContainer);
+    });
+    
+    qDiv.appendChild(optionsContainer);
+    
+    // Explanation (hidden by default)
+    if (qEngine.explanation) {
+      const expDiv = document.createElement('div');
+      expDiv.className = 'rso-explanation';
+      expDiv.innerHTML = qEngine.explanation;
+      qDiv.appendChild(expDiv);
+    }
+    
+    quizEl.appendChild(qDiv);
+  });
+}
+
+function handleKnowledgeAnswerRSO(button, selectedIndex, qEngine, questionDiv) {
+  if (questionDiv.getAttribute('data-answered') === 'true') return;
+  questionDiv.setAttribute('data-answered', 'true');
+  
+  const selected = qEngine.shuffledOptions[selectedIndex];
+  const isCorrect = selected.isCorrect;
+  
+  rsoAnsweredCount++;
+  if (isCorrect) rsoScore++;
+  
+  // Disable all buttons in this question
+  const buttons = questionDiv.querySelectorAll('.rso-option-btn');
+  buttons.forEach(btn => btn.disabled = true);
+  
+  // Style selected button
+  button.classList.add(isCorrect ? 'correct' : 'incorrect');
+  
+  // If wrong, highlight the correct answer
+  if (!isCorrect) {
+    buttons.forEach((btn, idx) => {
+      if (qEngine.shuffledOptions[idx].isCorrect) {
+        btn.classList.add('correct');
+      }
+    });
+  }
+  
+  // Dim non-selected and non-correct buttons
+  buttons.forEach(btn => {
+    if (btn !== button && !btn.classList.contains('correct')) {
+      btn.classList.add('dimmed');
+    }
+  });
+  
+  // Add status icon
+  const statusIcon = document.createElement('span');
+  statusIcon.className = `rso-status-icon ${isCorrect ? 'correct' : 'incorrect'}`;
+  statusIcon.textContent = isCorrect ? '✔' : '✖';
+  button.parentElement.appendChild(statusIcon);
+  
+  // Show explanation
+  const expDiv = questionDiv.querySelector('.rso-explanation');
+  if (expDiv && !isCorrect) {
+    expDiv.classList.add('visible');
+  }
+  
+  // Update score
+  document.getElementById('rso-correct').textContent = rsoScore;
+  
+  // Update progress bar
+  const progressPct = (rsoAnsweredCount / rsoTotalQuestions) * 100;
+  document.getElementById('rso-progress-bar').style.width = `${progressPct}%`;
+  
+  // Score animation
+  if (isCorrect) {
+    const scoreEl = document.getElementById('rso-scoreboard');
+    scoreEl.classList.add('reward');
+    setTimeout(() => scoreEl.classList.remove('reward'), 500);
+  }
+  
+  // Store in history for results screen
+  knowledgeQuizHistory.push({
+    q: qEngine.questionHTML,
+    userAns: selected.text,
+    correctAns: qEngine.correctAnswer,
+    isCorrect: isCorrect,
+    expl: qEngine.explanation,
+    allOptions: qEngine.shuffledOptions.map(o => o.text),
+    correctIndex: qEngine.shuffledOptions.findIndex(o => o.isCorrect),
+    selectedIndex: selectedIndex
+  });
+  
+  // Update the global score for compatibility
+  knowledgeScore = rsoScore;
+  currentKnowledgeQuestion = rsoAnsweredCount;
+  
+  // Check if all answered
+  if (rsoAnsweredCount >= rsoTotalQuestions) {
+    // Short delay then show results
+    setTimeout(() => {
+      showKnowledgeResults();
+    }, 1500);
+  }
+}
+
+function restartRSOQuiz() {
+  knowledgeScore = 0;
+  rsoScore = 0;
+  rsoAnsweredCount = 0;
+  currentKnowledgeQuestion = 0;
+  knowledgeQuizHistory = [];
+  
+  // Re-shuffle the pool
+  knowledgeQuizPool.sort(() => Math.random() - 0.5);
+  
+  // Re-render
+  renderAllQuestionsRSO();
+  
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 // ==================== PICTURE-IN-PICTURE POPUP LOGIC ====================
 let questionPopoutWindow = null;
 
@@ -5226,7 +6710,9 @@ function getPopoutStyles() {
       --col-bg-card: #1a1a1a;
       --col-bg-btn: #222;
       --col-border: #444;
-      --col-primary: #00ffff;
+      --col-primary: var(--accent-0, #00ffff);
+      --accent-0: #00ffff;
+      --accent-0-rgb: 0, 255, 255;
       --col-text-main: #ccc;
       --col-text-muted: #888;
       --col-success: #00ff88;
@@ -5508,7 +6994,7 @@ function formatDose(uSv) {
 function generateDistractors(correctVal, multipliers) {
   let opts = [correctVal];
   let attempts = 0;
-  while (opts.length < 4 && attempts < 20) {
+  while (opts.length < window.maxOptionsPerQuestion && attempts < 20) {
     let cand = correctVal * multipliers[Math.floor(Math.random() * multipliers.length)];
     // Add some random noise to avoid exact multiples always
     cand += (Math.random() - 0.5) * (correctVal * 0.1); 
@@ -5519,7 +7005,7 @@ function generateDistractors(correctVal, multipliers) {
     attempts++;
   }
   // Fill fallback
-  while (opts.length < 4) opts.push(correctVal * (Math.random() + 0.5));
+  while (opts.length < window.maxOptionsPerQuestion) opts.push(correctVal * (Math.random() + 0.5));
   return opts;
 }
 // ==================== NEW GENERATOR: DETECTOR COUNT RATE ====================
@@ -5762,7 +7248,7 @@ currentDistanceUnits = new Set();
   questionHTML = questionHTML.replace(/(\d)\.0+(\s)/g, '$1$2');
   questionHTML = questionHTML.replace(/(\.\d*?[1-9])0+(\s)/g, '$1$2'); // Remove trailing 0s (e.g. .50 -> .5)
 
-  document.getElementById("question").innerHTML = questionHTML;
+  document.getElementById("question").innerHTML = formatQuestionText(questionHTML);
   
   // Render options
   const optsDiv = document.getElementById("options");
@@ -5909,6 +7395,11 @@ document.getElementById('mode-title').textContent = `${selectedDifficulty.toUppe
   // All 5 formula types (Rate, Inverse, Pure Inverse Square, Mixed Sources, Unit Conversion) 
   // now work in EVERY difficulty level. Selection state is fully preserved when switching modes.
   
+  // Create history log entry and start timer
+  const formulaNames = selectedFormulas.map(f => (typeof FORMULA_METADATA !== 'undefined' && FORMULA_METADATA[f]) ? FORMULA_METADATA[f].name : f);
+  currentSessionId = createHistoryEntry('conventional', selectedDifficulty, formulaNames, '');
+  startQuizTimer(currentSessionId);
+  
   generateQuestion();
 }
 
@@ -5974,7 +7465,7 @@ function checkAnswer(selectedIndex, correctIndex, btn) {
     const resultEl = document.getElementById("result");
     
     if (isCorrect) {
-      resultEl.innerHTML = `✅ Correct!<br><small>${q.expl}</small>`;
+      resultEl.innerHTML = `<small>${formatQuestionText(q.expl)}</small>`;
       resultEl.style.color = "#00ff88";
       btn.classList.add("correct");
     } else {
@@ -5982,7 +7473,7 @@ function checkAnswer(selectedIndex, correctIndex, btn) {
         ? q.opts[0] 
         : formatAnswer(q.opts[0], q.unit, q.type);
       
-      resultEl.innerHTML = `❌ Wrong<br><small>Correct: ${correctDisplay}<br>${q.expl}</small>`;
+      resultEl.innerHTML = `❌ Wrong<br><small>Correct: ${correctDisplay}<br>${formatQuestionText(q.expl)}</small>`;
       resultEl.style.color = "#ff4444";
       btn.classList.add("wrong");
     }
@@ -6019,6 +7510,22 @@ function formatScientificNice(val, precision = 3) {
   let superExp = exp.toString().split('').map(c => map[c] || c).join('');
   return `${mant}×10${superExp}`;
 }
+// ==================== MARKDOWN & LATEX FORMATTER ====================
+function formatQuestionText(text) {
+  if (!text) return "";
+  
+  // 1. Convert Markdown Bold (**text**) to <strong>text</strong>
+  text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  
+  // 2. Convert LaTeX $$...$$ to a styled span (basic math rendering)
+  // For proper rendering, consider MathJax or KaTeX in the future
+  text = text.replace(/\$\$([^$]+)\$\$/g, '<span class="math-equation">$1</span>');
+  
+  // 3. Handle inline LaTeX $...$ if present
+  text = text.replace(/(?<!\$)\$([^$\n]+)\$/g, '<span class="math-inline">$1</span>');
+  
+  return text;
+}
 function startStepsQuiz() {
   isStepsMode = true;
   numQuestionsTotal = parseInt(document.getElementById('steps-num-questions').value) || 10;
@@ -6037,6 +7544,11 @@ function startStepsQuiz() {
     ? ISOTOPES[selectedIsotopes[0]].symbol 
     : "Multi-Isotope";
   document.getElementById('steps-mode-title').textContent = `SINGLE/MULTI STEPS - ${isoDisplay}`;
+  
+  // Create history log entry and start timer
+  const formulaNames = selectedFormulas.map(f => (typeof FORMULA_METADATA !== 'undefined' && FORMULA_METADATA[f]) ? FORMULA_METADATA[f].name : f);
+  currentSessionId = createHistoryEntry('steps', 'standard', formulaNames, '');
+  startQuizTimer(currentSessionId);
   
   generateStepsQuestion();
 }
@@ -7136,7 +8648,7 @@ function renderStepsStep() {
     addDistractor(correctStep.op, correctStep.val * 10);
     addDistractor(correctStep.op, correctStep.val / 10);
     
-    if (opts.length < 4) addDistractor(correctStep.op, correctStep.val * 100);
+    if (opts.length < window.maxOptionsPerQuestion) addDistractor(correctStep.op, correctStep.val * 100);
   }
 
   // Shuffle
@@ -7319,6 +8831,12 @@ function nextStepsQuestion() {
 function showStepsResults() {
   document.getElementById('steps-quiz-screen').classList.add('hidden');
   document.getElementById('steps-results-screen').classList.remove('hidden');
+
+  // Finalize history log entry
+  if (currentSessionId) {
+    finalizeHistoryEntry(currentSessionId, score, numQuestionsTotal, quizHistory, true);
+    currentSessionId = null;
+  }
   
   const pct = Math.round(score/numQuestionsTotal*100);
   document.getElementById('steps-final-score').innerHTML = `Final Score: <strong>${score} / ${numQuestionsTotal}</strong> (${pct}%)`;
@@ -7361,6 +8879,12 @@ function showResultsScreen() {
   document.getElementById('quiz-screen').style.display = 'none';
   const rs = document.getElementById('results-screen');
   rs.style.display = 'block';
+
+  // Finalize history log entry
+  if (currentSessionId) {
+    finalizeHistoryEntry(currentSessionId, score, numQuestionsTotal, quizHistory, true);
+    currentSessionId = null;
+  }
   
   const pct = Math.round(score/numQuestionsTotal*100);
   document.getElementById('final-score').innerHTML = `Final Score: <strong>${score} / ${numQuestionsTotal}</strong> (${pct}%)`;
@@ -7489,15 +9013,62 @@ function continueQuiz(addCount) {
   // 1. Update total count (adding the exact number needed)
   numQuestionsTotal += addCount;
   
-  // 2. Switch UI
+  // 2. Create a new history session for the continuation
+  const formulaNames = selectedFormulas.map(f => (typeof FORMULA_METADATA !== 'undefined' && FORMULA_METADATA[f]) ? FORMULA_METADATA[f].name : f);
+  currentSessionId = createHistoryEntry('conventional', selectedDifficulty + ' (continued)', formulaNames, '');
+  startQuizTimer(currentSessionId);
+  
+  // 3. Switch UI
   document.getElementById('results-screen').style.display = 'none';
   document.getElementById('quiz-screen').style.display = 'block';
   
-  // 3. Continue Quiz (Score/History stays intact)
+  // 4. Continue Quiz (Score/History stays intact)
   generateQuestion();
 }
 // ==================== BACK TO SELECTION ====================
 function backToSelection() {
+  // Save incomplete session to history if active
+  if (currentSessionId) {
+    pauseQuizTimer();
+    const activeTab = document.querySelector('.tab-btn.active').dataset.tab;
+    let sessionScore = 0, sessionTotal = 0, sessionHistory = [];
+    
+    if (activeTab === 'knowledge') {
+      sessionScore = knowledgeScore;
+      sessionTotal = totalKnowledgeQuestions;
+      sessionHistory = knowledgeQuizHistory;
+    } else if (activeTab === 'steps') {
+      sessionScore = score;
+      sessionTotal = numQuestionsTotal;
+      sessionHistory = quizHistory;
+    } else {
+      sessionScore = score;
+      sessionTotal = numQuestionsTotal;
+      sessionHistory = quizHistory;
+    }
+    
+    const entry = quizHistoryLog.find(e => e.id === currentSessionId);
+    if (entry) {
+      entry.endTime = Date.now();
+      entry.timeSpent = getElapsedTime();
+      entry.score = sessionScore;
+      entry.total = sessionTotal;
+      entry.currentQuestion = activeTab === 'knowledge' ? currentKnowledgeQuestion : currentQuestionNum;
+      entry.history = sessionHistory;
+      entry.isCompleted = false;
+      // Save resume state
+      entry.resumeState = {
+        tab: activeTab,
+        score: sessionScore,
+        currentQ: activeTab === 'knowledge' ? currentKnowledgeQuestion : currentQuestionNum,
+        totalQ: sessionTotal,
+        history: sessionHistory
+      };
+      saveHistoryLog();
+    }
+    currentSessionId = null;
+  }
+
   saveSession();
   // Hide all possible screens
   document.getElementById('quiz-screen').style.display = 'none';
@@ -7505,6 +9076,7 @@ function backToSelection() {
   document.getElementById('steps-quiz-screen').classList.add('hidden');
   document.getElementById('steps-results-screen').classList.add('hidden');
   document.getElementById('knowledge-quiz-screen').classList.add('hidden');
+  document.getElementById('knowledge-quiz-screen').classList.remove('rso-mode');
   document.getElementById('knowledge-results-screen').classList.add('hidden');
 
   // Show correct selection screen based on current tab
@@ -7551,6 +9123,9 @@ window.addEventListener('message', function(e) {
 });
 // ==================== TAB SWITCHING ====================
 function switchTab(tabName) {
+  // Pause timer when switching away from an active quiz
+  if (currentSessionId) pauseQuizTimer();
+  
   saveSession();
   // Update tab button states
   document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -7586,7 +9161,329 @@ function switchTab(tabName) {
     const activeDiff = document.querySelector('#difficulty-options .option-card.selected');
     if (activeDiff) selectedDifficulty = activeDiff.dataset.value;
   }
+
+  // Resume timer if returning to tab with active quiz
+  if (currentSessionId && activeQuizTimer.sessionId === currentSessionId) {
+    resumeQuizTimer();
+  }
+
+  // Render history tab when switching to it
+  if (tabName === 'history') {
+    renderHistoryTab();
+  }
 }
+// ==================== HISTORY TAB RENDERING ====================
+let historyPage = 1;
+let historyPerPage = 10;
+let expandedHistoryId = null;
+
+function renderHistoryTab() {
+  loadHistoryLog(); // Refresh from storage
+  const listEl = document.getElementById('history-list');
+  const pageEl = document.getElementById('history-pagination');
+  const perPageEl = document.getElementById('history-per-page-controls');
+  
+  // Sort by start time descending (newest first)
+  const sorted = [...quizHistoryLog].sort((a, b) => (b.startTime || 0) - (a.startTime || 0));
+  
+  if (sorted.length === 0) {
+    listEl.innerHTML = `
+      <div class="history-empty">
+        <div class="history-empty-icon">📋</div>
+        <p>No quiz history yet.</p>
+        <p style="font-size:0.85em;">Complete a quiz to see your results here.</p>
+      </div>`;
+    pageEl.innerHTML = '';
+    perPageEl.innerHTML = '';
+    return;
+  }
+  
+  // Pagination
+  const totalPages = Math.ceil(sorted.length / historyPerPage);
+  if (historyPage > totalPages) historyPage = totalPages;
+  const startIdx = (historyPage - 1) * historyPerPage;
+  const pageItems = sorted.slice(startIdx, startIdx + historyPerPage);
+  
+  // Render rows
+  let html = '';
+  pageItems.forEach(entry => {
+    const isExpanded = expandedHistoryId === entry.id;
+    const pct = entry.total > 0 ? Math.round(entry.score / entry.total * 100) : null;
+    
+    // Result bar class
+    let barClass = 'incomplete';
+    if (entry.isCompleted) {
+      barClass = pct >= 80 ? 'win' : (pct >= 50 ? 'partial' : 'loss');
+    }
+    
+    // Score color
+    let scoreClass = 'na';
+    if (pct !== null) {
+      scoreClass = pct >= 80 ? 'good' : (pct >= 50 ? 'mid' : 'low');
+    }
+    
+    // Type badge
+    const typeBadge = `<span class="history-badge badge-${entry.type}">${entry.type}</span>`;
+    const modeBadge = entry.mode ? `<span class="history-badge badge-${entry.mode}">${entry.mode}</span>` : '';
+    
+    // Section names
+    const sectionText = entry.sections ? entry.sections.join(', ') : 'Quiz';
+    const authorText = entry.author ? `by ${entry.author}` : '';
+    
+    // Date/time
+    const dateStr = entry.startTime ? new Date(entry.startTime).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+    const timeStr = entry.startTime ? new Date(entry.startTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : '';
+    const durationStr = entry.timeSpent ? formatDuration(entry.timeSpent) : '--';
+    
+    // Action button
+    let actionBtn = '';
+    if (entry.isCompleted) {
+      actionBtn = `<button class="history-action-btn btn-completed" disabled>Completed</button>`;
+    } else {
+      actionBtn = `<button class="history-action-btn btn-continue" onclick="event.stopPropagation(); continueHistorySession('${entry.id}')">Continue</button>`;
+    }
+    
+    // Progress text for incomplete
+    const progressText = !entry.isCompleted && entry.currentQuestion > 0 
+      ? `Q${entry.currentQuestion}/${entry.total}` 
+      : '';
+    
+    html += `
+      <div class="history-row ${isExpanded ? 'expanded' : ''}" onclick="toggleHistoryExpand('${entry.id}')">
+        <div class="history-row-header">
+          <div class="history-result-bar ${barClass}"></div>
+          <div class="history-info">
+            <div class="history-title">${sectionText}</div>
+            <div class="history-meta">
+              ${typeBadge}${modeBadge}
+              ${authorText ? `<span class="history-detail-small">${authorText}</span>` : ''}
+              <span class="history-detail-small">${dateStr} ${timeStr}</span>
+              <span class="history-detail-small">⏱ ${durationStr}</span>
+              ${progressText ? `<span class="history-detail-small">${progressText}</span>` : ''}
+            </div>
+          </div>
+          <div class="history-score">
+            ${pct !== null ? `<div class="history-score-pct ${scoreClass}">${pct}%</div>` : `<div class="history-score-pct na">--</div>`}
+            <div class="history-score-detail">${entry.score}/${entry.total}</div>
+          </div>
+          ${actionBtn}
+        </div>
+        <div class="history-detail-panel" id="history-detail-${entry.id}">
+          ${isExpanded ? renderHistoryDetail(entry) : ''}
+        </div>
+      </div>
+    `;
+  });
+  
+  listEl.innerHTML = html;
+  
+  // Render pagination
+  if (totalPages > 1) {
+    let pagHTML = '';
+    for (let p = 1; p <= totalPages; p++) {
+      pagHTML += `<button class="history-page-btn ${p === historyPage ? 'active' : ''}" onclick="historyGoToPage(${p})">${p}</button>`;
+    }
+    pageEl.innerHTML = pagHTML;
+  } else {
+    pageEl.innerHTML = '';
+  }
+  
+  // Per page controls
+  perPageEl.innerHTML = `
+    <span class="history-per-page-label">Per page:</span>
+    <button class="history-page-btn ${historyPerPage === 10 ? 'active' : ''}" onclick="setHistoryPerPage(10)">10</button>
+    <button class="history-page-btn ${historyPerPage === 25 ? 'active' : ''}" onclick="setHistoryPerPage(25)">25</button>
+    <button class="history-page-btn ${historyPerPage === 50 ? 'active' : ''}" onclick="setHistoryPerPage(50)">50</button>
+  `;
+}
+
+function renderHistoryDetail(entry) {
+  // Stats bar
+  const durationStr = entry.timeSpent ? formatDuration(entry.timeSpent) : '--';
+  const startStr = entry.startTime ? new Date(entry.startTime).toLocaleString() : '--';
+  const endStr = entry.endTime ? new Date(entry.endTime).toLocaleString() : '--';
+  
+  let statsHTML = `
+    <div class="history-detail-stats">
+      <div class="history-detail-stat"><div class="history-detail-stat-val">${entry.score}</div><div class="history-detail-stat-lbl">Correct</div></div>
+      <div class="history-detail-stat"><div class="history-detail-stat-val">${entry.total}</div><div class="history-detail-stat-lbl">Total</div></div>
+      <div class="history-detail-stat"><div class="history-detail-stat-val">${durationStr}</div><div class="history-detail-stat-lbl">Time</div></div>
+      <div class="history-detail-stat"><div class="history-detail-stat-val" style="font-size:0.75em;">${startStr}</div><div class="history-detail-stat-lbl">Start</div></div>
+      <div class="history-detail-stat"><div class="history-detail-stat-val" style="font-size:0.75em;">${endStr}</div><div class="history-detail-stat-lbl">End</div></div>
+    </div>
+  `;
+  
+  // Question list
+  let qHTML = '<div class="history-q-list">';
+  if (entry.history && entry.history.length > 0) {
+    entry.history.forEach((item, i) => {
+      const markerClass = item.isCorrect ? 'correct' : 'wrong';
+      const markerIcon = item.isCorrect ? '✔' : '✖';
+      const questionText = item.q || item.questionHTML || 'Question ' + (i+1);
+      
+      // Build options display if available
+      let optsHTML = '';
+      if (item.allOptions) {
+        optsHTML = '<div class="history-q-opts">';
+        item.allOptions.forEach((opt, idx) => {
+          let optClass = 'history-q-opt opt-neutral';
+          let prefix = '';
+          if (idx === item.correctIndex) {
+            optClass = 'history-q-opt opt-correct';
+            prefix = '✔ ';
+          } else if (idx === item.selectedIndex && !item.isCorrect) {
+            optClass = 'history-q-opt opt-wrong-chosen';
+            prefix = '✖ ';
+          }
+          optsHTML += `<div class="${optClass}">${prefix}${opt}</div>`;
+        });
+        optsHTML += '</div>';
+      } else {
+        // Fallback
+        const answerHTML = item.isCorrect 
+          ? `<span class="correct-ans">${item.userAns || item.userAnswer || item.correctAns || item.correctAnswer}</span>`
+          : `<span class="wrong-ans">${item.userAns || item.userAnswer}</span> → <span class="correct-ans">${item.correctAns || item.correctAnswer}</span>`;
+        optsHTML = `<div class="history-q-answer">${answerHTML}</div>`;
+      }
+      
+      const explHTML = (item.expl || item.explanation) 
+        ? `<div class="history-q-expl">${item.expl || item.explanation}</div>` 
+        : '';
+      
+      qHTML += `
+        <div class="history-q-item">
+          <div class="history-q-marker ${markerClass}">${markerIcon}</div>
+          <div class="history-q-content">
+            <div class="history-q-text">${questionText}</div>
+            ${optsHTML}
+            ${explHTML}
+          </div>
+        </div>
+      `;
+    });
+  } else {
+    qHTML += '<p style="color:var(--col-text-muted); font-size:0.85em; text-align:center; padding:10px;">No question details available.</p>';
+  }
+  qHTML += '</div>';
+  
+  return statsHTML + qHTML;
+}
+
+function toggleHistoryExpand(id) {
+  if (expandedHistoryId === id) {
+    expandedHistoryId = null;
+  } else {
+    expandedHistoryId = id;
+  }
+  renderHistoryTab();
+}
+
+function historyGoToPage(page) {
+  historyPage = page;
+  expandedHistoryId = null;
+  renderHistoryTab();
+}
+
+function setHistoryPerPage(n) {
+  historyPerPage = n;
+  historyPage = 1;
+  expandedHistoryId = null;
+  renderHistoryTab();
+}
+
+function clearAllHistory() {
+  if (!confirm('Clear all quiz history? This cannot be undone.')) return;
+  quizHistoryLog = [];
+  saveHistoryLog();
+  renderHistoryTab();
+}
+
+function continueHistorySession(sessionId) {
+  const entry = quizHistoryLog.find(e => e.id === sessionId);
+  if (!entry || entry.isCompleted || !entry.resumeState) {
+    alert('This session cannot be continued.');
+    return;
+  }
+  
+  const rs = entry.resumeState;
+  
+  if (rs.tab === 'knowledge') {
+    // Switch to knowledge tab
+    switchTab('knowledge');
+    
+    // Restore quiz state
+    knowledgeScore = rs.score || 0;
+    currentKnowledgeQuestion = rs.currentQ || 0;
+    totalKnowledgeQuestions = rs.totalQ || 0;
+    knowledgeQuizHistory = rs.history || [];
+    
+    // Re-activate session timer
+    currentSessionId = sessionId;
+    activeQuizTimer.sessionId = sessionId;
+    activeQuizTimer.accumulated = entry.timeSpent || 0;
+    activeQuizTimer.startedAt = Date.now();
+    activeQuizTimer.isPaused = false;
+    
+    // Show quiz screen
+    document.getElementById('knowledge-selection-screen').classList.add('hidden');
+    document.getElementById('knowledge-results-screen').classList.add('hidden');
+    document.getElementById('knowledge-quiz-screen').classList.remove('hidden');
+    
+    if (isKnowledgeProgressive) {
+      document.getElementById('knowledge-quiz-screen').classList.remove('rso-mode');
+      updateKnowledgeScore();
+      nextKnowledgeQuestion();
+    } else {
+      // For standard/RSO, continue from where left off
+      document.getElementById('knowledge-quiz-screen').classList.remove('rso-mode');
+      updateKnowledgeScore();
+      nextKnowledgeQuestion();
+    }
+  } 
+  else if (rs.tab === 'conventional') {
+    switchTab('conventional');
+    
+    score = rs.score || 0;
+    currentQuestionNum = rs.currentQ || 0;
+    numQuestionsTotal = rs.totalQ || 0;
+    quizHistory = rs.history || [];
+    
+    currentSessionId = sessionId;
+    activeQuizTimer.sessionId = sessionId;
+    activeQuizTimer.accumulated = entry.timeSpent || 0;
+    activeQuizTimer.startedAt = Date.now();
+    activeQuizTimer.isPaused = false;
+    
+    document.getElementById('selection-screen').style.display = 'none';
+    document.getElementById('results-screen').style.display = 'none';
+    document.getElementById('quiz-screen').style.display = 'block';
+    
+    updateScore();
+    generateQuestion();
+  }
+  else if (rs.tab === 'steps') {
+    switchTab('steps');
+    
+    score = rs.score || 0;
+    currentQuestionNum = rs.currentQ || 0;
+    numQuestionsTotal = rs.totalQ || 0;
+    quizHistory = rs.history || [];
+    
+    currentSessionId = sessionId;
+    activeQuizTimer.sessionId = sessionId;
+    activeQuizTimer.accumulated = entry.timeSpent || 0;
+    activeQuizTimer.startedAt = Date.now();
+    activeQuizTimer.isPaused = false;
+    
+    document.getElementById('steps-selection-screen').classList.add('hidden');
+    document.getElementById('steps-results-screen').classList.add('hidden');
+    document.getElementById('steps-quiz-screen').classList.remove('hidden');
+    
+    updateStepsScore();
+    generateStepsQuestion();
+  }
+}
+
 // ==================== IMPORT HELP MODAL LOGIC ====================
 function openImportHelp() {
   document.getElementById('import-help-overlay').classList.add('active');
@@ -7601,6 +9498,304 @@ function closeImportHelpOnOverlay(event) {
     closeImportHelp();
   }
 }
+</script>
+
+<!-- ==================== Settings Modal ==================== -->
+<div id="settings-modal" class="settings-modal">
+  <div class="settings-modal-content">
+    <button class="settings-close-modal" id="settings-close-btn">×</button>
+    <h2>Settings</h2>
+
+    <div class="setting-item">
+      <label>Accent Color <span style="font-size:1.4em;">🎨</span></label>
+      <div style="display:flex; gap:12px; align-items:center; justify-content:center;">
+        <input type="color" id="accent-color-picker" value="#00ffff" style="width:68px;height:68px;border:none;border-radius:12px;cursor:pointer;">
+        <input type="text" id="accent-hex-input" value="#00FFFF" maxlength="7" style="background:#111;color:#ccc;border:2px solid var(--accent-0);padding:10px 14px;border-radius:8px;font-family:monospace;font-size:1.1em;width:130px;text-align:center;">
+      </div>
+      <p style="margin-top:12px;font-size:0.9em;color:#888;">Live preview • Everything updates instantly</p>
+    </div>
+
+    <div class="setting-item">
+      <label>Answer Options <span style="font-size:1.2em;">🔢</span></label>
+      <div class="opt-limit-group">
+        <button class="opt-limit-btn active" data-limit="4" onclick="setOptionsLimit(4)">4</button>
+        <button class="opt-limit-btn" data-limit="5" onclick="setOptionsLimit(5)">5</button>
+        <button class="opt-limit-btn" data-limit="6" onclick="setOptionsLimit(6)">6</button>
+      </div>
+      <p style="margin-top:12px;font-size:0.9em;color:#888;">Number of answer choices per question</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Cosmic Bubble Background ==================== -->
+<script>
+// Make body transparent so the canvas background shows through
+document.body.style.background = "transparent";
+
+let canvas = document.createElement("canvas");
+canvas.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;";
+document.body.appendChild(canvas);
+let ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+let blobs = Array.from({ length: 40 }, () => ({
+  x: Math.random() * window.innerWidth,
+  y: Math.random() * window.innerHeight,
+  radius: Math.random() * 60 + 40,
+  dx: (Math.random() - 0.5) * 0.4,
+  dy: (Math.random() - 0.5) * 0.4
+}));
+let globalBlobs = blobs;
+
+function drawCosmicField() {
+  ctx.fillStyle = "#0b0e11";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.globalCompositeOperation = "lighter";
+
+  // Read current accent colors from CSS (live-updates with color picker)
+  const rootStyle = getComputedStyle(document.documentElement);
+  const accent0 = rootStyle.getPropertyValue('--accent-0-rgb').trim();
+  const accent2 = rootStyle.getPropertyValue('--accent-2-rgb').trim();
+  const accent4 = rootStyle.getPropertyValue('--accent-4-rgb').trim();
+
+  blobs.forEach(blob => {
+    const gradient = ctx.createRadialGradient(blob.x, blob.y, 0, blob.x, blob.y, blob.radius);
+
+    gradient.addColorStop(0, `rgba(${accent0}, 0.32)`);
+    gradient.addColorStop(0.6, `rgba(${accent2}, 0.08)`);
+    gradient.addColorStop(1, `rgba(${accent4}, 0)`);
+
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(blob.x, blob.y, blob.radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    blob.x += blob.dx;
+    blob.y += blob.dy;
+    if (blob.x < 0 || blob.x > canvas.width) blob.dx *= -1;
+    if (blob.y < 0 || blob.y > canvas.height) blob.dy *= -1;
+  });
+
+  ctx.globalCompositeOperation = "source-over";
+  requestAnimationFrame(drawCosmicField);
+}
+drawCosmicField();
+</script>
+
+<!-- ==================== Color Picker Engine + Settings Modal Logic ==================== -->
+<script>
+/* ====================== HSL Conversion Helpers ====================== */
+const lightnessLevels = [90, 82, 74, 65, 55, 42, 80, 62, 87, 48];
+
+function hexToHsl(hex) {
+  let r = parseInt(hex.slice(1,3),16)/255;
+  let g = parseInt(hex.slice(3,5),16)/255;
+  let b = parseInt(hex.slice(5,7),16)/255;
+  const max = Math.max(r,g,b), min = Math.min(r,g,b);
+  let h, s, l = (max + min)/2;
+  if (max === min) h = s = 0;
+  else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch(max){
+      case r: h = (g-b)/d + (g<b?6:0); break;
+      case g: h = (b-r)/d + 2; break;
+      case b: h = (r-g)/d + 4; break;
+    }
+    h /= 6;
+  }
+  return [Math.round(h*360), Math.round(s*100), Math.round(l*100)];
+}
+
+function hslToHex(h, s, l) {
+  h /= 360; s /= 100; l /= 100;
+  let r, g, b;
+  if (s === 0) r = g = b = l;
+  else {
+    const hue2rgb = (p,q,t) => {
+      if(t<0) t+=1; if(t>1) t-=1;
+      if(t<1/6) return p + (q-p)*6*t;
+      if(t<1/2) return q;
+      if(t<2/3) return p + (q-p)*(2/3-t)*6;
+      return p;
+    };
+    const q = l<0.5 ? l*(1+s) : l + s - l*s;
+    const p = 2*l - q;
+    r = hue2rgb(p,q,h+1/3);
+    g = hue2rgb(p,q,h);
+    b = hue2rgb(p,q,h-1/3);
+  }
+  const toHex = x => Math.round(x*255).toString(16).padStart(2,'0');
+  return '#' + toHex(r) + toHex(g) + toHex(b);
+}
+
+/* ====================== Core: changeAccentColor ====================== */
+function changeAccentColor(newHex) {
+  if (!newHex || newHex[0] !== '#' || newHex.length !== 7) return;
+
+  const [hue] = hexToHsl(newHex);
+  const sat = 100;
+
+  for (let i = 0; i < 10; i++) {
+    const newColor = hslToHex(hue, sat, lightnessLevels[i]);
+    document.documentElement.style.setProperty(`--accent-${i}`, newColor);
+
+    const nr = parseInt(newColor.slice(1,3),16);
+    const ng = parseInt(newColor.slice(3,5),16);
+    const nb = parseInt(newColor.slice(5,7),16);
+    document.documentElement.style.setProperty(`--accent-${i}-rgb`, `${nr}, ${ng}, ${nb}`);
+  }
+
+  // Refresh bubbles to match new hue
+  if (typeof globalBlobs !== 'undefined' && globalBlobs) {
+    globalBlobs.forEach(blob => {
+      blob.colorStops = [
+        `rgba(var(--accent-0-rgb), 0.32)`,
+        `rgba(var(--accent-2-rgb), 0.08)`,
+        `rgba(var(--accent-4-rgb), 0)`
+      ];
+    });
+  }
+}
+
+/* ====================== Settings Modal Open/Close ====================== */
+function openSettingsModal() {
+  const modal = document.getElementById('settings-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+  } else {
+    console.error('settings-modal element not found!');
+  }
+}
+
+function closeSettingsModal() {
+  // 1. Save the current color preference before closing
+  const hexInput = document.getElementById('accent-hex-input');
+  if (hexInput && hexInput.value) {
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, hexInput.value);
+    } catch (e) {
+      console.warn("Could not save theme preference:", e);
+    }
+  }
+  // 2. Save settings (options limit, etc.)
+  saveAppSettings();
+
+  // 3. Hide the modal
+  const modal = document.getElementById('settings-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function setOptionsLimit(n) {
+  window.maxOptionsPerQuestion = n;
+  document.querySelectorAll('.opt-limit-btn').forEach(b => {
+    b.classList.toggle('active', parseInt(b.dataset.limit) === n);
+  });
+  saveAppSettings();
+}
+
+function saveAppSettings() {
+  try {
+    localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify({
+      maxOptions: window.maxOptionsPerQuestion
+    }));
+  } catch(e) { console.warn("Settings save failed:", e); }
+}
+
+function loadAppSettings() {
+  try {
+    const s = localStorage.getItem(SETTINGS_STORAGE_KEY);
+    if (!s) return;
+    const obj = JSON.parse(s);
+    if (obj.maxOptions && [4,5,6].includes(obj.maxOptions)) {
+      window.maxOptionsPerQuestion = obj.maxOptions;
+      document.querySelectorAll('.opt-limit-btn').forEach(b => {
+        b.classList.toggle('active', parseInt(b.dataset.limit) === obj.maxOptions);
+      });
+    }
+  } catch(e) { console.warn("Settings load failed:", e); }
+}
+
+/* ====================== Wire Everything Up (runs immediately) ====================== */
+(function initThemeSystem() {
+  const picker = document.getElementById('accent-color-picker');
+  const hexInput = document.getElementById('accent-hex-input');
+  const settingsBtn = document.getElementById('settings-btn');
+  const settingsCloseBtn = document.getElementById('settings-close-btn');
+  const settingsModal = document.getElementById('settings-modal');
+
+  // Settings button opens modal
+  if (settingsBtn) {
+    settingsBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      openSettingsModal();
+    });
+  }
+
+  // Close button
+  if (settingsCloseBtn) {
+    settingsCloseBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeSettingsModal();
+    });
+  }
+
+  // Click outside modal content to close
+  if (settingsModal) {
+    settingsModal.addEventListener('click', function(e) {
+      if (e.target === settingsModal) closeSettingsModal();
+    });
+  }
+
+  // Color picker → hex input sync + live update
+  if (picker) {
+    picker.addEventListener('input', function() {
+      if (hexInput) hexInput.value = picker.value.toUpperCase();
+      changeAccentColor(picker.value);
+    });
+  }
+
+  // Hex input → color picker sync + live update
+  if (hexInput) {
+    hexInput.addEventListener('input', function() {
+      let v = hexInput.value.trim().toUpperCase();
+      if (v.length === 7 && v[0] === '#') {
+        if (picker) picker.value = v;
+        changeAccentColor(v);
+      }
+    });
+  }
+
+    // --- LOAD SAVED THEME ON STARTUP ---
+  let initialColor = '#00ffff'; // Default fallback
+  try {
+    const savedColor = localStorage.getItem(THEME_STORAGE_KEY);
+    // Validate it's a hex code
+    if (savedColor && savedColor[0] === '#' && savedColor.length === 7) {
+      initialColor = savedColor;
+    }
+  } catch (e) {
+    console.warn("Could not load saved theme:", e);
+  }
+
+  // Apply the loaded color to UI inputs
+  if (picker) picker.value = initialColor;
+  if (hexInput) hexInput.value = initialColor.toUpperCase();
+  
+  // Apply to CSS
+  changeAccentColor(initialColor);
+
+  // Load app settings (options limit, etc.)
+  loadAppSettings();
+  // Load history log
+  loadHistoryLog();
+})();
 </script>
 </body>
 </html>
