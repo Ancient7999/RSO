@@ -270,14 +270,23 @@
   }
 
   .question-box {
-    background: var(--col-bg-card);
-    max-width: 720px;
-    margin: var(--margin-heading) auto;
-    padding: var(--margin-heading);
-    border-radius: var(--radius-xl);
-    border: 2px solid var(--col-primary);
-  }
+  background: rgba(26, 26, 26, 0.85); 
+  max-width: 720px;
+  margin: var(--margin-heading) auto;
+  padding: var(--margin-heading);
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--col-primary);
+  position: relative;
+}
+/* Hide redundant header when quiz is active */
+#quiz-screen .question-box {
+  margin-top: 0; /* Optional: remove top margin since header is gone */
+}
 
+#quiz-screen #mode-title,
+#quiz-screen .score-display {
+  display: none;
+}
   .question {
     font-size: var(--font-size-xl);
     line-height: 1.6;
@@ -1766,29 +1775,86 @@
     display: block;
     margin-bottom: 10px;
   }
-  /* Math Equation Styling */
-.math-equation {
-  display: block;
-  text-align: center;
-  font-family: 'Times New Roman', serif;
-  font-style: italic;
-  background: rgba(var(--accent-0-rgb), 0.05);
-  padding: 8px 12px;
-  margin: 8px 0;
-  border-radius: var(--radius-sm);
-  border-left: 3px solid var(--accent-0);
-  font-size: 1.1em;
-  overflow-x: auto;
-  white-space: nowrap;
-}
-
 .math-inline {
-  font-family: 'Times New Roman', serif;
-  font-style: italic;
-  background: rgba(var(--accent-0-rgb), 0.08);
-  padding: 2px 6px;
+  font-family: 'Courier New', monospace;
+  background: rgba(0,0,0,0.2);
+  padding: 1px 4px;
   border-radius: 4px;
   font-size: 0.95em;
+  white-space: nowrap;
+}
+.math-block {
+  display: block;
+  font-family: 'Courier New', monospace;
+  background: rgba(0,0,0,0.2);
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin: 5px 0;
+  text-align: center;
+}
+/* ==================== SOLUTION BUTTON & MODAL ==================== */
+.solution-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--col-border);
+  background: var(--col-bg-btn);
+  color: var(--col-text-muted);
+  font-weight: bold;
+  font-size: 1.1em;
+  cursor: pointer;
+  display: none; /* Hidden by default */
+  z-index: 10;
+  transition: all 0.3s;
+}
+.solution-btn.visible {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.solution-btn:hover {
+  border-color: var(--col-primary);
+  color: var(--col-primary);
+  box-shadow: 0 0 10px rgba(var(--accent-0-rgb), 0.3);
+}
+
+.solution-content {
+  text-align: left;
+  line-height: 1.7;
+  font-size: 0.95em;
+}
+.solution-step {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--col-border-light);
+}
+.solution-step:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+.solution-step-title {
+  color: var(--col-primary);
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+}
+/* ==================== PROGRESS BAR INNER TEXT ==================== */
+.progress-inner-text {
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: var(--col-bg-main); /* Adaptable variable color for contrast */
+  font-weight: bold;
+  font-size: 0.85em;
+  line-height: 18px; /* Match height of progress bar */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 10px;
+  box-sizing: border-box;
 }
 </style>
 </head>
@@ -1804,7 +1870,7 @@
   <button class="tab-btn active" data-tab="conventional" onclick="switchTab('conventional')">Conventional</button>
   <button class="tab-btn" data-tab="steps" onclick="switchTab('steps')">Single/Multi Steps</button>
   <button class="tab-btn" data-tab="knowledge" onclick="switchTab('knowledge')">Question Bank</button>
-  <button class="tab-btn" data-tab="history" onclick="switchTab('history')">History</button>
+  <button class="tab-btn" data-tab="history" onclick="switchTab('history')">Quiz History</button>
 </div>
 
 
@@ -1898,10 +1964,11 @@
   </div>
 
   <!-- QUIZ SCREEN -->
-  <div class="container quiz-container" id="quiz-screen">
-    <h1 id="mode-title">Cesium-137 Quiz</h1>
+      <div class="container quiz-container" id="quiz-screen">
+    <h1 id="mode-title" class="text-primary">Quiz</h1>
     <div class="score-display" id="score">Score: 0 / 0</div>
     <div class="question-box">
+      <button id="solution-btn" class="solution-btn" onclick="openSolutionModal()">?</button>
       <div class="question" id="question"></div>
       <div class="options" id="options"></div>
 <div class="numpad-hint">💡 Use Numpad select your answer</div>
@@ -1954,20 +2021,23 @@
     </div>
   </div>
 
-  <!-- QUIZ SCREEN (New Layout) -->
+  <!-- QUIZ SCREEN -->
   <div class="container hidden" id="steps-quiz-screen">
     <h1 id="steps-mode-title">Single/Multi Steps Mode</h1>
-    <div class="score-display" id="steps-score">Score: 0 / 0</div>
+    <div class="rso-progress-container" style="margin: 15px 0;">
+  <div class="rso-progress-bar" id="steps-progress-bar">
+    <span class="progress-inner-text" id="steps-progress-text">Initializing...</span>
+  </div>
+</div>
     
     <div class="question-box">
       <div class="question" id="steps-question"></div>
       
-      <!-- NEW: Step Selection Area -->
-      <div class="step-prompt" id="steps-step-prompt">What is the first step?</div>
+      <!-- Step Selection Area -->
       <div class="options" id="steps-step-options"></div>
 <div class="numpad-hint">💡 Use Numpad to select your answer</div>
       
-      <!-- NEW: Feedback Area (Hidden until answered) -->
+      <!-- Feedback Area (Hidden until answered) -->
       <div class="feedback-box hidden" id="steps-feedback-box">
         <div class="feedback-msg" id="steps-feedback-msg"></div>
         <div class="calculation-display" id="steps-calc-display"></div>
@@ -2047,7 +2117,11 @@
     <!-- === SINGLE QUESTION VIEW (Progressive + fallback) === -->
     <div class="knowledge-single-view">
       <h1 id="knowledge-mode-title">Question Bank</h1>
-      <div class="score-display" id="knowledge-score">Score: 0 / 0</div>
+      <div class="rso-progress-container" style="margin: 15px 0;">
+  <div class="rso-progress-bar" id="knowledge-progress-bar">
+    <span class="progress-inner-text" id="knowledge-progress-text">0%</span>
+  </div>
+</div>
       
       <div class="question-box">
         <div class="question" id="knowledge-question"></div>
@@ -2192,6 +2266,17 @@
     }
   }
 }</div>
+    </div>
+  </div>
+</div>
+<div id="solution-modal-overlay" class="help-modal-overlay" onclick="closeSolutionModalOnOverlay(event)">
+  <div class="help-modal-container" onclick="event.stopPropagation()" style="max-width: 650px;">
+    <div class="help-modal-header">
+      <div class="help-modal-title">📐 Step-by-Step Solution</div>
+      <button class="help-close-btn" onclick="closeSolutionModal()">✕</button>
+    </div>
+    <div id="solution-modal-body" class="solution-content">
+      <!-- Content injected by JS -->
     </div>
   </div>
 </div>
@@ -2547,7 +2632,11 @@ function renderRestoredQuestion(qData, tab) {
     // For now, let's assume we saved the raw options and re-format them.
     // NOTE: To perfectly restore options order, we should save `window.currentShuffledOptions` in state.
     // Quick fix: Re-generate formatting.
-    const formatted = qData.opts.map(v => formatAnswer(v, qData.unit, qData.type));
+    // Pick one consistent display unit for all answer options (difficulty-aware)
+  const { displayUnit, convert } = pickAnswerConversion(qData.unit);
+  if (displayUnit !== qData.unit && displayUnit.endsWith("m") && !displayUnit.includes("/"))
+    currentDistanceUnits.add(displayUnit);
+  const formatted = qData.opts.map(v => formatAnswer(convert(v), displayUnit, qData.type));
     const shuffled = [...formatted].sort(() => Math.random() - 0.5); // This changes order!
     
     // Better: Save shuffled options in state.next time. For now, we accept new shuffle or save in state.
@@ -3527,30 +3616,57 @@ function formatActivity(mbq, forceSystem = 'auto') {
   }
  }
 function formatDistance(m) {
-    // Hidden Mode: Use Q, R, Y, Z, a, z, y, r, q meters
+    // --- Hidden Mode: Use Q, R, Y, Z, a, z, y, r, q meters ---
   if (selectedDifficulty === "hidden") {
     const hiddenPrefixes = [
-      { sym: 'Q', val: 1e30 }, { sym: 'R', val: 1e27 }, { sym: 'Y', val: 1e24 }, { sym: 'Z', val: 1e21 },
-      { sym: 'a', val: 1e-18 }, { sym: 'z', val: 1e-21 }, { sym: 'y', val: 1e-24 }, { sym: 'r', val: 1e-27 }, { sym: 'q', val: 1e-30 }
+      { sym: 'Q', val: 1e30, name: 'Quetta' }, { sym: 'R', val: 1e27, name: 'Ronna' }, { sym: 'Y', val: 1e24, name: 'Yotta' }, { sym: 'Z', val: 1e21, name: 'Zetta' },
+      { sym: 'a', val: 1e-18, name: 'Atto' }, { sym: 'z', val: 1e-21, name: 'Zepto' }, { sym: 'y', val: 1e-24, name: 'Yocto' }, { sym: 'r', val: 1e-27, name: 'Ronto' }, { sym: 'q', val: 1e-30, name: 'Quecto' }
     ];
     const p = hiddenPrefixes[Math.floor(Math.random() * hiddenPrefixes.length)];
     const val = m / p.val;
-    const unit = p.sym + "m";
-    currentDistanceUnits.add(unit);
+    const unit = `${p.name} meter(${p.sym}m)`;
+    currentDistanceUnits.add(p.sym + "m"); // Track simple symbol internally for tooltips
 
-    // FIX: Prevent "0.00" display for extremely small values
+    // Prevent "0.00" display for extremely small values
     if (Math.abs(val) < 0.005) {
        return formatScientificNice(val, 2) + " " + unit;
     }
     return val.toFixed(2) + " " + unit;
   }
 
-  // Hard & Extreme: Use mm, cm, in, ft. 
-  if (selectedDifficulty === "hard" || selectedDifficulty === "extreme") {
-    let choices = [0, 1, 2, 3];
-    if (selectedDifficulty === "hard") {
-      choices.push(4); // 4 = meters (Hard only fallback)
+  // --- Extreme Mode ---
+  // Use expanded SI prefixes (from atto to Exa)
+  if (selectedDifficulty === "extreme") {
+    const extremePrefixes = [
+      { sym: 'a', val: 1e-18, name: 'Atto' }, { sym: 'f', val: 1e-15, name: 'Femto' }, { sym: 'p', val: 1e-12, name: 'Pico' }, 
+      { sym: 'n', val: 1e-9, name: 'Nano' }, { sym: 'µ', val: 1e-6, name: 'Micro' }, { sym: 'm', val: 1e-3, name: 'Milli' }, 
+      { sym: 'c', val: 1e-2, name: 'Centi' }, { sym: '', val: 1, name: '' }, 
+      { sym: 'k', val: 1e3, name: 'Kilo' }, { sym: 'M', val: 1e6, name: 'Mega' }, { sym: 'G', val: 1e9, name: 'Giga' }, 
+      { sym: 'T', val: 1e12, name: 'Tera' }, { sym: 'P', val: 1e15, name: 'Peta' }, { sym: 'E', val: 1e18, name: 'Exa' }
+    ];
+    
+    const p = extremePrefixes[Math.floor(Math.random() * extremePrefixes.length)];
+    const val = m / p.val;
+    
+    let unit;
+    if (p.sym === '') {
+        unit = "m";
+    } else {
+        unit = `${p.name} meter(${p.sym}m)`;
     }
+    
+    currentDistanceUnits.add(p.sym + "m"); // Track simple symbol internally for tooltips
+
+    if (Math.abs(val) < 0.005) {
+       return formatScientificNice(val, 2) + " " + unit;
+    }
+    return val.toFixed(2) + " " + unit;
+  }
+
+  // --- Hard Mode: Use mm, cm, in, ft, m ---
+  if (selectedDifficulty === "hard") {
+    let choices = [0, 1, 2, 3];
+    choices.push(4); // 4 = meters (Hard gets meters as a fallback)
     
     const choice = choices[Math.floor(Math.random() * choices.length)];
     
@@ -3574,11 +3690,12 @@ function formatDistance(m) {
       currentDistanceUnits.add("ft");
       return val.toFixed(2) + " ft";
     }
+    // choice 4 (meters)
     currentDistanceUnits.add("m");
     return m.toFixed(3) + " m";
   }
 
-  // Easy/Normal logic
+  // --- Easy/Normal Logic (Existing) ---
   if ((selectedDifficulty === "easy" || selectedDifficulty === "normal") && Math.random() < 0.5) {
     const feet = m / FT_TO_M;
     if (feet >= 1.5) {
@@ -3596,53 +3713,9 @@ function formatDistance(m) {
     return Math.round(m * 100) + " cm";
   }
   
-  // Standard formatting, Global Cleaner will strip zeros
+  // Standard formatting
   currentDistanceUnits.add("m");
   return m.toFixed(2) + " m";
-}
-function formatRate(value, unitSystem = 'si') {
-  // Hidden Mode: Restricted prefixes only
-  if (selectedDifficulty === "hidden") {
-    const hiddenPrefixes = [
-      { sym: 'Q', val: 1e30 }, { sym: 'R', val: 1e27 }, { sym: 'Y', val: 1e24 }, { sym: 'Z', val: 1e21 },
-      { sym: 'a', val: 1e-18 }, { sym: 'z', val: 1e-21 }, { sym: 'y', val: 1e-24 }, { sym: 'r', val: 1e-27 }, { sym: 'q', val: 1e-30 }
-    ];
-    const p = hiddenPrefixes[Math.floor(Math.random() * hiddenPrefixes.length)];
-    const val = (value * 1e-6) / p.val; // µSv -> Sv -> Target
-    return formatAnswer(val, p.sym + "Sv/h");
-  }
-
-  // Extreme Mode: Random prefixes
-  if (selectedDifficulty === "extreme") {
-    const roll = Math.random();
-    if (unitSystem === 'si') {
-      if (roll < 0.33) return formatAnswer(value, "µSv/h");
-      if (roll < 0.66) return formatAnswer(value / 1000, "mSv/h");
-      return formatAnswer(value / 1e6, "Sv/h");
-    } else {
-      const valR = value / 10000;
-      if (roll < 0.5) return formatAnswer(valR * 1000, "mR/h");
-      return formatAnswer(valR, "R/h");
-    }
-  }
-
-  // Normal / Hard / Easy Logic
-  const useExpanded = (selectedDifficulty === 'normal' || selectedDifficulty === 'hard');
-
-  if (unitSystem === 'si') {
-    if (value >= 1000) return formatAnswer(value / 1000, "mSv/h");
-    if (useExpanded && value < 1) return formatAnswer(value * 1000, "nSv/h");
-    return formatAnswer(value, "µSv/h");
-  } else {
-    // Traditional
-    let valR = value / 10000; // Convert µSv to R
-    
-    if (valR >= 1) return formatAnswer(valR, "R/h");
-    if (valR >= 0.001) return formatAnswer(valR * 1000, "mR/h");
-    if (useExpanded && valR < 0.001) return formatAnswer(valR * 1e6, "µR/h");
-    
-    return formatAnswer(valR, "R/h");
-  }
 }
 function formatHalfLife(totalSeconds) {
   const SEC_PER_YEAR = 365.25 * 24 * 3600; // 31557600
@@ -3685,6 +3758,63 @@ function formatHalfLife(totalSeconds) {
 
   // 5. SECONDS
   return totalSeconds + " seconds";
+}
+// ==================== DOSE RATE FORMATTING (Difficulty-Aware) ====================
+function formatDoseRate(uSvPerH) {
+  // Easy/Normal: plain µSv/h
+  if (selectedDifficulty === "easy" || selectedDifficulty === "normal") {
+    return `${uSvPerH} µSv/h`;
+  }
+
+  let factor = 1;
+  let unit = "µSv/h";
+
+  if (selectedDifficulty === "hidden") {
+    const HIDDEN_PFX = [
+      { sym: 'Q', val: 1e30 }, { sym: 'R', val: 1e27 }, { sym: 'Y', val: 1e24 }, { sym: 'Z', val: 1e21 },
+      { sym: 'a', val: 1e-18 }, { sym: 'z', val: 1e-21 }, { sym: 'y', val: 1e-24 }, { sym: 'r', val: 1e-27 }, { sym: 'q', val: 1e-30 }
+    ];
+    const p = HIDDEN_PFX[Math.floor(Math.random() * HIDDEN_PFX.length)];
+    factor = 1e-6 / p.val;
+    unit = p.sym + "Sv/h";
+  }
+  else if (selectedDifficulty === "extreme") {
+    const choices = [
+      { unit: "nSv/h", factor: 1000 },
+      { unit: "mSv/h", factor: 0.001 },
+      { unit: "Sv/h", factor: 1e-6 },
+      { unit: "mrem/h", factor: 0.1 },
+      { unit: "rem/h", factor: 0.0001 },
+    ];
+    const pick = choices[Math.floor(Math.random() * choices.length)];
+    factor = pick.factor;
+    unit = pick.unit;
+  }
+  else if (selectedDifficulty === "hard") {
+    const choices = [
+      { unit: "µSv/h", factor: 1 },
+      { unit: "mSv/h", factor: 0.001 },
+      { unit: "mrem/h", factor: 0.1 },
+      { unit: "nSv/h", factor: 1000 },
+    ];
+    const pick = choices[Math.floor(Math.random() * choices.length)];
+    factor = pick.factor;
+    unit = pick.unit;
+  }
+
+  const val = uSvPerH * factor;
+
+  if (Math.abs(val) < 0.005 && val !== 0) {
+    return formatScientificNice(val, 2) + " " + unit;
+  }
+  if (selectedDifficulty === "extreme" || selectedDifficulty === "hidden") {
+    let s = val.toFixed(4);
+    s = s.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.0+$/, '');
+    return s + " " + unit;
+  }
+  let s = val.toFixed(2);
+  s = s.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.0+$/, '');
+  return s + " " + unit;
 }
 // ====================== GLOBAL HOVER CONTROL ======================
 // Completely disables every tooltip/conversion in Hard & Extreme modes
@@ -3921,7 +4051,55 @@ function generateRateQuestion() {
   // --- PREPARE METADATA FOR STEPS MODE ---
   let idealActUnit = useTradResult ? "Ci" : "MBq";
   let act_raw_val = useTradResult ? (a / CI_TO_MBQ) : a;
+  // --- GENERATE SOLUTION STEPS ---
+  let solutionText = "";
+  
+  // Step 1: Parameters
+  solutionText += `**1. Identify the Given Parameters**\n`;
+  solutionText += `- Activity ($A$): ${actDisplay}\n`;
+  solutionText += `- Gamma Constant ($\\Gamma$): ${gammaDisplay}\n`;
+  solutionText += `- Distance ($d$): ${formatDistance(d)}\n`;
+  if (transmission < 1) {
+     solutionText += `- Shield Thickness: Various\n`;
+     solutionText += `- Transmission Factor ($T$): ${transmission.toFixed(4)}\n`;
+  }
+  if (buildup > 1) {
+     solutionText += `- Buildup Factor ($B$): ${buildup.toFixed(2)}\n`;
+  }
+  
+  // Step 2: Unshielded Rate
+  solutionText += `\n**2. Calculate the Unshielded Dose Rate**\n`;
+  if (useTradResult) {
+      solutionText += `Using Traditional formula:\n`;
+      solutionText += `$$ \\dot{X}_0 = \\frac{\\Gamma \\cdot A}{d^2} $$\n`;
+      solutionText += `$$ \\dot{X}_0 = \\frac{${isotope.gammaR} \\cdot ${(a/CI_TO_MBQ).toFixed(2)}}{${safeD}^2} $$\n`;
+      let unshieldedR = isotope.gammaR * (a/CI_TO_MBQ) / (safeD*safeD);
+      solutionText += `$$ \\dot{X}_0 \\approx ${unshieldedR.toFixed(5)} \\text{ R/h} $$\n`;
+  } else {
+      solutionText += `Using SI formula:\n`;
+      solutionText += `$$ \\dot{D}_0 = \\frac{\\Gamma \\cdot A}{d^2} $$\n`;
+      solutionText += `$$ \\dot{D}_0 = \\frac{${isotope.gamma} \\cdot ${a.toFixed(0)}}{${safeD}^2} $$\n`;
+      let unshieldedSI = isotope.gamma * a / (safeD*safeD);
+      solutionText += `$$ \\dot{D}_0 \\approx ${unshieldedSI.toFixed(4)} \\; \\mu\\text{Sv/h} $$\n`;
+  }
 
+  // Step 3: Shielding & Buildup
+  solutionText += `\n**3. Apply Shielding & Buildup**\n`;
+  let formulaParts = [];
+  if (transmission < 1) formulaParts.push("T");
+  if (buildup > 1) formulaParts.push("B");
+  
+  if (formulaParts.length > 0) {
+      solutionText += `$$ \\text{Rate}_{final} = \\text{Rate}_0 \\cdot ${formulaParts.join(' \\cdot ')} $$\n`;
+      solutionText += `Calculation: ${ans.toFixed(4)} (Intermediate)`;
+  } else {
+      solutionText += `No shielding applied.`;
+  }
+
+  // Step 4: Unit Conversion
+  solutionText += `\n**4. Final Result**\n`;
+  solutionText += `Final Dose Rate = **${formatAnswer(ans, unit, "rate")}**\n`;
+  if (expl) solutionText += `\n*${expl}*`;
   return {
     type: "rate",
     isotope: returnIsotope,
@@ -3931,6 +4109,7 @@ function generateRateQuestion() {
     unit: unit,
     expl: expl,
     hints: (returnIsotope === null) ? gammaDisplay : null,
+    solution: solutionText,
     // --- METADATA FOR STEPS ENGINE ---
     meta: {
       actStart: a,
@@ -3979,79 +4158,116 @@ function generateInverseQuestion() {
     gammaDisplay = `Γ = ${isotope.gamma} µSv·m²/(h·MBq)`;
     explLine = "d = √(Γ × A / Rate) (SI)";
     
+    return {
+      type: "inverse",
+      isotope: isotope,
+      q: `${getArticle(isotope.symbol)} ${isotope.symbol} source has activity ${actDisplay}.<br>At what distance would the dose rate be ${targetDisplay}?`,
+      ans: d,
+      opts: generateInverseDistractors(d), // Helper for cleaner code
+      unit: "m",
+      expl: explLine,
+      hints: null,
+      meta: {
+        startVal: a,
+        startUnit: "MBq",
+        a: a, 
+        aCi: null,
+        actDisplay: actDisplay,
+        gammaVal: isotope.gamma,
+        gammaUnit: "µSv·m²/(h·MBq)",
+        targetRate: targetRate, 
+        targetUnit: "µSv/h",
+        useTradPath: false
+      }
+    };
+    
   } else if (scenario === 1) {
     // --- SCENARIO B: TRADITIONAL ---
-    // Force Number type
     aCi = Number((Math.random() * 5 + 0.1).toFixed(2));
-    const targetR = [0.1, 0.5, 1.0, 2.0, 5.0][Math.floor(Math.random() * 5)]; 
+    targetRate = [0.1, 0.5, 1.0, 2.0, 5.0][Math.floor(Math.random() * 5)]; 
     
-    d = Math.sqrt(isotope.gammaR * aCi / targetR);
+    d = Math.sqrt(isotope.gammaR * aCi / targetRate);
     
     actDisplay = `${aCi} Ci`;
-    targetDisplay = `${targetR} R/h`;
+    targetDisplay = `${targetRate} R/h`;
     gammaDisplay = `Γ = ${isotope.gammaR} R·m²/(h·Ci)`;
     explLine = "d = √(Γ × A / Rate) (Traditional)";
+    
+    return {
+      type: "inverse",
+      isotope: null,
+      q: `${getArticle(isotope.symbol)} ${isotope.symbol} source has activity ${actDisplay}.<br>At what distance would the dose rate be ${targetDisplay}?`,
+      ans: d,
+      opts: generateInverseDistractors(d),
+      unit: "m",
+      expl: explLine,
+      hints: gammaDisplay,
+      meta: {
+        startVal: aCi, // FIX: Pass the correct value used above
+        startUnit: "Ci", // FIX: Identify unit so engine skips conversion
+        a: null,
+        aCi: aCi,
+        actDisplay: actDisplay,
+        gammaVal: isotope.gammaR,
+        gammaUnit: "R·m²/(h·Ci)",
+        targetRate: targetRate,
+        targetUnit: "R/h",
+        useTradPath: true
+      }
+    };
     
   } else {
     // --- SCENARIO C: CROSS (Source Ci, Target µSv/h) ---
     aCi = Number((Math.random() * 5 + 0.1).toFixed(2));
-    const targetUSv = [10, 50, 100, 500, 1000][Math.floor(Math.random() * 5)];
+    targetRate = [10, 50, 100, 500, 1000][Math.floor(Math.random() * 5)];
     
-    const targetR = targetUSv / R_TO_USV;
+    const targetR = targetRate / R_TO_USV;
     d = Math.sqrt(isotope.gammaR * aCi / targetR);
     
     actDisplay = `${aCi} Ci`;
-    targetDisplay = `${targetUSv} µSv/h`;
+    targetDisplay = `${targetRate} µSv/h`;
     gammaDisplay = `Γ = ${isotope.gammaR} R·m²/(h·Ci) | 1 R ≈ 10,000 µSv`;
     explLine = "Convert target rate to R/h or Activity to MBq";
+    
+    return {
+      type: "inverse",
+      isotope: null,
+      q: `${getArticle(isotope.symbol)} ${isotope.symbol} source has activity ${actDisplay}.<br>At what distance would the dose rate be ${targetDisplay}?`,
+      ans: d,
+      opts: generateInverseDistractors(d),
+      unit: "m",
+      expl: explLine,
+      hints: gammaDisplay,
+      meta: {
+        startVal: aCi, // FIX: Starts in Ci
+        startUnit: "Ci", 
+        a: null,
+        aCi: aCi,
+        actDisplay: actDisplay,
+        gammaVal: isotope.gammaR,
+        gammaUnit: "R·m²/(h·Ci)",
+        targetRate: targetRate, 
+        targetUnit: "µSv/h",
+        useTradPath: true
+      }
+    };
   }
+}
 
-  // Safety check for distance
-  d = Math.max(0.1, d);
-
-    const opts = [d];
+// Helper to generate distractors (optional, keeps code clean)
+function generateInverseDistractors(d) {
+  const opts = [d];
   const multipliers = [0.6, 1.4, 2.1, 0.45, 3.2, 0.8, 1.8];
-  
   let attempts = 0;
   while (opts.length < window.maxOptionsPerQuestion && attempts < 50) {
     const cand = d * multipliers[Math.floor(Math.random() * multipliers.length)];
-    
-    // FIX: Relative check (5% difference)
     const minDiff = Math.max(0.0000001, d * 0.05);
     const isDuplicate = opts.some(existing => Math.abs(cand - existing) < minDiff);
-
-    if (cand > 0 && !isDuplicate) {
-      opts.push(cand);
-    }
+    if (cand > 0 && !isDuplicate) opts.push(cand);
     attempts++;
   }
-  
-  // Fallback
-  while (opts.length < window.maxOptionsPerQuestion) {
-    opts.push(d * (1 + (Math.random() * 2)));
-  }
-
-    return {
-    type: "inverse",
-    isotope: scenario === 0 ? isotope : null,
-    q: `${getArticle(isotope.symbol)} ${isotope.symbol} source has activity ${actDisplay}.<br>At what distance would the dose rate be ${targetDisplay}?`,
-    ans: d,
-    opts: opts,
-    unit: "m",
-    expl: explLine,
-    hints: (scenario !== 0) ? gammaDisplay : null,
-    // --- METADATA FOR STEPS MODE ---
-    meta: {
-      a: a, // MBq
-      aCi: scenario === 1 ? aCi : null,
-      actDisplay: actDisplay,
-      gammaVal: useTradResult ? isotope.gammaR : isotope.gamma,
-      gammaUnit: useTradResult ? "R·m²/(h·Ci)" : "µSv·m²/(h·MBq)",
-      targetRate: scenario === 1 ? targetR : (scenario === 2 ? targetUSv : targetRate),
-      targetUnit: scenario === 1 ? "R/h" : "µSv/h",
-      useTradPath: useTradResult
-    }
-  };
+  while (opts.length < window.maxOptionsPerQuestion) opts.push(d * (1 + (Math.random() * 2)));
+  return opts;
 }
 function generateReverseShieldedQuestion() {
   const isoKey = selectedIsotopes[Math.floor(Math.random() * selectedIsotopes.length)];
@@ -4140,7 +4356,7 @@ function generateReverseShieldedQuestion() {
   return {
     type: "reverse-shielded",
     isotope: isotope,
-    q: `${getArticle(isotope.symbol)} ${isotope.symbol} source ${trickyText}What activity in GBq is required to produce exactly ${targetRate} µSv/h at ${getDistanceHTML(d)} given the following shielding?<br>${shieldText}`,
+    q: `${getArticle(isotope.symbol)} ${isotope.symbol} source ${trickyText}What activity is required to produce exactly ${formatDoseRate(targetRate)} at ${getDistanceHTML(d)} given the following shielding?<br>${shieldText}`,
     ans: ans,
     opts: opts,
     expl: explParts.join('<br>'),
@@ -4182,7 +4398,7 @@ function generatePureInverseQuestion() {
 
     return {
     type: "pure-inverse",
-    q: `Dose rate is ${r1} µSv/h at ${getDistanceHTML(d1)}.<br>What is it at ${getDistanceHTML(d2)}?`,
+q: `Dose rate is ${formatDoseRate(r1)} at ${getDistanceHTML(d1)}.<br>What is it at ${getDistanceHTML(d2)}?`,
     ans: r2,
     opts: opts,
     unit: "µSv/h",
@@ -4626,7 +4842,7 @@ function generateConversionQuestion() {
 
   return {
     type: "conversion",
-    q: `${val} ${fromUnitStr} = how many ${toUnitStr}?`,
+    q: ` How much is ${val} ${fromUnitStr} in ${toUnitStr}?`,
     ans: ansNum,
     opts: opts,
     unit: toUnitStr,
@@ -4738,7 +4954,46 @@ function generateBasicDecayQuestion() {
     return { type: "decay", isotope: null, q: qHTML, ans: ans, opts: [ans, ans*2.1, ans*0.48, ans*4.5], unit: unit, expl: expl, meta: meta };
   }
 }
+// ==================== RICH TEXT FORMATTING (Markdown + LaTeX) ====================
+function formatRichText(text) {
+  if (!text) return "";
 
+  // 1. Markdown Bold: **text** -> <strong>text</strong>
+  text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+  // 2. Basic LaTeX-like Symbol replacements
+  const symbols = {
+    '\\mu': 'μ', '\\alpha': 'α', '\\beta': 'β', '\\gamma': 'γ', '\\delta': 'δ',
+    '\\Delta': 'Δ', '\\Sigma': 'Σ', '\\sigma': 'σ', '\\pi': 'π', '\\theta': 'θ',
+    '\\lambda': 'λ', '\\tau': 'τ', '\\nu': 'ν', '\\rho': 'ρ', '\\phi': 'φ',
+    '\\infty': '∞', '\\propto': '∝', '\\approx': '≈', '\\neq': '≠',
+    '\\leq': '≤', '\\geq': '≥', '\\pm': '±', '\\cdot': '·', '\\times': '×',
+    '\\div': '÷', '\\rightarrow': '→', '\\leftarrow': '←', '\\sum': '∑',
+    '\\int': '∫', '\\sqrt': '√'
+  };
+
+  // Replace symbols
+  for (const [key, val] of Object.entries(symbols)) {
+    // Use split/join for global replacement
+    text = text.split(key).join(val);
+  }
+
+  // 3. Handle Fractions: \frac{A}{B} -> (A/B)
+  text = text.replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1/$2)');
+
+  // 4. Handle Superscripts/Subscripts (Simple cases: x^2, x_1)
+  // Note: This is a basic regex; complex nested groups require a real parser.
+  text = text.replace(/\^{([^}]+)}/g, '<sup>$1</sup>'); // Matches ^{...}
+  text = text.replace(/_{([^}]+)}/g, '<sub>$1</sub>');  // Matches _{...}
+  
+  // 5. Clean up Math Delimiters
+  // Replace $$ .. $$ with a styled span (block-ish)
+  text = text.replace(/\$\$(.*?)\$\$/g, '<span class="math-block">$1</span>');
+  // Replace $ .. $ with a styled span (inline)
+  text = text.replace(/\$(.*?)\$/g, '<span class="math-inline">$1</span>');
+
+  return text;
+}
 // ==================== TIME-BASED DECAY ====================
 function generateDecayTimeQuestion() {
   const isoKey = selectedIsotopes[Math.floor(Math.random() * selectedIsotopes.length)];
@@ -4993,6 +5248,7 @@ function generateDeadTimeQuestion() {
   const tau_s = tau_us * 1e-6; // Convert to seconds
 
   let qHTML, ans, unit, opts, expl;
+  let Ro_cpm = null, R_true_cps = null; // Hoisted so return metadata can reference them
 
   // --- SCENARIO 1: FORWARD (Observed -> Corrected) ---
   // R = Ro / (1 - Ro * tau)
@@ -5013,7 +5269,7 @@ function generateDeadTimeQuestion() {
       Ro_cps = Math.random() * 2000 + 200; 
     }
 
-    const Ro_cpm = Ro_cps * 60;
+    Ro_cpm = Ro_cps * 60;
     
     // Safety check: Saturation
     if (Ro_cps * tau_s >= 1) {
@@ -5048,7 +5304,6 @@ function generateDeadTimeQuestion() {
     // Easy mode defaults to Forward only, so this runs on Normal+
     
     // Generate True Count Rate (cpm)
-    let R_true_cps;
     if (selectedDifficulty === "normal") {
        R_true_cps = [300, 500, 800, 1000][Math.floor(Math.random()*4)];
     } else {
@@ -5060,7 +5315,7 @@ function generateDeadTimeQuestion() {
     // Calculate Observed
     // Ro = R / (1 + R*tau)
     const Ro_cps = R_true_cps / (1 + (R_true_cps * tau_s));
-    const Ro_cpm = Ro_cps * 60;
+    Ro_cpm = Ro_cps * 60;
 
     qHTML = `The true count rate from a source is <strong>${Math.round(R_true_cpm)} cpm</strong>.<br>If the detector dead time is <strong>${tau_us} μs</strong>, what is the measured (observed) count rate?`;
     
@@ -5337,7 +5592,7 @@ function generateCumulativeDoseQuestion() {
     ans = ansData.val;
     unit = ansData.unit;
 
-    qHTML = `A radiation area has a measured dose rate of <strong>${rate} µSv/h</strong>.<br>
+    qHTML = `A radiation area has a measured dose rate of <strong>${formatDoseRate(rate)}</strong>.<br>
              A worker is present for <strong>${timeVal} ${timeUnit}</strong>.<br>
              ${occupancyDisplay}<br>
              Calculate the accumulated dose.`;
@@ -5385,7 +5640,7 @@ function generateCumulativeDoseQuestion() {
         timeUnit = unit;
     }
 
-    qHTML = `A radiation area has a dose rate of <strong>${rate} µSv/h</strong>.<br>
+    qHTML = `A radiation area has a dose rate of <strong>${formatDoseRate(rate)}</strong>.<br>
              ${occupancyDisplay}<br>
              The dose limit is <strong>${targetDoseDisplay.val} ${targetDoseDisplay.unit}</strong>.<br>
              What is the maximum allowed exposure time?`;
@@ -6206,18 +6461,18 @@ function generateKnowledgeQuestionHTML(qData) {
   if (qData.variants && qData.variants.length > 0) {
     // Pick a random variant
     variantIndex = Math.floor(Math.random() * qData.variants.length); // SAVE INDEX
-    questionText = formatQuestionText(qData.variants[variantIndex]);
+    questionText = qData.variants[variantIndex];
   } else {
-    questionText = formatQuestionText(qData.question || "Missing Question Text");
+    questionText = qData.question || "Missing Question Text";
   }
 
   // --- 3. EXPLANATION (Variants Logic) ---
   let explanation = "";
   if (qData.explanations && qData.explanations.length > 0) {
     const idx = Math.floor(Math.random() * qData.explanations.length);
-    explanation = formatQuestionText(qData.explanations[idx]);
+    explanation = qData.explanations[idx];
   } else if (qData.explanation) {
-    explanation = formatQuestionText(qData.explanation);
+    explanation = qData.explanation;
   }
 
   // --- HELPER: RESOLVE OPTION SYNONYMS ---
@@ -6314,20 +6569,22 @@ function generateKnowledgeQuestionHTML(qData) {
 
     finalOptions = [correctAnswerSource, ...distractorSources];
   }
-
+  
   // --- 5. FINAL RESOLUTION (Synonym Randomization) ---
-  // Now we convert sources (arrays) into display strings.
-  // This happens AFTER selection, ensuring the "Correct" option text is randomized too.
-  
-  const correctDisplayText = resolveOptionDisplay(correctAnswerSource);
-  
-  const finalShuffledOptions = finalOptions.map(src => {
-    const text = resolveOptionDisplay(src);
-    return {
-      text: text,
-      isCorrect: text === correctDisplayText // Identify correct based on the resolved text
-    };
-  });
+// Create a resolved text map to ensure each source resolves only once
+const resolvedTexts = new Map();
+finalOptions.forEach(src => {
+  if (!resolvedTexts.has(src)) {
+    resolvedTexts.set(src, resolveOptionDisplay(src));
+  }
+});
+
+const correctDisplayText = resolvedTexts.get(correctAnswerSource);
+
+const finalShuffledOptions = finalOptions.map(src => ({
+  text: resolvedTexts.get(src),
+  isCorrect: src === correctAnswerSource
+}));
 
   // Shuffle Final Options
   finalShuffledOptions.sort(() => Math.random() - 0.5);
@@ -6407,7 +6664,7 @@ function checkKnowledgeAnswer(btn, index, qEngine) {
     }
 
     btn.classList.add('correct');
-    resultEl.innerHTML = qEngine.explanation ? `<small>${qEngine.explanation}</small>` : '';
+    resultEl.innerHTML = qEngine.explanation ? `<small>${formatRichText(qEngine.explanation)}</small>` : '';
     resultEl.style.color = "var(--col-success)";
   } else {
     btn.classList.add('wrong');
@@ -6438,21 +6695,27 @@ function checkKnowledgeAnswer(btn, index, qEngine) {
   });
 
   // Auto-advance
-  setTimeout(nextKnowledgeQuestion, 1800);
+  // Progressive Mode: Fast transition (400ms) for rapid feedback.
+  // Standard Mode: Slow transition (1800ms) to review explanation.
+  const advanceDelay = isKnowledgeProgressive ? 400 : 1800;
+  setTimeout(nextKnowledgeQuestion, advanceDelay);
 }
 function updateKnowledgeScore() {
-  const scoreEl = document.getElementById('knowledge-score');
-  
+  // This function primarily serves Progressive Mode now
   if (isKnowledgeProgressive) {
-    // Calculate Percentage
-    // Max points = total questions * 2
     const pct = knowledgeMaxPossiblePoints > 0 
       ? Math.round((knowledgeProgressivePoints / knowledgeMaxPossiblePoints) * 100) 
       : 0;
     
-    scoreEl.textContent = `Progress: ${pct}%`;
+    const bar = document.getElementById('knowledge-progress-bar');
+    const text = document.getElementById('knowledge-progress-text');
+    
+    if (bar) bar.style.width = pct + '%';
+    if (text) text.textContent = pct + '%';
   } else {
-    scoreEl.textContent = `Score: ${knowledgeScore} / ${currentKnowledgeQuestion}`;
+    // Fallback for Standard Mode if it uses this function
+    const scoreEl = document.getElementById('knowledge-score');
+    if(scoreEl) scoreEl.textContent = `Score: ${knowledgeScore} / ${currentKnowledgeQuestion}`;
   }
 }
 function showKnowledgeResults() {
@@ -6523,12 +6786,12 @@ function showKnowledgeResults() {
     }
     
     html += `
-      <div class="result-item" style="border-left-color:${color};">
-        <strong>Q${i+1}:</strong> ${item.q}
-        ${optionsHTML}
-        ${item.expl ? `<small style="display:block; margin-top:8px; color:var(--col-text-muted); border-top:1px solid var(--col-border-light); padding-top:8px;">${item.expl}</small>` : ''}
-      </div>
-    `;
+  <div class="result-item" style="border-left-color:${color};">
+    <strong>Q${i+1}:</strong> ${item.q}
+    ${optionsHTML}
+    ${item.expl ? `<small style="display:block; margin-top:8px; color:var(--col-text-muted); border-top:1px solid var(--col-border-light); padding-top:8px;">${formatRichText(item.expl)}</small>` : ''}
+  </div>
+`;
   });
   document.getElementById('knowledge-review-list').innerHTML = html;
 }
@@ -7132,9 +7395,107 @@ function generateDetectorCountRateQuestion() {
     }
   };
 }
+// ==================== ANSWER UNIT CONVERSION (Difficulty-Aware) ====================
+// Picks ONE consistent display unit per question so all options match.
+// Returns { displayUnit, convert } where convert(v) transforms from base to display.
+function pickAnswerConversion(baseUnit) {
+  const diff = selectedDifficulty;
+  const isAdvanced = (diff === "hard" || diff === "extreme" || diff === "hidden");
+  const isExoticTier = (diff === "extreme" || diff === "hidden");
+
+  // --- HIDDEN PREFIX TABLE (shared across distance/rate/activity) ---
+  const HIDDEN_PFX = [
+    { sym: 'Q', val: 1e30 }, { sym: 'R', val: 1e27 }, { sym: 'Y', val: 1e24 }, { sym: 'Z', val: 1e21 },
+    { sym: 'a', val: 1e-18 }, { sym: 'z', val: 1e-21 }, { sym: 'y', val: 1e-24 }, { sym: 'r', val: 1e-27 }, { sym: 'q', val: 1e-30 }
+  ];
+  const EXTREME_DIST_PFX = [
+    { sym: 'a', val: 1e-18 }, { sym: 'f', val: 1e-15 }, { sym: 'p', val: 1e-12 },
+    { sym: 'n', val: 1e-9 }, { sym: 'µ', val: 1e-6 }, { sym: 'm', val: 1e-3 },
+    { sym: 'c', val: 1e-2 }, { sym: '', val: 1 },
+    { sym: 'k', val: 1e3 }, { sym: 'M', val: 1e6 }, { sym: 'G', val: 1e9 },
+    { sym: 'T', val: 1e12 }, { sym: 'P', val: 1e15 }, { sym: 'E', val: 1e18 }
+  ];
+  const randPick = arr => arr[Math.floor(Math.random() * arr.length)];
+
+  // ======================== DISTANCE (base = "m") ========================
+  if (baseUnit === "m" && isAdvanced) {
+    if (diff === "hidden") {
+      const p = randPick(HIDDEN_PFX);
+      return { displayUnit: p.sym + "m", convert: v => v / p.val };
+    }
+    if (diff === "extreme") {
+      const p = randPick(EXTREME_DIST_PFX);
+      return { displayUnit: p.sym + "m", convert: v => v / p.val };
+    }
+    // hard
+    const hc = [
+      { u: "mm", fn: v => v * 1000 },
+      { u: "cm", fn: v => v * 100 },
+      { u: "in", fn: v => v / 0.0254 },
+      { u: "ft", fn: v => v / 0.3048 },
+      { u: "m",  fn: v => v }
+    ];
+    const pick = randPick(hc);
+    return { displayUnit: pick.u, convert: pick.fn };
+  }
+
+  // ======================== SI RATE FAMILY ========================
+  // Maps each possible generator unit to its factor relative to µSv/h
+  const SI_RATE = { "µSv/h": 1, "nSv/h": 1e-3, "mSv/h": 1e3, "Sv/h": 1e6 };
+  if (SI_RATE[baseUnit] !== undefined && isExoticTier) {
+    const toBase = SI_RATE[baseUnit]; // multiply value by this to get µSv/h
+    if (diff === "hidden") {
+      const p = randPick(HIDDEN_PFX);
+      // µSv/h -> Sv/h (÷1e6) -> target prefix (÷p.val)
+      return { displayUnit: p.sym + "Sv/h", convert: v => (v * toBase * 1e-6) / p.val };
+    }
+    // extreme: randomly pick among standard SI tiers
+    const targets = [
+      { u: "nSv/h", f: 1e3 }, { u: "µSv/h", f: 1 }, { u: "mSv/h", f: 1e-3 }, { u: "Sv/h", f: 1e-6 }
+    ];
+    const pick = randPick(targets);
+    return { displayUnit: pick.u, convert: v => v * toBase * pick.f };
+  }
+
+  // ======================== TRAD RATE FAMILY ========================
+  const TRAD_RATE = { "R/h": 1, "mR/h": 1e-3, "µR/h": 1e-6, "rem/h": 1, "mrem/h": 1e-3 };
+  if (TRAD_RATE[baseUnit] !== undefined && isExoticTier) {
+    const toBase = TRAD_RATE[baseUnit]; // multiply value by this to get R/h (or rem/h)
+    const family = baseUnit.includes("rem") ? "rem" : "R";
+    if (diff === "hidden") {
+      const p = randPick(HIDDEN_PFX);
+      return { displayUnit: p.sym + family + "/h", convert: v => (v * toBase) / p.val };
+    }
+    // extreme
+    const targets = [
+      { u: family + "/h", f: 1 }, { u: "m" + family + "/h", f: 1e3 }
+    ];
+    const pick = randPick(targets);
+    return { displayUnit: pick.u, convert: v => v * toBase * pick.f };
+  }
+
+  // ======================== ACTIVITY (GBq from reverse-shielded) ========================
+  // GBq -> exotic Bq prefixes
+  if (baseUnit === "GBq" && isExoticTier) {
+    if (diff === "hidden") {
+      const p = randPick(HIDDEN_PFX);
+      // GBq -> Bq (×1e9) -> target (÷p.val)
+      return { displayUnit: p.sym + "Bq", convert: v => (v * 1e9) / p.val };
+    }
+    // extreme: random SI activity prefix
+    const targets = [
+      { u: "kBq", f: 1e6 }, { u: "MBq", f: 1e3 }, { u: "GBq", f: 1 }, { u: "TBq", f: 1e-3 }
+    ];
+    const pick = randPick(targets);
+    return { displayUnit: pick.u, convert: v => v * pick.f };
+  }
+
+  // ======================== NO CONVERSION NEEDED ========================
+  return { displayUnit: baseUnit, convert: v => v };
+}
 // ==================== MAIN QUIZ ENGINE ====================
 function generateQuestion() {
-currentDistanceUnits = new Set();
+currentDistanceUnits.clear();
   // --- STEPS MODE MERGE LOGIC ---
   // If in Steps Mode, randomly assign 'easy' or 'normal' for this specific question.
   // This "forges" the two difficulties into one experience.
@@ -7248,14 +7609,37 @@ currentDistanceUnits = new Set();
   questionHTML = questionHTML.replace(/(\d)\.0+(\s)/g, '$1$2');
   questionHTML = questionHTML.replace(/(\.\d*?[1-9])0+(\s)/g, '$1$2'); // Remove trailing 0s (e.g. .50 -> .5)
 
-  document.getElementById("question").innerHTML = formatQuestionText(questionHTML);
+  document.getElementById("question").innerHTML = questionHTML;
+  
+  // --- Handle Solution Button ---
+  const solBtn = document.getElementById('solution-btn');
+  if (qData.solution) {
+    solBtn.classList.add('visible');
+    document.getElementById('solution-modal-body').innerHTML = formatRichText(qData.solution);
+  } else {
+    solBtn.classList.remove('visible');
+  }
   
   // Render options
   const optsDiv = document.getElementById("options");
   optsDiv.innerHTML = "";
   
-  const formatted = qData.opts.map(v => formatAnswer(v, qData.unit, qData.type));
-  const shuffled = [...formatted].sort(() => Math.random() - 0.5);
+  let shuffled;
+  let formatted;
+
+  // Counting Statistics uses pre-formatted string options, not numbers.
+  // We must skip unit conversion to avoid NaN errors.
+  if (qData.type === "counting-stats") {
+    formatted = qData.opts; // Already strings
+    shuffled = [...formatted].sort(() => Math.random() - 0.5);
+  } else {
+    // Standard numerical option processing
+    const { displayUnit, convert } = pickAnswerConversion(qData.unit);
+    if (displayUnit !== qData.unit && displayUnit.endsWith("m") && !displayUnit.includes("/"))
+      currentDistanceUnits.add(displayUnit);
+    formatted = qData.opts.map(v => formatAnswer(convert(v), displayUnit, qData.type));
+    shuffled = [...formatted].sort(() => Math.random() - 0.5);
+  }
   
   // Store shuffled options globally so checkAnswer can access them for history
   window.currentShuffledOptions = shuffled;
@@ -7265,10 +7649,13 @@ currentDistanceUnits = new Set();
   
     shuffled.forEach((optText, i) => {
     const btn = document.createElement("button");
-    const originalVal = qData.opts[formatted.indexOf(optText)];
-    // CHANGE: Pass qData.sourceUnit if available (used by conversion questions)
-    const tooltipText = getAnswerTooltip(originalVal, qData.unit, qData.sourceUnit || null);
+	const originalVal = qData.opts[formatted.indexOf(optText)];
     
+    // Tooltips are only for numerical values. For string answers (e.g. counting-stats), skip tooltip.
+    const tooltipText = (typeof originalVal === 'number') 
+      ? getAnswerTooltip(originalVal, qData.unit, qData.sourceUnit || null) 
+      : "";
+
     btn.innerHTML = `<span class="option-number">${i + 1}.</span> ${createHoverable(optText, tooltipText)}`;
     btn.onclick = () => checkAnswer(i, window.currentCorrectIndex, btn);
     optsDiv.appendChild(btn);
@@ -7375,10 +7762,13 @@ function formatAnswer(value, unit, type = "rate") {
   return `${formattedValue} ${unit}`;
 }
 function updateScore() {
-  document.getElementById('score').textContent = `Score: ${score} / ${numQuestionsTotal}`;
+  const scoreEl = document.getElementById('score');
+  if (scoreEl) {
+    scoreEl.textContent = `Score: ${score} / ${numQuestionsTotal}`;
+  }
 }
 function updateStepsScore() {
-  document.getElementById('steps-score').textContent = `Score: ${score} / ${numQuestionsTotal}`;
+  // Score display replaced by Step Progress Bar - logic moved to renderStepsStep
 }
 function startQuiz() {
   numQuestionsTotal = parseInt(document.getElementById('num-questions').value) || 10;
@@ -7386,15 +7776,17 @@ function startQuiz() {
   document.getElementById('quiz-screen').style.display = 'block';
   score = 0; currentQuestionNum = 0; quizHistory = [];
   updateScore();
+  
+  // Set the visible header title
   const isoDisplay = selectedIsotopes.length === 1 
-  ? ISOTOPES[selectedIsotopes[0]].symbol 
-  : "Multi-Isotope";
-document.getElementById('mode-title').textContent = `${selectedDifficulty.toUpperCase()} - ${isoDisplay}`;
+    ? ISOTOPES[selectedIsotopes[0]].symbol 
+    : "Multi-Isotope";
   
-  // FIXED: Removed Hard/Extreme override. 
-  // All 5 formula types (Rate, Inverse, Pure Inverse Square, Mixed Sources, Unit Conversion) 
-  // now work in EVERY difficulty level. Selection state is fully preserved when switching modes.
-  
+  const modeTitleEl = document.getElementById('mode-title');
+  if (modeTitleEl) {
+     modeTitleEl.textContent = `${selectedDifficulty.toUpperCase()} - ${isoDisplay}`;
+  }
+
   // Create history log entry and start timer
   const formulaNames = selectedFormulas.map(f => (typeof FORMULA_METADATA !== 'undefined' && FORMULA_METADATA[f]) ? FORMULA_METADATA[f].name : f);
   currentSessionId = createHistoryEntry('conventional', selectedDifficulty, formulaNames, '');
@@ -7465,7 +7857,7 @@ function checkAnswer(selectedIndex, correctIndex, btn) {
     const resultEl = document.getElementById("result");
     
     if (isCorrect) {
-      resultEl.innerHTML = `<small>${formatQuestionText(q.expl)}</small>`;
+      resultEl.innerHTML = `<small>${formatRichText(q.expl)}</small>`;
       resultEl.style.color = "#00ff88";
       btn.classList.add("correct");
     } else {
@@ -7473,7 +7865,7 @@ function checkAnswer(selectedIndex, correctIndex, btn) {
         ? q.opts[0] 
         : formatAnswer(q.opts[0], q.unit, q.type);
       
-      resultEl.innerHTML = `❌ Wrong<br><small>Correct: ${correctDisplay}<br>${formatQuestionText(q.expl)}</small>`;
+      resultEl.innerHTML = `❌ Wrong<br><small>Correct: ${correctDisplay}<br>${q.expl}</small>`;
       resultEl.style.color = "#ff4444";
       btn.classList.add("wrong");
     }
@@ -7483,7 +7875,9 @@ function checkAnswer(selectedIndex, correctIndex, btn) {
   }
   
   // --- UNIFIED ADVANCEMENT ---
-  const advanceDelay = isCorrect ? 100 : 1800; // Fast for correct, slow for wrong (to read explanation)
+  // Conventional Mode: Use standard delay for both correct and wrong answers.
+  // This allows users to read the explanation/feedback on correct answers as well.
+  const advanceDelay = 1800; 
   
   setTimeout(() => {
     if (currentQuestionNum >= numQuestionsTotal) {
@@ -7509,22 +7903,6 @@ function formatScientificNice(val, precision = 3) {
   const map = {'0':'⁰','1':'¹','2':'²','3':'³','4':'⁴','5':'⁵','6':'⁶','7':'⁷','8':'⁸','9':'⁹','-':'⁻'};
   let superExp = exp.toString().split('').map(c => map[c] || c).join('');
   return `${mant}×10${superExp}`;
-}
-// ==================== MARKDOWN & LATEX FORMATTER ====================
-function formatQuestionText(text) {
-  if (!text) return "";
-  
-  // 1. Convert Markdown Bold (**text**) to <strong>text</strong>
-  text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-  
-  // 2. Convert LaTeX $$...$$ to a styled span (basic math rendering)
-  // For proper rendering, consider MathJax or KaTeX in the future
-  text = text.replace(/\$\$([^$]+)\$\$/g, '<span class="math-equation">$1</span>');
-  
-  // 3. Handle inline LaTeX $...$ if present
-  text = text.replace(/(?<!\$)\$([^$\n]+)\$/g, '<span class="math-inline">$1</span>');
-  
-  return text;
 }
 function startStepsQuiz() {
   isStepsMode = true;
@@ -7553,10 +7931,10 @@ function startStepsQuiz() {
   generateStepsQuestion();
 }
 function generateStepsQuestion() {
-currentDistanceUnits = new Set();
+  currentDistanceUnits = new Set();
   // --- STEP 1: Generate Question Data ---
-  // Added: reverse-shielded, decay, decay-time, counting-stats, detector-count-rate
-    const supportedTypes = ['rate', 'conversion', 'pure-inverse', 'cumulative-dose', 'inverse', 'dead-time', 
+  // Supported types for Progressive Steps
+  const supportedTypes = ['rate', 'conversion', 'pure-inverse', 'cumulative-dose', 'inverse', 'dead-time', 
                           'reverse-shielded', 'decay', 'decay-time', 'counting-stats', 'detector-count-rate', 'mixed']; 
   
   const hasSupported = selectedFormulas.some(f => supportedTypes.includes(f));
@@ -7629,9 +8007,13 @@ currentDistanceUnits = new Set();
   window.currentStepIndex = 0;
 
   // --- STEP 3: Initialize Working Value ---
-  // Logic determines the starting point for the chain.
   
-  if (qData.meta && qData.meta.sourceVal !== undefined) {
+  // FIX: Universal check - does the question define an explicit start value?
+  if (qData.meta && qData.meta.startVal !== undefined) {
+    window.currentWorkingValue = qData.meta.startVal;
+  }
+  // Legacy/Specific fallbacks
+  else if (qData.meta && qData.meta.sourceVal !== undefined) {
     window.currentWorkingValue = qData.meta.sourceVal; // Conversion
   } 
   else if (qData.meta && qData.meta.r1 !== undefined) {
@@ -7641,7 +8023,7 @@ currentDistanceUnits = new Set();
     window.currentWorkingValue = qData.meta.rate; // Cumulative Dose
   }
   else if (qData.meta && qData.meta.a !== undefined) {
-    window.currentWorkingValue = qData.meta.a; // Inverse Distance
+    window.currentWorkingValue = qData.meta.a; // Inverse Distance (Legacy fallback)
   }
   else if (qData.meta && qData.meta.observed_cpm !== undefined) {
     window.currentWorkingValue = qData.meta.observed_cpm; // Dead Time Forward
@@ -7671,7 +8053,7 @@ currentDistanceUnits = new Set();
   else if (qData.type === 'counting-stats') {
     window.currentWorkingValue = qData.meta.N; // Start with counts
   }
-    else if (qData.type === 'detector-count-rate') {
+  else if (qData.type === 'detector-count-rate') {
     window.currentWorkingValue = qData.meta.act_Bq; // Start with Activity
   }
   // --- NEW: MIXED SOURCES ---
@@ -7894,20 +8276,39 @@ function decomposeInverseDistanceSteps(data) {
   const meta = data.meta;
   let steps = [];
 
-  // Step 1: Normalize Activity (if Trad path)
+  // Current state of the working value
+  const currentUnit = meta.startUnit || "MBq"; // Default to MBq if missing
+
+  // --- STEP 1: ACTIVITY CONVERSION (CONDITIONAL) ---
   if (meta.useTradPath) {
-    steps.push({
-      type: "norm-activity",
-      op: "divide",
-      val: CI_TO_MBQ,
-      text: `Convert Activity to Ci`,
-      intermediateUnit: "Ci"
-    });
-    // If we converted to Ci, our working value is now in Ci.
-    // We must use gammaR.
+    // We need Ci for the Gamma constant.
+    if (currentUnit !== "Ci") {
+      // Convert MBq -> Ci
+      steps.push({
+        type: "norm-activity",
+        op: "divide",
+        val: CI_TO_MBQ,
+        text: `Convert Activity from MBq to Ci`,
+        intermediateUnit: "Ci"
+      });
+    }
+    // If already Ci, do nothing (skip step).
+  } else {
+    // We need MBq for SI Gamma constant.
+    if (currentUnit !== "MBq") {
+       // Convert Ci -> MBq
+       steps.push({
+        type: "norm-activity",
+        op: "multiply",
+        val: CI_TO_MBQ,
+        text: `Convert Activity from Ci to MBq`,
+        intermediateUnit: "MBq"
+      });
+    }
+    // If already MBq, do nothing.
   }
 
-  // Step 2: Apply Gamma
+  // --- STEP 2: APPLY GAMMA ---
   steps.push({
     type: "gamma",
     op: "multiply",
@@ -7916,7 +8317,7 @@ function decomposeInverseDistanceSteps(data) {
     intermediateUnit: meta.useTradPath ? "R/h at 1m" : "µSv/h at 1m"
   });
 
-  // Step 3: Divide by Target Rate
+  // --- STEP 3: DIVIDE BY TARGET RATE ---
   steps.push({
     type: "target-rate",
     op: "divide",
@@ -7925,11 +8326,11 @@ function decomposeInverseDistanceSteps(data) {
     intermediateUnit: "m²"
   });
 
-  // Step 4: Square Root
+  // --- STEP 4: SQUARE ROOT ---
   steps.push({
     type: "sqrt",
     op: "sqrt",
-    val: 0, // Dummy val for consistency
+    val: 0, 
     text: `Take the Square Root (√)`,
     intermediateUnit: "m"
   });
@@ -8520,8 +8921,16 @@ function renderStepsStep() {
   const steps = window.currentStepList;
   const idx = window.currentStepIndex;
 
-  // 1. Update Header
-  document.getElementById('steps-step-prompt').textContent = `Step ${idx + 1} of ${steps.length}: ${steps[idx].text}`;
+  // 1. Update Progress Bar (Header)
+  const totalSteps = steps.length;
+  const currentStepNum = idx + 1;
+  const pct = (currentStepNum / totalSteps) * 100;
+  
+  const bar = document.getElementById('steps-progress-bar');
+  const textEl = document.getElementById('steps-progress-text');
+  
+  if (bar) bar.style.width = pct + '%';
+  if (textEl) textEl.textContent = `Step ${currentStepNum} of ${totalSteps}: ${steps[idx].text}`;
 
   // 2. Render Question / Status
   let qHTML = "";
@@ -8546,7 +8955,7 @@ function renderStepsStep() {
       
       document.getElementById('steps-question').innerHTML = qHTML;
   }
-  // --- NEW: MIXED SOURCES DISPLAY ---
+  // --- MIXED SOURCES DISPLAY ---
   else if (qData.type === "mixed") {
       const meta = qData.meta;
       const valDisplay = formatScientificNice(window.currentWorkingValue, 2);
@@ -8627,7 +9036,7 @@ function renderStepsStep() {
     addDistractor("multiply", 2);
     addDistractor("divide", 2);
   }
-  // --- NEW: MIXED SOURCES SPECIAL STEPS ---
+  // --- MIXED SOURCES SPECIAL STEPS ---
   else if (correctStep.op === "store-reset") {
     // Distractors for store-reset
     addDistractor("multiply", 1);
@@ -8725,7 +9134,6 @@ function checkStepsStep(btn, selectedStep, correctStep) {
     } else {
       // DONE - Log to History for Results Screen
       score++;
-      updateStepsScore();
       
       // Save to history
       quizHistory.push({
@@ -8929,28 +9337,27 @@ function showResultsScreen() {
     // Show Full Breakdown if valid
     if (hasMultipleTypes) {
       let rows = [];
-      const weakest = breakdown[breakdown.length - 1];
+
       
       breakdown.forEach(stat => {
-        let rowClass = '';
-        let prefix = '';
-        
-        if (stat.pct === 100 && stat.total >= 3) {
-          rowClass = 'stat-aced';
-          prefix = '🏆 ACED: ';
-        } 
-        else if (stat === weakest && stat.pct < 75) {
-          rowClass = 'stat-weak';
-          prefix = '⚠️ Needs Review: ';
-        }
-        
-        rows.push(`
-          <div class="stat-row">
-            <span class="stat-name ${rowClass}">${prefix}${stat.name}</span>
-            <span class="stat-score ${rowClass}">${stat.correct}/${stat.total} (${stat.pct}%)</span>
-          </div>
-        `);
-      });
+      let rowClass = '';
+      
+      // Highlight perfect scores
+      if (stat.pct === 100 && stat.total >= 3) {
+        rowClass = 'stat-aced';
+      } 
+      // Highlight ALL weak areas (below 75%), not just the single lowest
+      else if (stat.pct < 75) {
+        rowClass = 'stat-weak';
+      }
+      
+      rows.push(`
+        <div class="stat-row">
+          <span class="stat-name ${rowClass}">${stat.name}</span>
+          <span class="stat-score ${rowClass}">${stat.correct}/${stat.total} (${stat.pct}%)</span>
+        </div>
+      `);
+    });
       
       diagnosticHTML = `
         <div class="diagnostic-box">
@@ -8999,12 +9406,12 @@ function showResultsScreen() {
     optionsHTML += '</div>';
     // -----------------------------
 
-    reviewHTML += `<div class="result-item" style="border-left-color:${color};">
-      <strong style="color:#ccc">Question ${i+1}</strong> ${typeLabel}
-      ${item.questionHTML}
-      ${optionsHTML}
-      <small style="color:#aaa; display:block; margin-top:10px; border-top:1px solid var(--col-border-light); padding-top:10px;">${item.expl}</small>
-    </div>`;
+reviewHTML += `<div class="result-item" style="border-left-color:${color};">
+  <strong style="color:#ccc">Question ${i+1}</strong> ${typeLabel}
+  ${item.questionHTML}
+  ${optionsHTML}
+  <small style="display:block; margin-top:10px; border-top:1px solid var(--col-border-light); padding-top:10px;">${formatRichText(item.expl)}</small>
+</div>`;
   });
   
   document.getElementById('review-list').innerHTML = diagnosticHTML + reviewHTML;
@@ -9335,26 +9742,29 @@ function renderHistoryDetail(entry) {
             optClass = 'history-q-opt opt-wrong-chosen';
             prefix = '✖ ';
           }
-          optsHTML += `<div class="${optClass}">${prefix}${opt}</div>`;
+          // Apply formatRichText to options here
+          optsHTML += `<div class="${optClass}">${prefix}${formatRichText(opt)}</div>`;
         });
         optsHTML += '</div>';
       } else {
         // Fallback
         const answerHTML = item.isCorrect 
-          ? `<span class="correct-ans">${item.userAns || item.userAnswer || item.correctAns || item.correctAnswer}</span>`
-          : `<span class="wrong-ans">${item.userAns || item.userAnswer}</span> → <span class="correct-ans">${item.correctAns || item.correctAnswer}</span>`;
+          ? `<span class="correct-ans">${formatRichText(item.userAns || item.userAnswer || item.correctAns || item.correctAnswer)}</span>`
+          : `<span class="wrong-ans">${formatRichText(item.userAns || item.userAnswer)}</span> → <span class="correct-ans">${formatRichText(item.correctAns || item.correctAnswer)}</span>`;
         optsHTML = `<div class="history-q-answer">${answerHTML}</div>`;
       }
       
-      const explHTML = (item.expl || item.explanation) 
-        ? `<div class="history-q-expl">${item.expl || item.explanation}</div>` 
+      // Apply formatRichText to explanation here
+      const explText = item.expl || item.explanation;
+      const explHTML = explText 
+        ? `<div class="history-q-expl">${formatRichText(explText)}</div>` 
         : '';
       
       qHTML += `
         <div class="history-q-item">
           <div class="history-q-marker ${markerClass}">${markerIcon}</div>
           <div class="history-q-content">
-            <div class="history-q-text">${questionText}</div>
+            <div class="history-q-text">${formatRichText(questionText)}</div>
             ${optsHTML}
             ${explHTML}
           </div>
@@ -9498,8 +9908,20 @@ function closeImportHelpOnOverlay(event) {
     closeImportHelp();
   }
 }
-</script>
+function openSolutionModal() {
+  document.getElementById('solution-modal-overlay').classList.add('active');
+}
 
+function closeSolutionModal() {
+  document.getElementById('solution-modal-overlay').classList.remove('active');
+}
+
+function closeSolutionModalOnOverlay(event) {
+  if (event.target === document.getElementById('solution-modal-overlay')) {
+    closeSolutionModal();
+  }
+}
+</script>
 <!-- ==================== Settings Modal ==================== -->
 <div id="settings-modal" class="settings-modal">
   <div class="settings-modal-content">
