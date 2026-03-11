@@ -36,8 +36,11 @@
     --col-text-muted: #888;
     --col-bg-main: #0d0d0d;
     --col-bg-card: #1a1a1a;
+    --col-bg-card-rgb: 26, 26, 26;
     --col-bg-btn: #222;
+    --col-bg-btn-rgb: 34, 34, 34;
     --col-bg-input: #111;
+    --col-bg-input-rgb: 17, 17, 17;
     --col-bg-selected: #2a2a2a;
     --col-bg-tab-inactive: #181818;
     --col-border: #444;
@@ -142,7 +145,7 @@
 
   /* ==================== SELECTION BOX ==================== */
   .selection-box {
-    background: var(--col-bg-card);
+    background-color: rgba(var(--col-bg-card-rgb), 0.90);
     border: 2px solid var(--col-primary);
     border-radius: var(--radius-box);
     padding: var(--margin-section);
@@ -270,7 +273,7 @@
   }
 
   .question-box {
-  background: rgba(26, 26, 26, 0.85); 
+  background: rgba(var(--col-bg-card-rgb), 0.90);
   max-width: 720px;
   margin: var(--margin-heading) auto;
   padding: var(--margin-heading);
@@ -450,7 +453,7 @@
 
   /* ==================== DIAGNOSTIC BOX ==================== */
   .diagnostic-box {
-    background: var(--col-bg-card);
+    background: rgba(var(--col-bg-card-rgb), 0.90);
     border: 1px solid var(--col-border-light);
     padding: 20px;
     border-radius: var(--radius-lg);
@@ -541,7 +544,7 @@
   .feedback-box {
     margin-top: 25px;
     padding: 15px;
-    background: var(--col-bg-card);
+    background: rgba(var(--col-bg-card-rgb), 0.90);
     border-radius: var(--radius-lg);
     border: 1px solid var(--col-border-light);
     text-align: left;
@@ -1211,7 +1214,7 @@
 
 /* RSO Quiz Container */
 .rso-quiz-container {
-  background-color: var(--col-bg-card);
+  background-color: rgba(var(--col-bg-card-rgb), 0.95);
   padding: 20px;
   border-radius: 16px;
   max-width: 900px;
@@ -1220,15 +1223,30 @@
 }
 
 /* RSO Question Card */
+  .question-box {
+  background: rgba(var(--col-bg-card-rgb), 0.90);
+  max-width: 720px;
+  margin: var(--margin-heading) auto;
+  padding: var(--margin-heading);
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--col-primary);
+  position: relative;
+}
+@keyframes rsoFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* RSO Question Card */
 .rso-question {
   position: relative;
   padding: 20px;
   margin-bottom: 20px;
-  background-color: #111;
+  background-color: rgba(var(--col-bg-card-rgb), 0.95); /* <--- THIS IS THE FIX */
   border-radius: 8px;
   border-left: 4px solid var(--col-primary);
   animation: rsoFadeIn 0.4s ease-out;
 }
+
 @keyframes rsoFadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -1272,14 +1290,13 @@
   0%, 100% { text-shadow: 0 0 4px rgba(var(--accent-4-rgb),0.7); }
   50% { text-shadow: 0 0 6px rgba(var(--accent-3-rgb),0.9); }
 }
-
 .rso-question .rso-option-btn {
-  background-color: #222;
-  border: 1px solid var(--col-primary);
+  background-color: var(--col-bg-btn); /* Changed */
+  border: 2px solid var(--col-border); /* Changed */
   padding: 12px 18px;
   margin: 0 0 10px 0;
   border-radius: 8px;
-  color: #ccc;
+  color: var(--col-text-main); /* Changed */
   font-weight: normal;
   font-size: 1em;
   cursor: pointer;
@@ -1373,7 +1390,6 @@
 .rso-score.reward {
   animation: rsoRewardPulse 0.5s ease;
 }
-  /* ==================== SETTINGS BUTTON & MODAL ==================== */
 /* ==================== SETTINGS: OPTIONS LIMIT SELECTOR ==================== */
   .opt-limit-group {
     display: flex;
@@ -1856,10 +1872,87 @@
   padding: 0 10px;
   box-sizing: border-box;
 }
+  /* ==================== LIGHT MODE VARIABLES ==================== */
+  :root.light-mode {
+    --col-bg-main: #f0f2f5;
+    --col-bg-card: #ffffff;
+    --col-bg-card-rgb: 255, 255, 255;
+    --col-bg-btn: #e4e6eb;
+    --col-bg-btn-rgb: 228, 230, 235;
+    --col-bg-input: #ffffff;
+    --col-bg-input-rgb: 255, 255, 255;
+    --col-bg-selected: #e0f7fa;
+    --col-bg-tab-inactive: #f0f2f5;
+    --col-text-main: #1c1e21;
+    --col-text-muted: #65676b;
+    --col-border: #ced0d4;
+    --col-border-light: #ddd;
+    --col-border-tab: #b0b3b8;
+    --col-error-light: #ff8888;
+    
+    /* FIX: Use dark accent for primary elements in Light Mode */
+    --col-primary: var(--accent-5); 
+
+    /* Fix specific components for light mode */
+    --col-result-correct-bg: rgba(0, 255, 136, 0.15);
+    --col-result-wrong-bg: rgba(255, 68, 68, 0.1);
+    --col-result-neutral-bg: var(--col-bg-card);
+  }
+
+  /* Ensure canvas container is transparent so body bg shows, 
+     or set a specific light bg for body if canvas is hidden */
+  :root.light-mode body {
+     background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+  }
+  
+  /* Adjust bubble opacity for light mode visibility */
+  :root.light-mode ~ body canvas {
+     opacity: 0.6; 
+  }
+
+  /* FIX: RSO Button Hover in Light Mode */
+  :root.light-mode .rso-question:not([data-answered="true"]) .rso-option-btn:hover {
+    background-color: var(--accent-5);
+    color: #ffffff;
+    border-color: var(--accent-4);
+  }
+  /* ==================== RESUME TOAST NOTIFICATION ==================== */
+#resume-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--col-bg-card);
+  border: 2px solid var(--accent-0);
+  padding: 20px 30px;
+  border-radius: var(--radius-box);
+  box-shadow: 0 0 30px rgba(var(--accent-0-rgb), 0.4);
+  z-index: 10000;
+  display: none;
+  text-align: center;
+  animation: fadeInDown 0.5s ease-out;
+  max-width: 90%;
+}
+#resume-toast.visible { display: block; }
+#resume-toast p { margin: 0 0 15px 0; color: var(--col-text-main); font-size: 1.1em; }
+#resume-toast .toast-sub { font-size: 0.9em; color: var(--col-text-muted); margin-bottom: 10px; }
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translate(-50%, -20px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
 </style>
 </head>
 <body>
-
+<!-- Resume Session Toast -->
+<div id="resume-toast">
+  <p>🔄 <strong>Session Found!</strong></p>
+  <div class="toast-sub">Resuming in <span id="resume-countdown">5</span>s...</div>
+  <button class="btn btn-secondary" onclick="cancelResumeAndStartFresh()" style="padding: 8px 20px !important; font-size: 0.9em !important;">Start New Session</button>
+</div>
 <!-- Settings Gear Button -->
 <button class="settings-btn" id="settings-btn">⚙</button>
 
@@ -1943,22 +2036,12 @@
           <div class="card-desc-formula">Use all available</div>
         </div>
       </div>
-
-      <h2>Difficulty (select one)</h2>
-      <div class="options-grid" id="difficulty-options">
-        <div class="option-card" data-value="easy">Easy</div>
-        <div class="option-card selected" data-value="normal">Normal</div>
-        <div class="option-card" data-value="hard">Hard</div>
-        <div class="option-card" data-value="extreme">Extreme</div>
-        <div class="option-card hidden" data-value="hidden">Hidden</div>
-      </div>
-
       <h2>Number of Questions</h2>
-      <input type="number" id="num-questions" class="number-input" value="10" min="5" max="50">
-
+      <input type="number" id="num-questions" class="number-input" value="10" min="5" max="50"
+      onwheel="event.preventDefault(); event.deltaY < 0 ? this.stepUp() : this.stepDown()">
       <div class="btn-group">
         <button class="btn btn-primary" onclick="startQuiz()">Start Selected Quiz</button>
-        <button class="btn btn-secondary" onclick="startRandomMix()">Random Mix (All Formulas)</button>
+        <button hidden class="btn btn-secondary" onclick="startRandomMix()">Random Mix (All Formulas)</button>
       </div>
     </div>
   </div>
@@ -2013,7 +2096,8 @@
       </div>
 
       <h2>Number of Questions</h2>
-      <input type="number" id="steps-num-questions" class="number-input" value="10" min="5" max="50">
+      <input type="number" id="steps-num-questions" class="number-input" value="10" min="5" max="50" 
+       onwheel="event.preventDefault(); event.deltaY < 0 ? this.stepUp() : this.stepDown()">
 
       <div class="btn-group">
         <button class="btn btn-primary" onclick="startStepsQuiz()">Start Steps Quiz</button>
@@ -2076,7 +2160,7 @@
       </p>
       
       <label for="json-upload" class="btn btn-secondary" style="cursor:pointer;">
-        📂 Select JSON File
+        Select JSON File
       </label>
       <input type="file" id="json-upload" accept=".json" style="display:none;" onchange="handleKnowledgeImport(event)">
       
@@ -2547,11 +2631,6 @@ function loadSession() {
 function restoreConventionalState() {
   const state = sessionState.conv;
   
-  // Restore Selections (Visuals)
-  // Difficulty
-  document.querySelectorAll('#difficulty-options .option-card').forEach(c => {
-    c.classList.toggle('selected', c.dataset.value === state.selection.difficulty);
-  });
   // Formulas & Isotopes (simplified restoration - full restoration requires looping logic)
   // For now, we rely on the fact that startQuiz overwrites these, 
   // but we should restore the UI for "Selection" screen.
@@ -2566,7 +2645,6 @@ function restoreConventionalState() {
     currentQuestionNum = state.currentQ;
     numQuestionsTotal = state.totalQ;
     score = state.score;
-    selectedDifficulty = state.selection.difficulty;
 
     // Render
     updateScore();
@@ -2631,13 +2709,22 @@ function renderRestoredQuestion(qData, tab) {
     // We need the formatted options. Ideally, we save them too.
     // For now, let's assume we saved the raw options and re-format them.
     // NOTE: To perfectly restore options order, we should save `window.currentShuffledOptions` in state.
-    // Quick fix: Re-generate formatting.
-    // Pick one consistent display unit for all answer options (difficulty-aware)
-  const { displayUnit, convert } = pickAnswerConversion(qData.unit);
-  if (displayUnit !== qData.unit && displayUnit.endsWith("m") && !displayUnit.includes("/"))
-    currentDistanceUnits.add(displayUnit);
-  const formatted = qData.opts.map(v => formatAnswer(convert(v), displayUnit, qData.type));
-    const shuffled = [...formatted].sort(() => Math.random() - 0.5); // This changes order!
+  let formatted;
+  let displayUnit = qData.unit;
+
+  // Check if options are strings (e.g. "A ± B" from Counting Stats)
+  // If so, skip conversion math which results in NaN
+  if (qData.opts.length > 0 && typeof qData.opts[0] === 'string') {
+      formatted = qData.opts;
+  } else {
+      const conv = pickAnswerConversion(qData.unit);
+      displayUnit = conv.displayUnit;
+      if (displayUnit !== qData.unit && displayUnit.endsWith("m") && !displayUnit.includes("/"))
+        currentDistanceUnits.add(displayUnit);
+      formatted = qData.opts.map(v => formatAnswer(conv.convert(v), displayUnit, qData.type));
+  }
+
+  const shuffled = [...formatted].sort(() => Math.random() - 0.5);
     
     // Better: Save shuffled options in state.next time. For now, we accept new shuffle or save in state.
     // Let's update saveSession to save shuffled options.
@@ -2873,14 +2960,7 @@ am241: {
 };
 // Function to decide if shielding is included
 function includeShielding() {
-  const probs = {
-    easy: 0.333,
-    normal: 0.5,
-    hard: 0.5,
-    extreme: 0.5,
-    hidden: 0.5
-  };
-  return Math.random() < (probs[selectedDifficulty] || 0.5);
+  return Math.random() < 0.5;
 }
 
 // Helper to get random transmission factor
@@ -2953,11 +3033,8 @@ function getShieldingScenario(isotope) {
     layerValue = hvl_mm;
     layerName = "HVL";
 
-    if (selectedDifficulty === "easy" || selectedDifficulty === "normal") {
-      nLayers = [2, 3, 5, 8, 10][Math.floor(Math.random() * 5)];
-    } else {
-      nLayers = parseFloat((Math.random() * 8 + 1).toFixed(1)); 
-    }
+    // Use integer steps
+    nLayers = [2, 3, 5, 8, 10][Math.floor(Math.random() * 5)];
     transmission = Math.pow(0.5, nLayers);
   }
 
@@ -3201,15 +3278,6 @@ function initializeSelectionScreen() {
   setupFormulas('formula-options', 'all-formulas-btn');
   // Single/Multi Steps
   setupFormulas('steps-formula-options', 'steps-all-formulas-btn');
-
-  // --- DIFFICULTY SELECTION (Conventional Only) ---
-  document.querySelectorAll('#difficulty-options .option-card').forEach(card => {
-    card.addEventListener('click', () => {
-      document.querySelectorAll('#difficulty-options .option-card').forEach(c => c.classList.remove('selected'));
-      card.classList.add('selected');
-      selectedDifficulty = card.dataset.value;
-    });
-  });
 }
 
 // --- HELPER: UPDATE FORMULA STATE ---
@@ -3444,25 +3512,8 @@ const scale = Math.sqrt(scaleW * scaleH);
   container.style.fontSize = (BASE_FONT * scale) + 'px';
 }
 function getRandomActivity() {
-  // Easy mode keeps preset values
-  if (selectedDifficulty === "easy") return [740,1480,2960,3700,5550,7400,11100][Math.floor(Math.random()*7)];
-
-  // --- STRATEGY FOR CLEAN NUMBERS ---
-
-  // 1. Hidden/Extreme Mode: "Universal Clean" Strategy
-  // Since formatActivity randomizes units (pBq, TBq, etc), we need values that are 
-  // clean in BOTH SI (Powers of 10) AND Traditional (Multiples of 37).
-  // We use multiples of 37 MBq (which is exactly 1 mCi).
-  // Example: 370 MBq -> 10 mCi (Clean Trad) OR 0.37 GBq (Clean SI).
-  if (selectedDifficulty === "hidden" || selectedDifficulty === "extreme") {
-    // Generate a clean magnitude multiplier (1, 2, 5, 10, 20, 50...)
-    const multipliers = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000];
-    const m = multipliers[Math.floor(Math.random() * multipliers.length)];
-    return m * 37; // Returns clean MBq that translates to clean mCi
-  }
-
-  // 2. Normal/Hard Mode: "Targeted Tier" Strategy
-  // formatActivity is deterministic here, so we target the specific unit we want.
+  // --- UNIFIED LOGIC (Targeted Tier Strategy) ---
+  // Generates clean steps (5s and 50s) targeting specific units (Ci, mCi, MBq, etc.)
   
   const forceSystem = Math.random() < 0.5 ? 'trad' : 'si';
   
@@ -3476,17 +3527,17 @@ function getRandomActivity() {
     // Target Traditional Units
     const tier = Math.random();
     if (tier < 0.1) { 
-      // Ci (Large): 0.5 to 50 Ci
-      const ci = (Math.floor(Math.random() * 100) + 1) / 2; // Steps of 0.5
+      // Ci (Large)
+      const ci = (Math.floor(Math.random() * 100) + 1) / 2; 
       return ci * 37000;
     } 
     else if (tier < 0.8) { 
-      // mCi (Medium): 5 to 5000 mCi
+      // mCi (Medium)
       const mCi = getCleanStep(5000);
       return mCi * 37;
     } 
     else { 
-      // µCi (Small): 5 to 5000 µCi
+      // µCi (Small)
       const uCi = getCleanStep(5000);
       return uCi * 0.037;
     }
@@ -3495,44 +3546,27 @@ function getRandomActivity() {
     // Target SI Units
     const tier = Math.random();
     if (tier < 0.1) { 
-      // TBq (Huge): 0.1 to 10 TBq
+      // TBq (Huge)
       const tbq = (Math.floor(Math.random() * 100) + 1) / 10; 
       return tbq * 1e6;
     } 
     else if (tier < 0.3) { 
-      // GBq (Large): 1 to 50 GBq
+      // GBq (Large)
       const gbq = (Math.floor(Math.random() * 100) + 1) / 2; 
       return gbq * 1000;
     } 
     else if (tier < 0.8) { 
-      // MBq (Standard): 5 to 5000 MBq
+      // MBq (Standard)
       return getCleanStep(5000);
     } 
     else { 
-      // kBq (Small): 50 to 5000 kBq
+      // kBq (Small)
       return getCleanStep(5000) / 1000;
     }
   }
 }
 function getRandomDistance() {
-  if (selectedDifficulty === "easy") {
-    return [0.3, 0.5, 0.8, 1.0, 1.2, 1.5, 2.0, 2.5][Math.floor(Math.random()*8)];
-  }
-  
-  // --- STRATEGY FOR CLEAN NUMBERS ---
-  
-  // 1. Hidden/Extreme Mode: Powers of 10
-  // Generates 0.1, 1, 10, 100... which look clean in m, cm, mm, ft, in.
-  if (selectedDifficulty === "hidden" || selectedDifficulty === "extreme") {
-    // Random exponent between -1 (0.1) and 2 (100)
-    const exp = Math.floor(Math.random() * 4) - 1; 
-    const base = Math.pow(10, exp);
-    // Multiply by 1, 2, or 5 for slight variety (1m, 2m, 5m, 10m...)
-    const multipliers = [1, 2, 5]; 
-    return base * multipliers[Math.floor(Math.random() * multipliers.length)];
-  }
-
-  // 2. Normal/Hard Mode: Targeted Steps (0.5m or 1m)
+  // --- UNIFIED LOGIC (Targeted Steps) ---
   const tier = Math.random();
   
   if (tier < 0.1) {
@@ -3551,41 +3585,12 @@ function getRandomDistance() {
 
 function formatActivity(mbq, forceSystem = 'auto') {
   const ci = mbq / CI_TO_MBQ;
-  
-    // Hidden Mode: Restricted prefixes only
-  if (selectedDifficulty === "hidden") {
-    const hiddenPrefixes = [
-      { sym: 'Q', val: 1e30 }, { sym: 'R', val: 1e27 }, { sym: 'Y', val: 1e24 }, { sym: 'Z', val: 1e21 },
-      { sym: 'a', val: 1e-18 }, { sym: 'z', val: 1e-21 }, { sym: 'y', val: 1e-24 }, { sym: 'r', val: 1e-27 }, { sym: 'q', val: 1e-30 }
-    ];
-    const p = hiddenPrefixes[Math.floor(Math.random() * hiddenPrefixes.length)];
-    const val = (mbq * 1e6) / p.val; // MBq -> Bq -> Target
-    
-    // FIX: Prevent "0.00" display for extremely small values
-    if (Math.abs(val) < 0.005) {
-       return formatScientificNice(val, 2) + " " + p.sym + "Bq";
-    }
-    return val.toFixed(2) + " " + p.sym + "Bq";
-  }
 
   // Determine system preference
   let useTrad = false;
   if (forceSystem === 'trad') useTrad = true;
   else if (forceSystem === 'si') useTrad = false;
   else useTrad = (ci >= 0.01); // Auto logic: Use Ci if >= 10 mCi
-
-  // Extreme Mode: Random prefixes
-  if (selectedDifficulty === "extreme") {
-    const choice = Math.floor(Math.random() * 5);
-    if (useTrad) {
-       if (choice < 3) return (ci * 1000).toFixed(1) + " mCi";
-       return (ci * 1e6).toFixed(0) + " µCi";
-    } else {
-       if (choice === 0) return (mbq * 1000).toFixed(0) + " kBq";
-       if (choice === 1) return (mbq / 1000).toFixed(3) + " GBq";
-       return (mbq / 1e6).toFixed(4) + " TBq";
-    }
-  }
 
   // --- SMART ROUNDING HELPER ---
   // Returns a string with up to 'precision' decimals, stripping trailing zeros.
@@ -3616,106 +3621,42 @@ function formatActivity(mbq, forceSystem = 'auto') {
   }
  }
 function formatDistance(m) {
-    // --- Hidden Mode: Use Q, R, Y, Z, a, z, y, r, q meters ---
-  if (selectedDifficulty === "hidden") {
-    const hiddenPrefixes = [
-      { sym: 'Q', val: 1e30, name: 'Quetta' }, { sym: 'R', val: 1e27, name: 'Ronna' }, { sym: 'Y', val: 1e24, name: 'Yotta' }, { sym: 'Z', val: 1e21, name: 'Zetta' },
-      { sym: 'a', val: 1e-18, name: 'Atto' }, { sym: 'z', val: 1e-21, name: 'Zepto' }, { sym: 'y', val: 1e-24, name: 'Yocto' }, { sym: 'r', val: 1e-27, name: 'Ronto' }, { sym: 'q', val: 1e-30, name: 'Quecto' }
-    ];
-    const p = hiddenPrefixes[Math.floor(Math.random() * hiddenPrefixes.length)];
-    const val = m / p.val;
-    const unit = `${p.name} meter(${p.sym}m)`;
-    currentDistanceUnits.add(p.sym + "m"); // Track simple symbol internally for tooltips
+  let displayResult = "";
+  let unitUsed = "m"; // Default
 
-    // Prevent "0.00" display for extremely small values
-    if (Math.abs(val) < 0.005) {
-       return formatScientificNice(val, 2) + " " + unit;
-    }
-    return val.toFixed(2) + " " + unit;
+    // --- UNIFIED LOGIC ---
+  // Randomly select between m, cm, mm, in, ft
+  let choices = [0, 1, 2, 3, 4]; // 0:mm, 1:cm, 2:in, 3:ft, 4:m
+  
+  const choice = choices[Math.floor(Math.random() * choices.length)];
+  
+  if (choice === 0) { // mm
+    const val = m * 1000;
+    unitUsed = "mm";
+    displayResult = (val < 10 ? val.toFixed(1) : Math.round(val)) + " mm";
   }
-
-  // --- Extreme Mode ---
-  // Use expanded SI prefixes (from atto to Exa)
-  if (selectedDifficulty === "extreme") {
-    const extremePrefixes = [
-      { sym: 'a', val: 1e-18, name: 'Atto' }, { sym: 'f', val: 1e-15, name: 'Femto' }, { sym: 'p', val: 1e-12, name: 'Pico' }, 
-      { sym: 'n', val: 1e-9, name: 'Nano' }, { sym: 'µ', val: 1e-6, name: 'Micro' }, { sym: 'm', val: 1e-3, name: 'Milli' }, 
-      { sym: 'c', val: 1e-2, name: 'Centi' }, { sym: '', val: 1, name: '' }, 
-      { sym: 'k', val: 1e3, name: 'Kilo' }, { sym: 'M', val: 1e6, name: 'Mega' }, { sym: 'G', val: 1e9, name: 'Giga' }, 
-      { sym: 'T', val: 1e12, name: 'Tera' }, { sym: 'P', val: 1e15, name: 'Peta' }, { sym: 'E', val: 1e18, name: 'Exa' }
-    ];
-    
-    const p = extremePrefixes[Math.floor(Math.random() * extremePrefixes.length)];
-    const val = m / p.val;
-    
-    let unit;
-    if (p.sym === '') {
-        unit = "m";
-    } else {
-        unit = `${p.name} meter(${p.sym}m)`;
-    }
-    
-    currentDistanceUnits.add(p.sym + "m"); // Track simple symbol internally for tooltips
-
-    if (Math.abs(val) < 0.005) {
-       return formatScientificNice(val, 2) + " " + unit;
-    }
-    return val.toFixed(2) + " " + unit;
+  else if (choice === 1) { // cm
+    const val = m * 100;
+    unitUsed = "cm";
+    displayResult = (val < 10 ? val.toFixed(1) : Math.round(val)) + " cm";
   }
-
-  // --- Hard Mode: Use mm, cm, in, ft, m ---
-  if (selectedDifficulty === "hard") {
-    let choices = [0, 1, 2, 3];
-    choices.push(4); // 4 = meters (Hard gets meters as a fallback)
-    
-    const choice = choices[Math.floor(Math.random() * choices.length)];
-    
-    if (choice === 0) { // mm
-      const val = m * 1000;
-      currentDistanceUnits.add("mm");
-      return (val < 10 ? val.toFixed(1) : Math.round(val)) + " mm";
-    }
-    if (choice === 1) { // cm
-      const val = m * 100;
-      currentDistanceUnits.add("cm");
-      return (val < 10 ? val.toFixed(1) : Math.round(val)) + " cm";
-    }
-    if (choice === 2) { // in
-      const val = m / 0.0254;
-      currentDistanceUnits.add("in");
-      return (val < 10 ? val.toFixed(1) : Math.round(val)) + " in";
-    }
-    if (choice === 3) { // ft
-      const val = m / 0.3048;
-      currentDistanceUnits.add("ft");
-      return val.toFixed(2) + " ft";
-    }
-    // choice 4 (meters)
-    currentDistanceUnits.add("m");
-    return m.toFixed(3) + " m";
+  else if (choice === 2) { // in
+    const val = m / 0.0254;
+    unitUsed = "in";
+    displayResult = (val < 10 ? val.toFixed(1) : Math.round(val)) + " in";
   }
-
-  // --- Easy/Normal Logic (Existing) ---
-  if ((selectedDifficulty === "easy" || selectedDifficulty === "normal") && Math.random() < 0.5) {
-    const feet = m / FT_TO_M;
-    if (feet >= 1.5) {
-      currentDistanceUnits.add("ft");
-      return feet.toFixed(feet < 10 ? 2 : 1) + " ft";
-    } else {
-      currentDistanceUnits.add("in");
-      const inches = m / IN_TO_M;
-      return Math.round(inches) + " in";
-    }
+  else if (choice === 3) { // ft
+    const val = m / 0.3048;
+    unitUsed = "ft";
+    displayResult = val.toFixed(2) + " ft";
   }
-
-  if (m < 1) {
-    currentDistanceUnits.add("cm");
-    return Math.round(m * 100) + " cm";
+  else { // choice 4 (meters)
+    unitUsed = "m";
+    displayResult = m.toFixed(3) + " m";
   }
   
-  // Standard formatting
-  currentDistanceUnits.add("m");
-  return m.toFixed(2) + " m";
+  currentDistanceUnits.add(unitUsed);
+  return displayResult;
 }
 function formatHalfLife(totalSeconds) {
   const SEC_PER_YEAR = 365.25 * 24 * 3600; // 31557600
@@ -3761,95 +3702,67 @@ function formatHalfLife(totalSeconds) {
 }
 // ==================== DOSE RATE FORMATTING (Difficulty-Aware) ====================
 function formatDoseRate(uSvPerH) {
-  // Easy/Normal: plain µSv/h
-  if (selectedDifficulty === "easy" || selectedDifficulty === "normal") {
-    return `${uSvPerH} µSv/h`;
-  }
-
-  let factor = 1;
-  let unit = "µSv/h";
-
-  if (selectedDifficulty === "hidden") {
-    const HIDDEN_PFX = [
-      { sym: 'Q', val: 1e30 }, { sym: 'R', val: 1e27 }, { sym: 'Y', val: 1e24 }, { sym: 'Z', val: 1e21 },
-      { sym: 'a', val: 1e-18 }, { sym: 'z', val: 1e-21 }, { sym: 'y', val: 1e-24 }, { sym: 'r', val: 1e-27 }, { sym: 'q', val: 1e-30 }
-    ];
-    const p = HIDDEN_PFX[Math.floor(Math.random() * HIDDEN_PFX.length)];
-    factor = 1e-6 / p.val;
-    unit = p.sym + "Sv/h";
-  }
-  else if (selectedDifficulty === "extreme") {
-    const choices = [
-      { unit: "nSv/h", factor: 1000 },
-      { unit: "mSv/h", factor: 0.001 },
-      { unit: "Sv/h", factor: 1e-6 },
-      { unit: "mrem/h", factor: 0.1 },
-      { unit: "rem/h", factor: 0.0001 },
-    ];
-    const pick = choices[Math.floor(Math.random() * choices.length)];
-    factor = pick.factor;
-    unit = pick.unit;
-  }
-  else if (selectedDifficulty === "hard") {
-    const choices = [
-      { unit: "µSv/h", factor: 1 },
-      { unit: "mSv/h", factor: 0.001 },
-      { unit: "mrem/h", factor: 0.1 },
-      { unit: "nSv/h", factor: 1000 },
-    ];
-    const pick = choices[Math.floor(Math.random() * choices.length)];
-    factor = pick.factor;
-    unit = pick.unit;
-  }
-
+  // --- UNIFIED LOGIC (Normal + Hard Units) ---
+  // Randomly choose between µSv/h, mSv/h, mrem/h, nSv/h
+  const choices = [
+    { unit: "µSv/h", factor: 1 },
+    { unit: "nSv/h", factor: 1000 },
+    { unit: "mSv/h", factor: 0.001 },
+    { unit: "mrem/h", factor: 0.1 }
+  ];
+  
+  const pick = choices[Math.floor(Math.random() * choices.length)];
+  const factor = pick.factor;
+  const unit = pick.unit;
+  
   const val = uSvPerH * factor;
 
   if (Math.abs(val) < 0.005 && val !== 0) {
     return formatScientificNice(val, 2) + " " + unit;
   }
-  if (selectedDifficulty === "extreme" || selectedDifficulty === "hidden") {
-    let s = val.toFixed(4);
-    s = s.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.0+$/, '');
-    return s + " " + unit;
-  }
+  
+  // Smart rounding
   let s = val.toFixed(2);
   s = s.replace(/(\.\d*?[1-9])0+$/, '$1').replace(/\.0+$/, '');
   return s + " " + unit;
 }
 // ====================== GLOBAL HOVER CONTROL ======================
-// Completely disables every tooltip/conversion in Hard & Extreme modes
 function createHoverable(text, tooltip) {
-  // STRICT: NEVER create hover span if tooltip is empty, falsy, or whitespace
-  if (selectedDifficulty === "hard" || selectedDifficulty === "extreme" ||
-      !tooltip || tooltip.trim() === "") {
-    return text;   // plain text only — no <span>, no CSS hover
+  // If no tooltip is provided, or it's empty/whitespace, return plain text
+  if (!tooltip || tooltip.trim() === "") {
+    return text;
   }
+  // Otherwise, return the span with the tooltip data
   return `<span class="hoverable" data-tooltip="${tooltip}">${text}</span>`;
 }
 // Only add hover tooltip when distance is shown as cm; meters = plain text
 function getDistanceHTML(m) {
   const display = formatDistance(m);
   
-  // Prepare meters string for tooltip (always calculated, used if needed)
-  let metersStr = m.toFixed(3);
-  metersStr = metersStr.replace(/0+$/, '').replace(/\.$/, '');
+  // EASY/NORMAL: Only show tooltip if display is NOT in meters
+  // Check if display uses a different unit that would benefit from conversion
+  const displayLower = display.toLowerCase();
+  const isNonMeterUnit = displayLower.includes("ft") || displayLower.includes("in") || 
+                         displayLower.includes("cm") || displayLower.includes("mm") ||
+                         displayLower.includes("km") || displayLower.includes("µm") ||
+                         displayLower.includes("nm");
   
-  // If fractional part exists but got stripped to integer → force 2 decimals
-  if (metersStr.indexOf('.') === -1 && Math.abs(m - Math.round(m)) > 0.005) {
-    metersStr = m.toFixed(2);
-  }
-  
-  // HARD & EXTREME: Never show tooltips in question text (user must convert mentally)
-  if (selectedDifficulty === "hard" || selectedDifficulty === "extreme") {
+  if (!isNonMeterUnit) {
+    // Display is already in meters (or meters-based exotic unit) - no tooltip needed
     return display;
   }
   
-  // EASY/NORMAL: Always generate a tooltip span with a temporary class.
-  // We will decide later (in generateQuestion) whether to keep or strip it
-  // based on whether multiple units were used (mismatch = keep tooltip).
+  // Only now create the tooltip span
+  let metersStr = m.toFixed(3);
+  metersStr = metersStr.replace(/0+$/, '').replace(/\.$/, '');
+  
   return `<span class="dist-unit-temp" data-tooltip="${metersStr} m">${display}</span>`;
 }
 function getAnswerTooltip(val, unit, sourceUnit = null) {
+  // --- EARLY EXIT FOR NON-CONVERTIBLE UNITS ---
+  // Count rates (cpm, cps) are dimensionless counts and have no cross-system conversion.
+  // They were incorrectly matching 'm' (meters) in the parser.
+  if (unit === "cpm" || unit === "cps" || unit === "counts") return "";
   // 1. UNIVERSAL DEFINITIONS
   const UNIT_DEFS = {
     "Sv": 1, "Gy": 1, "rem": 0.01, "rad": 0.01, 
@@ -4025,7 +3938,10 @@ function generateRateQuestion() {
       let ansSI = isotope.gamma * a / (safeD * safeD);
       ansSI *= transmission * buildup;
       ans = ansSI;
-      actDisplay = createHoverable(formatActivity(a, 'si'), a.toLocaleString() + " MBq");
+      // Only show MBq tooltip if the displayed unit is different
+const formattedActivitySI = formatActivity(a, 'si');
+const actTooltipSI = formattedActivitySI.includes("MBq") ? "" : a.toLocaleString() + " MBq";
+actDisplay = createHoverable(formattedActivitySI, actTooltipSI);
       gammaDisplay = `Γ = ${isotope.gamma} µSv·m²/(h·MBq)`;
       expl = `SI calculation: Rate = (Γ × A / d²)${factorText}`;
     }
@@ -4103,7 +4019,7 @@ function generateRateQuestion() {
   return {
     type: "rate",
     isotope: returnIsotope,
-    q: `${getArticle(isotope.symbol)} ${isotope.name} source (${isotope.symbol}) with activity ${actDisplay}.<br>${shieldText}What is the transmitted gamma dose rate at ${getDistanceHTML(d)}?`,
+    q: `${getArticle(isotope.name)} ${isotope.name} source (${isotope.symbol}) with activity ${actDisplay}.<br>${shieldText}What is the transmitted gamma dose rate at ${getDistanceHTML(d)}?`,
     ans: ans,
     opts: opts,
     unit: unit,
@@ -4153,7 +4069,10 @@ function generateInverseQuestion() {
     targetRate = [5, 12, 25, 40, 80, 150, 300][Math.floor(Math.random() * 7)]; 
     d = Math.sqrt(isotope.gamma * a / targetRate);
     
-    actDisplay = createHoverable(formatActivity(a, 'si'), a.toLocaleString() + " MBq");
+    // Only show MBq tooltip if the displayed unit is different
+const formattedActSI = formatActivity(a, 'si');
+const actTooltipSI = formattedActSI.includes("MBq") ? "" : a.toLocaleString() + " MBq";
+actDisplay = createHoverable(formattedActSI, actTooltipSI);
     targetDisplay = `${targetRate} µSv/h`;
     gammaDisplay = `Γ = ${isotope.gamma} µSv·m²/(h·MBq)`;
     explLine = "d = √(Γ × A / Rate) (SI)";
@@ -4365,19 +4284,11 @@ function generateReverseShieldedQuestion() {
   };
 }
 function generatePureInverseQuestion() {
-  const isHard = (selectedDifficulty === "hard" || selectedDifficulty === "extreme");
-
   let d1, r1, ratio;
 
-  if (isHard) {
-    d1 = Number((0.3 + Math.random() * 7.7).toFixed(2));
-    r1 = Math.round(25 + Math.random() * 975);
-    ratio = Number((1.3 + Math.random() * 4.7).toFixed(2));
-  } else {
-    d1 = [0.5, 1.0, 1.5, 2.0][Math.floor(Math.random()*4)];
-    r1 = [40, 60, 80, 120, 200, 300, 500][Math.floor(Math.random()*7)];
-    ratio = [1.8, 2.2, 2.6, 3.0, 3.5, 4.0][Math.floor(Math.random()*6)];
-  }
+  d1 = [0.5, 1.0, 1.5, 2.0][Math.floor(Math.random()*4)];
+  r1 = [40, 60, 80, 120, 200, 300, 500][Math.floor(Math.random()*7)];
+  ratio = [1.8, 2.2, 2.6, 3.0, 3.5, 4.0][Math.floor(Math.random()*6)];
 
   // FIXED: 3-decimal precision so tooltip shows 7.01 m
   const d2 = Number((d1 * ratio).toFixed(3));
@@ -4385,10 +4296,7 @@ function generatePureInverseQuestion() {
   const r2 = r1 * Math.pow(d1 / d2, 2);
 
   let opts = [r2];
-  const multipliers = isHard 
-    ? [0.28, 0.62, 1.52, 2.75, 0.19, 4.8] 
-    : [0.35, 0.65, 1.55, 2.8, 0.22, 4.5];
-
+  const multipliers = [0.35, 0.65, 1.55, 2.8, 0.22, 4.5];
   while (opts.length < window.maxOptionsPerQuestion) {
     let cand = r2 * multipliers[Math.floor(Math.random()*multipliers.length)];
     if (cand > 0.5 && !opts.some(r => Math.abs(r - cand) < Math.max(1, r2 * 0.09))) {
@@ -4582,29 +4490,8 @@ function generateConversionQuestion() {
   
   // --- 2. DIFFICULTY CONFIGURATIONS ---
   const CONFIG = {
-    easy: {
-      actDosePrefixes: ['M', 'G', 'T', 'n', 'µ', 'm', 'k', 'c'],
-      distPool: ['ft', 'in', 'cm', 'm', 'mm'] 
-    },
-    normal: {
-      actDosePrefixes: ['n', 'µ', 'd', 'm', 'c', 'k', 'M', 'G', 'T'],
-      distPool: ['ft', 'in', 'cm', 'mm', 'm', 'km', 'nm', 'µm']
-    },
-    hard: {
-      actDosePrefixes: ['f', 'p', 'n', 'c', 'd', 'da', 'h'],
-      distPool: ['ft', 'in', 'mm', 'cm', 'dam', 'µm', 'nm']
-    },
-    extreme: {
-      actDosePrefixes: ['a', 'f', 'p', 'n', 'da', 'h', 'P', 'E'], 
-      distPool: [
-        'ft', 'in', 'am', 'fm', 'pm', 'nm', 'µm', 'mm', 'cm', 'dm', 
-        'dam', 'hm', 'km', 'Mm', 'Gm', 'Tm', 'Pm', 'Em'
-      ]
-    },
-    hidden: {
-      actDosePrefixes: ['Q', 'R', 'Y', 'Z', 'a', 'z', 'y', 'r', 'q'],
-      distPool: ['Qm', 'Rm', 'Ym', 'Zm', 'am', 'zm', 'ym', 'rm', 'qm']
-    }
+  actDosePrefixes: ['n', 'µ', 'd', 'm', 'c', 'k', 'd', 'da', 'M', 'G', 'T'],
+  distPool: ['ft', 'in', 'cm', 'mm', 'm', 'km', 'd', 'da', 'nm', 'µm']
   };
 
   // --- 3. HELPER FUNCTIONS ---
@@ -4638,7 +4525,7 @@ function generateConversionQuestion() {
   }
 
   // --- 4. QUESTION GENERATION ---
-  const cfg = CONFIG[selectedDifficulty];
+  const cfg = CONFIG;
   const category = Math.floor(Math.random() * 3); // 0: Act, 1: Dist, 2: Dose
 
   let fromUnitStr, toUnitStr;
@@ -4675,18 +4562,10 @@ function generateConversionQuestion() {
     toUnitDef = toParsed.def;
   }
 
-   // --- NEW LOGIC: Clean Steps for Conversions ---
+   // --- Steps for Conversions ---
   let val;
-  
-  if (selectedDifficulty === "hidden" || selectedDifficulty === "extreme") {
-    // Use Powers of 10 for universal cleanliness
-    const exp = Math.floor(Math.random() * 5); // 10^0 to 10^4
-    val = Math.pow(10, exp); 
-  } else {
-    // Normal/Hard: Steps of 5 or 50
-    if (Math.random() < 0.8) val = (Math.floor(Math.random() * 199) + 1) * 5; // 5 to 995
-    else val = (Math.floor(Math.random() * 199) + 1) * 50; // 50 to ~10000
-  }
+  if (Math.random() < 0.8) val = (Math.floor(Math.random() * 199) + 1) * 5; // 5 to 995
+  else val = (Math.floor(Math.random() * 199) + 1) * 50; // 50 to ~10000
 
   let valStr = val < 10 ? val.toFixed(2) : val.toFixed(1);
   val = parseFloat(valStr); 
@@ -4699,14 +4578,14 @@ function generateConversionQuestion() {
 
   const ansNum = ans;
 
-    // --- FIX: SAFER DISTRACTOR GENERATION ---
+      // --- SAFER DISTRACTOR GENERATION ---
   let opts = [ansNum];
   
   // Helper to check if an option is valid and unique
   const isValidOption = (candidate) => {
     if (typeof candidate !== 'number' || isNaN(candidate) || candidate <= 0) return false;
-    // Use relative tolerance for large numbers, absolute for small
-    const tolerance = Math.max(Math.abs(ansNum * 0.01), 0.0001);
+    // Use purely relative tolerance (1%) to handle very small or very large numbers correctly
+    const tolerance = Math.abs(ansNum * 0.01);
     return !opts.some(existing => Math.abs(existing - candidate) < tolerance);
   };
 
@@ -4760,7 +4639,7 @@ function generateConversionQuestion() {
     }
   }
 
-  const isEasyNormal = (selectedDifficulty === "easy" || selectedDifficulty === "normal");
+  const isEasyNormal = true;
 
   // CATEGORY 0: ACTIVITY
   if (category === 0) {
@@ -4961,7 +4840,7 @@ function formatRichText(text) {
   // 1. Markdown Bold: **text** -> <strong>text</strong>
   text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
-  // 2. Basic LaTeX-like Symbol replacements
+    // 2. Basic LaTeX-like Symbol replacements
   const symbols = {
     '\\mu': 'μ', '\\alpha': 'α', '\\beta': 'β', '\\gamma': 'γ', '\\delta': 'δ',
     '\\Delta': 'Δ', '\\Sigma': 'Σ', '\\sigma': 'σ', '\\pi': 'π', '\\theta': 'θ',
@@ -4969,7 +4848,8 @@ function formatRichText(text) {
     '\\infty': '∞', '\\propto': '∝', '\\approx': '≈', '\\neq': '≠',
     '\\leq': '≤', '\\geq': '≥', '\\pm': '±', '\\cdot': '·', '\\times': '×',
     '\\div': '÷', '\\rightarrow': '→', '\\leftarrow': '←', '\\sum': '∑',
-    '\\int': '∫', '\\sqrt': '√'
+    '\\int': '∫', '\\sqrt': '√',
+    '\\left': '', '\\right': ''
   };
 
   // Replace symbols
@@ -5061,11 +4941,7 @@ function generateDecayTimeQuestion() {
     A0_Display = formatActivity(A0_MBq);
     
     let m_val;
-    if (selectedDifficulty === "easy" || selectedDifficulty === "normal") {
-      m_val = Math.floor(Math.random() * 4) + 1; 
-    } else {
-      m_val = parseFloat((Math.random() * 4 + 0.5).toFixed(2));
-    }
+    m_val = Math.floor(Math.random() * 4) + 1;
     
     const t_val = m_val * halfLifeNative;
     const t_Display = `${t_val.toFixed(1)} ${timeUnit}`;
@@ -5074,7 +4950,7 @@ function generateDecayTimeQuestion() {
     At_MBq = A0_MBq * Math.pow(0.5, m_val);
     const correctAnsStr = formatActivity(At_MBq);
     
-    qHTML = `${getArticle(isotope.symbol)} ${isotope.name} source (${isotope.symbol}) has an initial activity of ${A0_Display}.<br>Its half-life is ${hlDisplay}.<br>What is the activity after ${t_Display}?`;
+    qHTML = `${getArticle(isotope.name)} ${isotope.name} source (${isotope.symbol}) has an initial activity of ${A0_Display}.<br>Its half-life is ${hlDisplay}.<br>What is the activity after ${t_Display}?`;
     
     ans = correctAnsStr; unit = ""; 
     
@@ -5127,11 +5003,7 @@ function generateDecayTimeQuestion() {
     At_Display = formatActivity(At_MBq);
     
     let m_val;
-    if (selectedDifficulty === "easy" || selectedDifficulty === "normal") {
-      m_val = Math.floor(Math.random() * 3) + 1; 
-    } else {
-      m_val = parseFloat((Math.random() * 3 + 0.5).toFixed(2));
-    }
+    m_val = Math.floor(Math.random() * 3) + 1;
     
     const t_val = m_val * halfLifeNative;
     const t_Display = `${t_val.toFixed(1)} ${timeUnit}`;
@@ -5140,7 +5012,7 @@ function generateDecayTimeQuestion() {
     A0_MBq = At_MBq / Math.pow(0.5, m_val);
     const correctAnsStr = formatActivity(A0_MBq);
     
-    qHTML = `${getArticle(isotope.symbol)} ${isotope.name} source (${isotope.symbol}) currently has an activity of ${At_Display}.<br>Its half-life is ${hlDisplay}.<br>What was its initial activity ${t_Display} ago?`;
+    qHTML = `${getArticle(isotope.name)} ${isotope.name} source (${isotope.symbol}) currently has an activity of ${At_Display}.<br>Its half-life is ${hlDisplay}.<br>What was its initial activity ${t_Display} ago?`;
     
     ans = correctAnsStr; unit = "";
     
@@ -5199,7 +5071,7 @@ function generateDecayTimeQuestion() {
     
     const t_correct = m_time * halfLifeNative;
     
-    qHTML = `${getArticle(isotope.symbol)} ${isotope.name} source started with activity ${A0_Display} and now has ${At_Display}.<br>How much time has passed?`;
+    qHTML = `${getArticle(isotope.name)} ${isotope.name} source started with activity ${A0_Display} and now has ${At_Display}.<br>How much time has passed?`;
     
     ans = t_correct; unit = timeUnit;
     
@@ -5237,13 +5109,8 @@ function generateDeadTimeQuestion() {
     extreme: [175.5, 225.25, 310.75] // Floats
   };
 
-  const pool = tauPool[selectedDifficulty] || tauPool.normal;
+  const pool = tauPool.normal;
   let tau_us = pool[Math.floor(Math.random() * pool.length)];
-  
-  // For extreme, randomize float slightly
-  if (selectedDifficulty === "extreme" && typeof tau_us === 'number') {
-      tau_us = parseFloat((tau_us + (Math.random() * 20 - 10)).toFixed(2));
-  }
 
   const tau_s = tau_us * 1e-6; // Convert to seconds
 
@@ -5260,14 +5127,7 @@ function generateDeadTimeQuestion() {
     // And ensure Ro * tau is reasonable (e.g. < 0.5) to avoid massive corrections
     // If tau = 250us (0.00025s), max Ro approx 4000 cps (240,000 cpm).
     
-    if (selectedDifficulty === "easy" || selectedDifficulty === "normal") {
-      // Pick Ro_cps to make the math relatively clean
-      // Try to make (1 - Ro*tau) a clean fraction if possible
-      // Example: tau = 250us. Ro = 500cps. Ro*tau = 0.125. Denom = 0.875.
-      Ro_cps = [200, 400, 500, 600, 800, 1000][Math.floor(Math.random()*6)];
-    } else {
-      Ro_cps = Math.random() * 2000 + 200; 
-    }
+    Ro_cps = [200, 400, 500, 600, 800, 1000][Math.floor(Math.random()*6)];
 
     Ro_cpm = Ro_cps * 60;
     
@@ -5304,11 +5164,7 @@ function generateDeadTimeQuestion() {
     // Easy mode defaults to Forward only, so this runs on Normal+
     
     // Generate True Count Rate (cpm)
-    if (selectedDifficulty === "normal") {
-       R_true_cps = [300, 500, 800, 1000][Math.floor(Math.random()*4)];
-    } else {
-       R_true_cps = Math.random() * 1500 + 300;
-    }
+    R_true_cps = [300, 500, 800, 1000][Math.floor(Math.random()*4)];
 
     const R_true_cpm = R_true_cps * 60;
 
@@ -5410,25 +5266,10 @@ function generateCountingStatsQuestion() {
   let N, R; // N = Counts, R = Rate (μSv/h)
 
   // 2. GENERATE DATA BY DIFFICULTY
-  if (selectedDifficulty === "easy") {
-    // Perfect squares for clean mental math
-    const bases = [4, 5, 6, 7, 8, 9, 10, 12, 15, 20];
-    const base = bases[Math.floor(Math.random() * bases.length)];
-    N = base * base;
-    R = Math.round(Math.random() * 90 + 10); // Integer 10-100
-  } 
-  else if (selectedDifficulty === "normal") {
-    // Nice numbers, some perfect squares
-    const pool = [25, 36, 49, 64, 81, 100, 121, 144, 150, 200, 225, 256];
-    N = pool[Math.floor(Math.random() * pool.length)];
-    R = Math.round(Math.random() * 180 + 20);
-  }
-  else {
-    // Hard/Extreme: Random numbers, floats
-    N = Math.round(Math.random() * 9000 + 100);
-    R = parseFloat((Math.random() * 990 + 10).toFixed(1));
-  }
-
+  // Some perfect squares
+  const pool = [25, 36, 49, 64, 81, 100, 121, 144, 150, 200, 225, 256];
+  N = pool[Math.floor(Math.random() * pool.length)];
+  R = Math.round(Math.random() * 180 + 20);
   // 3. CALCULATIONS
   const sqrtN = Math.sqrt(N);
   
@@ -5579,7 +5420,7 @@ function generateCumulativeDoseQuestion() {
 
     // Occupancy Factor
     const T = OCCUPANCY_FACTORS[Math.floor(Math.random() * OCCUPANCY_FACTORS.length)];
-    const useOccupancy = (selectedDifficulty !== "easy" || Math.random() > 0.5);
+    const useOccupancy = Math.random() > 0.5;
     occupancyDisplay = useOccupancy ? `The area has an occupancy factor of <strong>${T}</strong>.` : '';
     effectiveT = useOccupancy ? T : 1;
 
@@ -5693,7 +5534,7 @@ function handleKnowledgeImport(event) {
         knowledgeQuestionState = {};
 
         const statusEl = document.getElementById('import-status');
-        statusEl.textContent = `✅ Loaded: ${file.name}`;
+        statusEl.textContent = `Loaded: ${file.name}`;
         statusEl.style.color = 'var(--col-success)';
         
         const saveStatus = document.getElementById('save-status');
@@ -6110,7 +5951,7 @@ function applyMerge() {
   const statusEl = document.getElementById('import-status');
   const replacedCount = plan.modifiedItems.filter(i => i.checked).length;
   const totalAdded = plan.newQCount;
-  statusEl.textContent = `✅ Merged: +${totalAdded} new, ${replacedCount} replaced, ${plan.skippedCount} unchanged`;
+  statusEl.textContent = `Merged: +${totalAdded} new, ${replacedCount} replaced, ${plan.skippedCount} unchanged`;
   statusEl.style.color = 'var(--col-success)';
   
   const saveStatus = document.getElementById('save-status');
@@ -6164,7 +6005,7 @@ function loadSavedKnowledgeData() {
 
     // Update UI
     const statusEl = document.getElementById('import-status');
-    statusEl.textContent = "✅ Restored previous session.";
+    statusEl.textContent = "Restored previous session.";
     statusEl.style.color = 'var(--col-success)';
     
     // Show status indicator
@@ -6801,27 +6642,62 @@ let rsoAnsweredCount = 0;
 let rsoTotalQuestions = 0;
 let rsoGeneratedEngines = []; // Store qEngine for each question
 
-function renderAllQuestionsRSO() {
+function renderAllQuestionsRSO(isResuming = false) {
   const quizEl = document.getElementById('rso-quiz');
   quizEl.innerHTML = '';
   
-  rsoScore = 0;
-  rsoAnsweredCount = 0;
-  rsoTotalQuestions = knowledgeQuizPool.length;
-  rsoGeneratedEngines = [];
+  // Build a map of history entries for fast lookup
+  const historyMap = new Map();
+  if (isResuming && knowledgeQuizHistory.length > 0) {
+      knowledgeQuizHistory.forEach(h => {
+          if(h.id) historyMap.set(h.id, h);
+      });
+  }
+
+  // Initialize counters
+  if (isResuming) {
+      rsoScore = knowledgeScore;
+      rsoAnsweredCount = knowledgeQuizHistory.length;
+  } else {
+      rsoScore = 0;
+      rsoAnsweredCount = 0;
+  }
   
-  // Update score display
-  document.getElementById('rso-correct').textContent = '0';
+  rsoTotalQuestions = knowledgeQuizPool.length;
+  rsoGeneratedEngines = []; 
+
+  // Update UI Score/Progress
+  document.getElementById('rso-correct').textContent = rsoScore;
   document.getElementById('rso-total').textContent = rsoTotalQuestions;
-  document.getElementById('rso-progress-bar').style.width = '0%';
+  const progressPct = (rsoAnsweredCount / rsoTotalQuestions) * 100;
+  document.getElementById('rso-progress-bar').style.width = `${progressPct}%`;
   
   // Render each question
   knowledgeQuizPool.forEach((item, qIndex) => {
-    const qEngine = generateKnowledgeQuestionHTML(item.qData);
+    let qEngine;
+    const existingHistory = historyMap.get(item.id);
+    
+    // Use existing history data if resuming, else generate new
+    if (existingHistory && existingHistory.allOptions) {
+        // Reconstruct qEngine from saved history
+        qEngine = {
+            questionHTML: existingHistory.q,
+            correctAnswer: existingHistory.correctAns,
+            shuffledOptions: existingHistory.allOptions.map((text, idx) => ({
+                text: text,
+                isCorrect: text === existingHistory.correctAns
+            })),
+            explanation: existingHistory.expl
+        };
+    } else {
+        qEngine = generateKnowledgeQuestionHTML(item.qData);
+    }
+    
     rsoGeneratedEngines.push(qEngine);
     
     const qDiv = document.createElement('div');
     qDiv.className = 'rso-question';
+    qDiv.id = 'rso-q-' + qIndex;
     qDiv.style.animationDelay = `${qIndex * 0.05}s`;
     
     // Question text
@@ -6841,7 +6717,30 @@ function renderAllQuestionsRSO() {
       const btn = document.createElement('button');
       btn.className = 'rso-option-btn';
       btn.textContent = opt.text;
-      btn.onclick = () => handleKnowledgeAnswerRSO(btn, optIdx, qEngine, qDiv);
+      
+      // If resuming and this question is in history, render as answered
+      if (existingHistory) {
+          btn.disabled = true;
+          qDiv.setAttribute('data-answered', 'true');
+          
+          const isSelected = (optIdx === existingHistory.selectedIndex);
+          const isCorrect = opt.isCorrect;
+
+          if (isSelected) btn.classList.add(isCorrect ? 'correct' : 'incorrect');
+          if (isCorrect && !isSelected) btn.classList.add('correct');
+          if (!isSelected && !isCorrect) btn.classList.add('dimmed');
+          
+          // Add status icon if user answered this
+          if (isSelected) {
+             const statusIcon = document.createElement('span');
+             statusIcon.className = `rso-status-icon ${isCorrect ? 'correct' : 'incorrect'}`;
+             statusIcon.textContent = isCorrect ? '✔' : '✖';
+             answerContainer.appendChild(statusIcon);
+          }
+      } else {
+          // Normal interaction
+          btn.onclick = () => handleKnowledgeAnswerRSO(btn, optIdx, qEngine, qDiv, item);
+      }
       
       answerContainer.appendChild(btn);
       optionsContainer.appendChild(answerContainer);
@@ -6849,19 +6748,46 @@ function renderAllQuestionsRSO() {
     
     qDiv.appendChild(optionsContainer);
     
-    // Explanation (hidden by default)
-    if (qEngine.explanation) {
+    // Show explanation if answered
+    if (existingHistory && qEngine.explanation) {
       const expDiv = document.createElement('div');
-      expDiv.className = 'rso-explanation';
+      expDiv.className = 'rso-explanation visible';
       expDiv.innerHTML = qEngine.explanation;
       qDiv.appendChild(expDiv);
     }
     
-    quizEl.appendChild(qDiv);
+     quizEl.appendChild(qDiv);
   });
+
+      // --- AUTO-SCROLL LOGIC FOR RESUMING ---
+  if (isResuming) {
+    // Build a set of answered question IDs for fast lookup
+    const answeredIDs = new Set(knowledgeQuizHistory.map(h => h.id));
+
+    // Find the index of the first UNANSWERED question in the pool
+    let scrollTargetIndex = -1;
+    for (let i = 0; i < knowledgeQuizPool.length; i++) {
+      if (!answeredIDs.has(knowledgeQuizPool[i].id)) {
+        scrollTargetIndex = i;
+        break;
+      }
+    }
+
+    // If all questions are answered, scroll to the very end (or start if none answered)
+    if (scrollTargetIndex === -1) {
+      scrollTargetIndex = knowledgeQuizPool.length > 0 ? knowledgeQuizPool.length - 1 : 0;
+    }
+
+    const targetEl = document.getElementById('rso-q-' + scrollTargetIndex);
+    if (targetEl) {
+      setTimeout(() => {
+        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 150);
+    }
+  }
 }
 
-function handleKnowledgeAnswerRSO(button, selectedIndex, qEngine, questionDiv) {
+function handleKnowledgeAnswerRSO(button, selectedIndex, qEngine, questionDiv, poolItem) {
   if (questionDiv.getAttribute('data-answered') === 'true') return;
   questionDiv.setAttribute('data-answered', 'true');
   
@@ -6922,6 +6848,7 @@ function handleKnowledgeAnswerRSO(button, selectedIndex, qEngine, questionDiv) {
   
   // Store in history for results screen
   knowledgeQuizHistory.push({
+    id: poolItem.id,
     q: qEngine.questionHTML,
     userAns: selected.text,
     correctAns: qEngine.correctAnswer,
@@ -7293,12 +7220,8 @@ function generateDetectorCountRateQuestion() {
   // Easy/Normal: Nice numbers including 2π, 4π, 10, 100
   // Hard: Random floats
   let area_cm2;
-  if (selectedDifficulty === "easy" || selectedDifficulty === "normal") {
-    area_cm2 = [2*Math.PI, 4*Math.PI, 10, 20, 50, 100][Math.floor(Math.random() * 6)];
-    area_cm2 = parseFloat(area_cm2.toFixed(2)); // Clean up 6.28...
-  } else {
-    area_cm2 = Math.random() * 80 + 5; // 5 to 85 cm²
-  }
+  area_cm2 = [2*Math.PI, 4*Math.PI, 10, 20, 50, 100][Math.floor(Math.random() * 6)];
+  area_cm2 = parseFloat(area_cm2.toFixed(2));
 
   const area_m2 = area_cm2 * 1e-4;
 
@@ -7334,7 +7257,7 @@ function generateDetectorCountRateQuestion() {
   const areaDisplay = `${area_cm2.toFixed(2)} cm²`;
 
   // Question Text
-  const qHTML = `${getArticle(isotope.symbol)} ${isotope.name} source (${isotope.symbol}) with activity ${actDisplay} is placed ${distDisplay} from a detector.<br>
+  const qHTML = `${getArticle(isotope.name)} ${isotope.name} source (${isotope.symbol}) with activity ${actDisplay} is placed ${distDisplay} from a detector.<br>
   The detector has a sensitive area of <strong>${areaDisplay}</strong> and an efficiency of <strong>${efficiency}</strong> for the measured energy.<br>
   Calculate the expected count rate.`;
 
@@ -7370,13 +7293,13 @@ function generateDetectorCountRateQuestion() {
 
   // 7. EXPLANATION
   // Use formatScientificNice to display beautiful superscripts like 10¹⁰
-  const geoExp = `Geometric Fraction = Area / (4πr²) = ${formatScientificNice(area_m2, 2)} / (4π × ${safeD.toFixed(2)}²) ≈ ${formatScientificNice(geoFraction, 2)}`;
+  const geoExp = `Geometric Efficiency (Ω):<br>Ω = Area / (4πd²)<br>Ω = ${formatScientificNice(area_m2, 2)} m² / (4π × ${safeD.toFixed(2)}² m²) ≈ ${formatScientificNice(geoFraction, 2)}`;
   
-  const calcExp = `Count Rate = Activity × Geometry × Efficiency<br>
-                   = ${formatScientificNice(act_Bq, 2)} Bq × ${formatScientificNice(geoFraction, 2)} × ${efficiency}<br>
-                   ≈ ${rate_cps.toFixed(2)} cps`;
+  const calcExp = `Count Rate (cps):<br>R = A × Ω × ε<br>R = ${formatScientificNice(act_Bq, 2)} Bq × ${formatScientificNice(geoFraction, 2)} × ${efficiency}<br>R ≈ ${rate_cps.toFixed(4)} cps`;
 
-  const expl = `${geoExp}<br>${calcExp}`;
+  const unitExp = askCPM ? `<br>Count Rate (cpm):<br>${rate_cps.toFixed(4)} cps × 60 ≈ ${rate_cpm.toFixed(3)} cpm` : '';
+
+  const expl = `${geoExp}<br><br>${calcExp}${unitExp}`;
 
     return {
     type: "detector-count-rate",
@@ -7399,9 +7322,6 @@ function generateDetectorCountRateQuestion() {
 // Picks ONE consistent display unit per question so all options match.
 // Returns { displayUnit, convert } where convert(v) transforms from base to display.
 function pickAnswerConversion(baseUnit) {
-  const diff = selectedDifficulty;
-  const isAdvanced = (diff === "hard" || diff === "extreme" || diff === "hidden");
-  const isExoticTier = (diff === "extreme" || diff === "hidden");
 
   // --- HIDDEN PREFIX TABLE (shared across distance/rate/activity) ---
   const HIDDEN_PFX = [
@@ -7417,91 +7337,12 @@ function pickAnswerConversion(baseUnit) {
   ];
   const randPick = arr => arr[Math.floor(Math.random() * arr.length)];
 
-  // ======================== DISTANCE (base = "m") ========================
-  if (baseUnit === "m" && isAdvanced) {
-    if (diff === "hidden") {
-      const p = randPick(HIDDEN_PFX);
-      return { displayUnit: p.sym + "m", convert: v => v / p.val };
-    }
-    if (diff === "extreme") {
-      const p = randPick(EXTREME_DIST_PFX);
-      return { displayUnit: p.sym + "m", convert: v => v / p.val };
-    }
-    // hard
-    const hc = [
-      { u: "mm", fn: v => v * 1000 },
-      { u: "cm", fn: v => v * 100 },
-      { u: "in", fn: v => v / 0.0254 },
-      { u: "ft", fn: v => v / 0.3048 },
-      { u: "m",  fn: v => v }
-    ];
-    const pick = randPick(hc);
-    return { displayUnit: pick.u, convert: pick.fn };
-  }
-
-  // ======================== SI RATE FAMILY ========================
-  // Maps each possible generator unit to its factor relative to µSv/h
-  const SI_RATE = { "µSv/h": 1, "nSv/h": 1e-3, "mSv/h": 1e3, "Sv/h": 1e6 };
-  if (SI_RATE[baseUnit] !== undefined && isExoticTier) {
-    const toBase = SI_RATE[baseUnit]; // multiply value by this to get µSv/h
-    if (diff === "hidden") {
-      const p = randPick(HIDDEN_PFX);
-      // µSv/h -> Sv/h (÷1e6) -> target prefix (÷p.val)
-      return { displayUnit: p.sym + "Sv/h", convert: v => (v * toBase * 1e-6) / p.val };
-    }
-    // extreme: randomly pick among standard SI tiers
-    const targets = [
-      { u: "nSv/h", f: 1e3 }, { u: "µSv/h", f: 1 }, { u: "mSv/h", f: 1e-3 }, { u: "Sv/h", f: 1e-6 }
-    ];
-    const pick = randPick(targets);
-    return { displayUnit: pick.u, convert: v => v * toBase * pick.f };
-  }
-
-  // ======================== TRAD RATE FAMILY ========================
-  const TRAD_RATE = { "R/h": 1, "mR/h": 1e-3, "µR/h": 1e-6, "rem/h": 1, "mrem/h": 1e-3 };
-  if (TRAD_RATE[baseUnit] !== undefined && isExoticTier) {
-    const toBase = TRAD_RATE[baseUnit]; // multiply value by this to get R/h (or rem/h)
-    const family = baseUnit.includes("rem") ? "rem" : "R";
-    if (diff === "hidden") {
-      const p = randPick(HIDDEN_PFX);
-      return { displayUnit: p.sym + family + "/h", convert: v => (v * toBase) / p.val };
-    }
-    // extreme
-    const targets = [
-      { u: family + "/h", f: 1 }, { u: "m" + family + "/h", f: 1e3 }
-    ];
-    const pick = randPick(targets);
-    return { displayUnit: pick.u, convert: v => v * toBase * pick.f };
-  }
-
-  // ======================== ACTIVITY (GBq from reverse-shielded) ========================
-  // GBq -> exotic Bq prefixes
-  if (baseUnit === "GBq" && isExoticTier) {
-    if (diff === "hidden") {
-      const p = randPick(HIDDEN_PFX);
-      // GBq -> Bq (×1e9) -> target (÷p.val)
-      return { displayUnit: p.sym + "Bq", convert: v => (v * 1e9) / p.val };
-    }
-    // extreme: random SI activity prefix
-    const targets = [
-      { u: "kBq", f: 1e6 }, { u: "MBq", f: 1e3 }, { u: "GBq", f: 1 }, { u: "TBq", f: 1e-3 }
-    ];
-    const pick = randPick(targets);
-    return { displayUnit: pick.u, convert: v => v * pick.f };
-  }
-
   // ======================== NO CONVERSION NEEDED ========================
   return { displayUnit: baseUnit, convert: v => v };
 }
 // ==================== MAIN QUIZ ENGINE ====================
 function generateQuestion() {
 currentDistanceUnits.clear();
-  // --- STEPS MODE MERGE LOGIC ---
-  // If in Steps Mode, randomly assign 'easy' or 'normal' for this specific question.
-  // This "forges" the two difficulties into one experience.
-  if (isStepsMode) {
-    selectedDifficulty = Math.random() < 0.5 ? 'easy' : 'normal';
-  }
 
   const type = selectedFormulas[Math.floor(Math.random() * selectedFormulas.length)];
   const generator = QUESTION_GENERATORS[type] || QUESTION_GENERATORS["rate"];
@@ -7510,8 +7351,7 @@ currentDistanceUnits.clear();
   let questionHTML = qData.q;
 
   // --- BUILD HINTS/PHYSICS INFO ---
-  // Only show hints if NOT Extreme difficulty
-  if (selectedDifficulty !== "extreme" && selectedDifficulty !== "hidden") {
+    if (true) {
     let physicsLines = []; // Lines for Formula & Constants (no bullets)
     let helperLines = [];  // Lines for Unit Conversions (with bullets)
 
@@ -7545,7 +7385,8 @@ currentDistanceUnits.clear();
         physicsLines.push(qData.hints);
     }
     // Single Isotope types (SI Mode)
-    else if (qData.isotope && qData.type !== "decay") {
+    // Exclude Detector Count Rate questions where Gamma is irrelevant
+    else if (qData.isotope && qData.type !== "decay" && qData.type !== "detector-count-rate") {
     physicsLines.push(`Γ<sub>${qData.isotope.symbol}</sub> = ${qData.isotope.gamma} µSv·m²/(h·MBq)`);
     }
     // Handle Questions with Custom Hints (Traditional/Cross units)
@@ -7560,20 +7401,18 @@ currentDistanceUnits.clear();
       });
     }
     
-    // Pure Inverse Formula hint (Easy only)
-    if (qData.type === "pure-inverse" && selectedDifficulty === "easy") {
+    // Pure Inverse Formula hint
+    if (qData.type === "pure-inverse") {
        physicsLines.push(qData.expl);
     }
 
 	// 2. HANDLE HELPER INFO (UNIT CONVERSIONS)
     if (currentDistanceUnits.has("ft") || currentDistanceUnits.has("in")) {
       if (currentDistanceUnits.has("ft")) {
-        const text = selectedDifficulty === "easy" ? "1 ft = 0.3048 m" : "1 ft = 30.48 cm";
-        helperLines.push(`• ${text}`);
+        helperLines.push(`• 1 ft = 0.3048 m`);
       }
-	if (currentDistanceUnits.has("in")) {
-        const text = selectedDifficulty === "easy" ? "1 in = 0.0254 m" : "1 in = 2.54 cm";
-        helperLines.push(`• ${text}`);
+      if (currentDistanceUnits.has("in")) {
+        helperLines.push(`• 1 in = 0.0254 m`);
       }
     }
 
@@ -7624,22 +7463,22 @@ currentDistanceUnits.clear();
   const optsDiv = document.getElementById("options");
   optsDiv.innerHTML = "";
   
-  let shuffled;
   let formatted;
+  let displayUnit = qData.unit; 
 
-  // Counting Statistics uses pre-formatted string options, not numbers.
-  // We must skip unit conversion to avoid NaN errors.
-  if (qData.type === "counting-stats") {
-    formatted = qData.opts; // Already strings
-    shuffled = [...formatted].sort(() => Math.random() - 0.5);
+  // Check if options are strings (e.g. "A ± B" or "30 years")
+  // If so, skip conversion math which results in NaN
+  if (qData.opts.length > 0 && typeof qData.opts[0] === 'string') {
+      formatted = qData.opts; 
   } else {
-    // Standard numerical option processing
-    const { displayUnit, convert } = pickAnswerConversion(qData.unit);
-    if (displayUnit !== qData.unit && displayUnit.endsWith("m") && !displayUnit.includes("/"))
-      currentDistanceUnits.add(displayUnit);
-    formatted = qData.opts.map(v => formatAnswer(convert(v), displayUnit, qData.type));
-    shuffled = [...formatted].sort(() => Math.random() - 0.5);
+      const conv = pickAnswerConversion(qData.unit);
+      displayUnit = conv.displayUnit;
+      if (displayUnit !== qData.unit && displayUnit.endsWith("m") && !displayUnit.includes("/"))
+        currentDistanceUnits.add(displayUnit);
+      formatted = qData.opts.map(v => formatAnswer(conv.convert(v), displayUnit, qData.type));
   }
+
+  const shuffled = [...formatted].sort(() => Math.random() - 0.5);
   
   // Store shuffled options globally so checkAnswer can access them for history
   window.currentShuffledOptions = shuffled;
@@ -7649,13 +7488,15 @@ currentDistanceUnits.clear();
   
     shuffled.forEach((optText, i) => {
     const btn = document.createElement("button");
-	const originalVal = qData.opts[formatted.indexOf(optText)];
+    const originalVal = qData.opts[formatted.indexOf(optText)];
     
-    // Tooltips are only for numerical values. For string answers (e.g. counting-stats), skip tooltip.
-    const tooltipText = (typeof originalVal === 'number') 
+    // Only show cross-system tooltips for conversion questions
+    // Rate questions using SI units (µSv·m²/(h·MBq)) naturally produce µSv/h - no conversion needed
+    const isConversionQuestion = (qData.type === "conversion");
+    const tooltipText = (typeof originalVal === 'number' && isConversionQuestion) 
       ? getAnswerTooltip(originalVal, qData.unit, qData.sourceUnit || null) 
       : "";
-
+      
     btn.innerHTML = `<span class="option-number">${i + 1}.</span> ${createHoverable(optText, tooltipText)}`;
     btn.onclick = () => checkAnswer(i, window.currentCorrectIndex, btn);
     optsDiv.appendChild(btn);
@@ -7697,7 +7538,7 @@ function formatAnswer(value, unit, type = "rate") {
   const isTinyTrad = (unit === 'R/h' || unit === 'rem/h') && Math.abs(value) < 0.01;
   
   // --- LOGIC: DETERMINE PRECISION MODE ---
-  const useHighPrecision = (type === "conversion" || selectedDifficulty === "hard" || selectedDifficulty === "extreme" || selectedDifficulty === "hidden" || isTinyTrad);
+  const useHighPrecision = (type === "conversion" || isTinyTrad);
 
   if (useHighPrecision) {
     // --- HIGH PRECISION LOGIC ---
@@ -7729,7 +7570,7 @@ function formatAnswer(value, unit, type = "rate") {
         formattedValue = value.toFixed(1);
       }
       
-      // FIX: If we rounded a tiny non-zero value to "0.000", expand decimals.
+      // If we rounded a tiny non-zero value to "0.000", expand decimals.
       if (parseFloat(formattedValue) === 0 && value !== 0) {
          formattedValue = value.toFixed(4);
       }
@@ -8008,7 +7849,7 @@ function generateStepsQuestion() {
 
   // --- STEP 3: Initialize Working Value ---
   
-  // FIX: Universal check - does the question define an explicit start value?
+  // Universal check - does the question define an explicit start value?
   if (qData.meta && qData.meta.startVal !== undefined) {
     window.currentWorkingValue = qData.meta.startVal;
   }
@@ -9078,7 +8919,7 @@ function renderStepsStep() {
 }
 // 5. Checker
 function checkStepsStep(btn, selectedStep, correctStep) {
-  const qData = window.currentStepsData; // <--- CRITICAL FIX: Retrieve question data
+  const qData = window.currentStepsData; // Retrieve question data
   const buttons = document.querySelectorAll('#steps-step-options button');
   const feedbackBox = document.getElementById('steps-feedback-box');
   const feedbackMsg = document.getElementById('steps-feedback-msg');
@@ -9087,7 +8928,7 @@ function checkStepsStep(btn, selectedStep, correctStep) {
   if (selectedStep === correctStep) {
     // --- CORRECT ---
     btn.classList.add('correct');
-    feedbackMsg.textContent = "✅ Correct Step!";
+    feedbackMsg.textContent = "Correct Step!";
     feedbackMsg.style.color = "var(--col-success)";
     
     // Apply Math to Working Value
@@ -9172,7 +9013,7 @@ function checkStepsStep(btn, selectedStep, correctStep) {
     });
   }
   
-  // --- ALTERNATIVE FIX: SYNC POPUP (Placed at end to cover both branches) ---
+  // --- SYNC POPUP (Placed at end to cover both branches) ---
   if (window.updatePopoutFeedback) window.updatePopoutFeedback();
 }
 
@@ -9183,7 +9024,7 @@ function handleCorrectionClick(btn, correctStep) {
   btn.classList.remove('step-correction');
   btn.classList.add('correct');
   
-  feedbackMsg.textContent = "✅ Correct Step (Guided).";
+  feedbackMsg.textContent = "Correct Step (Guided).";
   feedbackMsg.style.color = "var(--col-success)";
 
     // Update value using op/val
@@ -9434,50 +9275,13 @@ function continueQuiz(addCount) {
 }
 // ==================== BACK TO SELECTION ====================
 function backToSelection() {
-  // Save incomplete session to history if active
+  // Save progress as incomplete (only if a session is active)
   if (currentSessionId) {
-    pauseQuizTimer();
-    const activeTab = document.querySelector('.tab-btn.active').dataset.tab;
-    let sessionScore = 0, sessionTotal = 0, sessionHistory = [];
-    
-    if (activeTab === 'knowledge') {
-      sessionScore = knowledgeScore;
-      sessionTotal = totalKnowledgeQuestions;
-      sessionHistory = knowledgeQuizHistory;
-    } else if (activeTab === 'steps') {
-      sessionScore = score;
-      sessionTotal = numQuestionsTotal;
-      sessionHistory = quizHistory;
-    } else {
-      sessionScore = score;
-      sessionTotal = numQuestionsTotal;
-      sessionHistory = quizHistory;
-    }
-    
-    const entry = quizHistoryLog.find(e => e.id === currentSessionId);
-    if (entry) {
-      entry.endTime = Date.now();
-      entry.timeSpent = getElapsedTime();
-      entry.score = sessionScore;
-      entry.total = sessionTotal;
-      entry.currentQuestion = activeTab === 'knowledge' ? currentKnowledgeQuestion : currentQuestionNum;
-      entry.history = sessionHistory;
-      entry.isCompleted = false;
-      // Save resume state
-      entry.resumeState = {
-        tab: activeTab,
-        score: sessionScore,
-        currentQ: activeTab === 'knowledge' ? currentKnowledgeQuestion : currentQuestionNum,
-        totalQ: sessionTotal,
-        history: sessionHistory
-      };
-      saveHistoryLog();
-    }
-    currentSessionId = null;
+    saveCurrentProgressToHistory(false);
+    currentSessionId = null; // End session context
   }
 
-  saveSession();
-  // Hide all possible screens
+  // Reset UI
   document.getElementById('quiz-screen').style.display = 'none';
   document.getElementById('results-screen').style.display = 'none';
   document.getElementById('steps-quiz-screen').classList.add('hidden');
@@ -9486,15 +9290,12 @@ function backToSelection() {
   document.getElementById('knowledge-quiz-screen').classList.remove('rso-mode');
   document.getElementById('knowledge-results-screen').classList.add('hidden');
 
-  // Show correct selection screen based on current tab
   const activeTab = document.querySelector('.tab-btn.active').dataset.tab;
-
   if (activeTab === 'steps') {
     document.getElementById('steps-selection-screen').classList.remove('hidden');
   } else if (activeTab === 'knowledge') {
     document.getElementById('knowledge-selection-screen').classList.remove('hidden');
   } else {
-    // Conventional (default)
     document.getElementById('selection-screen').style.display = 'block';
   }
 }
@@ -9528,6 +9329,62 @@ window.addEventListener('message', function(e) {
     break;
   }
 });
+// ==================== HELPER: SAVE CURRENT PROGRESS ====================
+function saveCurrentProgressToHistory(isCompleted = false) {
+  if (!currentSessionId) return; // No active session
+
+  const entry = quizHistoryLog.find(e => e.id === currentSessionId);
+  if (!entry) return;
+
+  pauseQuizTimer();
+  entry.endTime = Date.now();
+  entry.timeSpent = getElapsedTime();
+
+  const activeTab = document.querySelector('.tab-btn.active').dataset.tab;
+  let sessionScore = 0, sessionTotal = 0, sessionHistory = [];
+  
+  if (activeTab === 'knowledge') {
+    sessionScore = knowledgeScore;
+    sessionTotal = totalKnowledgeQuestions;
+    sessionHistory = knowledgeQuizHistory;
+  } else if (activeTab === 'steps') {
+    sessionScore = score;
+    sessionTotal = numQuestionsTotal;
+    sessionHistory = quizHistory;
+  } else {
+    sessionScore = score;
+    sessionTotal = numQuestionsTotal;
+    sessionHistory = quizHistory;
+  }
+
+  entry.score = sessionScore;
+  entry.total = sessionTotal;
+  entry.currentQuestion = activeTab === 'knowledge' ? currentKnowledgeQuestion : currentQuestionNum;
+  entry.history = sessionHistory;
+  entry.isCompleted = isCompleted;
+
+  // Save Resume State only if incomplete
+  if (!isCompleted) {
+    const poolIDs = (activeTab === 'knowledge') ? knowledgeQuizPool.map(item => item.id) : [];
+    entry.resumeState = {
+      tab: activeTab,
+      mode: activeTab === 'knowledge' ? (isKnowledgeProgressive ? 'progressive' : 'standard') : 'normal',
+      score: sessionScore,
+      currentQ: activeTab === 'knowledge' ? currentKnowledgeQuestion : currentQuestionNum,
+      totalQ: sessionTotal,
+      history: sessionHistory,
+      poolIDs: poolIDs,
+      // Save selection states for conventional/steps
+      formulas: selectedFormulas,
+      isotopes: selectedIsotopes,
+      difficulty: selectedDifficulty
+    };
+  } else {
+    entry.resumeState = null; // Clear resume state if completed
+  }
+
+  saveHistoryLog();
+}
 // ==================== TAB SWITCHING ====================
 function switchTab(tabName) {
   // Pause timer when switching away from an active quiz
@@ -9564,9 +9421,6 @@ function switchTab(tabName) {
   else {
     // Conventional Tab
     isStepsMode = false;
-    // Restore difficulty from UI (in case Progressive overwrote it)
-    const activeDiff = document.querySelector('#difficulty-options .option-card.selected');
-    if (activeDiff) selectedDifficulty = activeDiff.dataset.value;
   }
 
   // Resume timer if returning to tab with active quiz
@@ -9817,39 +9671,74 @@ function continueHistorySession(sessionId) {
   
   const rs = entry.resumeState;
   
-  if (rs.tab === 'knowledge') {
-    // Switch to knowledge tab
-    switchTab('knowledge');
-    
-    // Restore quiz state
+      if (rs.tab === 'knowledge') {
+    // Check if database exists
+    if (!importedDatabase) {
+       alert("Please re-import the question bank JSON to continue this session.");
+       return;
+    }
+
+    // 1. Restore Mode (Explicitly determine boolean)
+    // 'standard' or 'rso' -> false; 'progressive' -> true
+    const mode = entry.mode || 'standard';
+    isKnowledgeProgressive = (mode === 'progressive');
+
+    // 2. Restore Pool (reconstruct from saved IDs)
+    if (rs.poolIDs) {
+        knowledgeQuizPool = rs.poolIDs.map(id => {
+            const lastUnderscore = id.lastIndexOf('_');
+            const sKey = id.substring(0, lastUnderscore);
+            const sIndex = parseInt(id.substring(lastUnderscore + 1));
+
+            const section = importedDatabase.sections[sKey];
+            if (section && section.questions[sIndex]) {
+                return { id: id, qData: section.questions[sIndex], sectionTitle: section.title || sKey };
+            }
+            return null;
+        }).filter(Boolean);
+    } else {
+        // Fallback if IDs weren't saved (old history)
+        knowledgeQuizPool = [];
+    }
+
+    // 3. Restore Counters & History
     knowledgeScore = rs.score || 0;
-    currentKnowledgeQuestion = rs.currentQ || 0;
-    totalKnowledgeQuestions = rs.totalQ || 0;
+    currentKnowledgeQuestion = rs.currentQ || 0; 
+    totalKnowledgeQuestions = rs.totalQ || knowledgeQuizPool.length;
     knowledgeQuizHistory = rs.history || [];
-    
-    // Re-activate session timer
+
+    // 4. Re-activate session timer
     currentSessionId = sessionId;
     activeQuizTimer.sessionId = sessionId;
     activeQuizTimer.accumulated = entry.timeSpent || 0;
     activeQuizTimer.startedAt = Date.now();
     activeQuizTimer.isPaused = false;
-    
-    // Show quiz screen
+
+    // 5. UI Switch
+    switchTab('knowledge');
     document.getElementById('knowledge-selection-screen').classList.add('hidden');
     document.getElementById('knowledge-results-screen').classList.add('hidden');
     document.getElementById('knowledge-quiz-screen').classList.remove('hidden');
-    
+
     if (isKnowledgeProgressive) {
-      document.getElementById('knowledge-quiz-screen').classList.remove('rso-mode');
-      updateKnowledgeScore();
-      nextKnowledgeQuestion();
+        // PROGRESSIVE MODE
+        document.getElementById('knowledge-quiz-screen').classList.remove('rso-mode');
+        updateKnowledgeScore();
+        nextKnowledgeQuestion();
     } else {
-      // For standard/RSO, continue from where left off
-      document.getElementById('knowledge-quiz-screen').classList.remove('rso-mode');
-      updateKnowledgeScore();
-      nextKnowledgeQuestion();
+        // STANDARD / RSO MODE
+        // Ensure UI is definitely in RSO mode
+        document.getElementById('knowledge-quiz-screen').classList.add('rso-mode');
+        
+        // Set Header Title
+        const sectionNames = [...new Set(knowledgeQuizPool.map(i => i.sectionTitle))];
+        document.getElementById('rso-section-title').textContent = sectionNames.join(' + ') || 'Question Bank';
+        
+        // Render All Questions (Pass true to indicate we are resuming)
+        // Logic now handles finding the first unanswered question automatically via historyMap
+        renderAllQuestionsRSO(true);
     }
-  } 
+  }
   else if (rs.tab === 'conventional') {
     switchTab('conventional');
     
@@ -9921,6 +9810,12 @@ function closeSolutionModalOnOverlay(event) {
     closeSolutionModal();
   }
 }
+// ==================== AUTO-SAVE ON CLOSE/REFRESH ====================
+window.addEventListener('beforeunload', function() {
+  if (currentSessionId) {
+    saveCurrentProgressToHistory(false);
+  }
+});
 </script>
 <!-- ==================== Settings Modal ==================== -->
 <div id="settings-modal" class="settings-modal">
@@ -9928,23 +9823,56 @@ function closeSolutionModalOnOverlay(event) {
     <button class="settings-close-modal" id="settings-close-btn">×</button>
     <h2>Settings</h2>
 
-    <div class="setting-item">
-      <label>Accent Color <span style="font-size:1.4em;">🎨</span></label>
+    <!-- Accent Color -->
+      <div class="setting-item">
+      <label>Accent Color</label>
       <div style="display:flex; gap:12px; align-items:center; justify-content:center;">
         <input type="color" id="accent-color-picker" value="#00ffff" style="width:68px;height:68px;border:none;border-radius:12px;cursor:pointer;">
-        <input type="text" id="accent-hex-input" value="#00FFFF" maxlength="7" style="background:#111;color:#ccc;border:2px solid var(--accent-0);padding:10px 14px;border-radius:8px;font-family:monospace;font-size:1.1em;width:130px;text-align:center;">
+        <!-- Removed inline background/color styles. Added class 'number-input' for consistent styling -->
+        <input type="text" id="accent-hex-input" value="#00FFFF" maxlength="7" class="number-input" style="width:130px; font-family:monospace;">
       </div>
-      <p style="margin-top:12px;font-size:0.9em;color:#888;">Live preview • Everything updates instantly</p>
+      <p style="margin-top:12px;font-size:0.9em;color:var(--col-text-muted);">Live preview • Everything updates instantly</p>
     </div>
 
+    <!-- Color Harmony Slider -->
+      <div class="setting-item">
+      <label for="hue-shift-slider">Color Harmony</label>
+      <div style="display:flex; gap:10px; align-items:center; justify-content:center;">
+         <span style="font-size:0.85em; color:var(--col-text-muted);">-180°</span>
+         <input type="range" id="hue-shift-slider" min="-180" max="180" value="0" style="flex:1; cursor:pointer;">
+         <span style="font-size:0.85em; color:var(--col-text-muted);">+180°</span>
+      </div>
+      <p style="margin-top:12px;font-size:0.9em;color:var(--col-text-muted);">Shift hue for secondary accents</p>
+    </div>
+
+    <!-- Light Mode Toggle -->
     <div class="setting-item">
-      <label>Answer Options <span style="font-size:1.2em;">🔢</span></label>
+      <div class="toggle-container" style="margin:0;">
+        <span class="toggle-label">Dark Mode</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="light-mode-toggle">
+          <span class="toggle-slider"></span>
+        </label>
+        <span class="toggle-label">Light Mode</span>
+      </div>
+    </div>
+
+        <!-- Answer Options -->
+    <div class="setting-item">
+      <label>Answer Options</label>
       <div class="opt-limit-group">
         <button class="opt-limit-btn active" data-limit="4" onclick="setOptionsLimit(4)">4</button>
         <button class="opt-limit-btn" data-limit="5" onclick="setOptionsLimit(5)">5</button>
         <button class="opt-limit-btn" data-limit="6" onclick="setOptionsLimit(6)">6</button>
       </div>
-      <p style="margin-top:12px;font-size:0.9em;color:#888;">Number of answer choices per question</p>
+      <p style="margin-top:12px;font-size:0.9em;color:var(--col-text-muted);">Number of answer choices per question</p>
+    </div>
+
+    <!-- Reset Defaults -->
+    <div class="setting-item" style="border-top: 1px solid var(--col-border); padding-top: 20px; margin-top: 10px;">
+      <button class="btn btn-secondary" style="border-color:var(--col-error); color:var(--col-error);" onclick="resetThemeToDefaults()">Reset Theme to Defaults</button>
+      <!-- Fixed hardcoded #888 -->
+      <p style="margin-top:8px;font-size:0.85em;color:var(--col-text-muted);">Resets accent color, hue shift, and dark mode.</p>
     </div>
   </div>
 </div>
@@ -9976,7 +9904,8 @@ let blobs = Array.from({ length: 40 }, () => ({
 let globalBlobs = blobs;
 
 function drawCosmicField() {
-  ctx.fillStyle = "#0b0e11";
+  const isLight = document.documentElement.classList.contains('light-mode');
+  ctx.fillStyle = isLight ? "#e0e5ec" : "#0b0e11";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.globalCompositeOperation = "lighter";
 
@@ -10009,7 +9938,6 @@ function drawCosmicField() {
 }
 drawCosmicField();
 </script>
-
 <!-- ==================== Color Picker Engine + Settings Modal Logic ==================== -->
 <script>
 /* ====================== HSL Conversion Helpers ====================== */
@@ -10058,14 +9986,15 @@ function hslToHex(h, s, l) {
 }
 
 /* ====================== Core: changeAccentColor ====================== */
-function changeAccentColor(newHex) {
+function changeAccentColor(newHex, hueShift = 0) {
   if (!newHex || newHex[0] !== '#' || newHex.length !== 7) return;
 
-  const [hue] = hexToHsl(newHex);
+  let [hue] = hexToHsl(newHex);
   const sat = 100;
 
   for (let i = 0; i < 10; i++) {
-    const newColor = hslToHex(hue, sat, lightnessLevels[i]);
+    let currentHue = (hue + hueShift) % 360;
+    const newColor = hslToHex(currentHue, sat, lightnessLevels[i]);
     document.documentElement.style.setProperty(`--accent-${i}`, newColor);
 
     const nr = parseInt(newColor.slice(1,3),16);
@@ -10073,8 +10002,7 @@ function changeAccentColor(newHex) {
     const nb = parseInt(newColor.slice(5,7),16);
     document.documentElement.style.setProperty(`--accent-${i}-rgb`, `${nr}, ${ng}, ${nb}`);
   }
-
-  // Refresh bubbles to match new hue
+  
   if (typeof globalBlobs !== 'undefined' && globalBlobs) {
     globalBlobs.forEach(blob => {
       blob.colorStops = [
@@ -10091,25 +10019,17 @@ function openSettingsModal() {
   const modal = document.getElementById('settings-modal');
   if (modal) {
     modal.style.display = 'flex';
-  } else {
-    console.error('settings-modal element not found!');
   }
 }
 
 function closeSettingsModal() {
-  // 1. Save the current color preference before closing
   const hexInput = document.getElementById('accent-hex-input');
   if (hexInput && hexInput.value) {
     try {
       localStorage.setItem(THEME_STORAGE_KEY, hexInput.value);
-    } catch (e) {
-      console.warn("Could not save theme preference:", e);
-    }
+    } catch (e) { console.warn("Could not save theme preference:", e); }
   }
-  // 2. Save settings (options limit, etc.)
   saveAppSettings();
-
-  // 3. Hide the modal
   const modal = document.getElementById('settings-modal');
   if (modal) modal.style.display = 'none';
 }
@@ -10144,7 +10064,30 @@ function loadAppSettings() {
   } catch(e) { console.warn("Settings load failed:", e); }
 }
 
-/* ====================== Wire Everything Up (runs immediately) ====================== */
+/* ====================== Reset Theme Logic ====================== */
+function resetThemeToDefaults() {
+  if (!confirm('Reset all theme settings to default?')) return;
+
+  localStorage.removeItem(THEME_STORAGE_KEY);
+  localStorage.removeItem('rp_hue_shift');
+  localStorage.removeItem('rp_light_mode');
+
+  const picker = document.getElementById('accent-color-picker');
+  const hexInput = document.getElementById('accent-hex-input');
+  const hueSlider = document.getElementById('hue-shift-slider');
+  const lightToggle = document.getElementById('light-mode-toggle');
+
+  if (picker) picker.value = '#00ffff';
+  if (hexInput) hexInput.value = '#00FFFF';
+  if (hueSlider) hueSlider.value = 0;
+
+  changeAccentColor('#00ffff', 0);
+
+  if (lightToggle) lightToggle.checked = false;
+  document.documentElement.classList.remove('light-mode');
+}
+
+/* ====================== Wire Everything Up ====================== */
 (function initThemeSystem() {
   const picker = document.getElementById('accent-color-picker');
   const hexInput = document.getElementById('accent-hex-input');
@@ -10152,7 +10095,6 @@ function loadAppSettings() {
   const settingsCloseBtn = document.getElementById('settings-close-btn');
   const settingsModal = document.getElementById('settings-modal');
 
-  // Settings button opens modal
   if (settingsBtn) {
     settingsBtn.addEventListener('click', function(e) {
       e.stopPropagation();
@@ -10160,7 +10102,6 @@ function loadAppSettings() {
     });
   }
 
-  // Close button
   if (settingsCloseBtn) {
     settingsCloseBtn.addEventListener('click', function(e) {
       e.stopPropagation();
@@ -10168,56 +10109,120 @@ function loadAppSettings() {
     });
   }
 
-  // Click outside modal content to close
   if (settingsModal) {
     settingsModal.addEventListener('click', function(e) {
       if (e.target === settingsModal) closeSettingsModal();
     });
   }
 
-  // Color picker → hex input sync + live update
+  const hueSlider = document.getElementById('hue-shift-slider');
+  
+  function updateThemeFromInputs() {
+      const hex = picker ? picker.value : '#00ffff';
+      const shift = hueSlider ? parseInt(hueSlider.value) : 0;
+      changeAccentColor(hex, shift);
+  }
+
   if (picker) {
     picker.addEventListener('input', function() {
       if (hexInput) hexInput.value = picker.value.toUpperCase();
-      changeAccentColor(picker.value);
+      updateThemeFromInputs();
     });
   }
 
-  // Hex input → color picker sync + live update
-  if (hexInput) {
-    hexInput.addEventListener('input', function() {
-      let v = hexInput.value.trim().toUpperCase();
-      if (v.length === 7 && v[0] === '#') {
-        if (picker) picker.value = v;
-        changeAccentColor(v);
-      }
+  if (hueSlider) {
+    hueSlider.addEventListener('input', updateThemeFromInputs);
+  }
+
+  const lightToggle = document.getElementById('light-mode-toggle');
+  if (lightToggle) {
+    lightToggle.addEventListener('change', function() {
+      document.documentElement.classList.toggle('light-mode', this.checked);
+      localStorage.setItem('rp_light_mode', this.checked ? '1' : '0');
     });
   }
 
-    // --- LOAD SAVED THEME ON STARTUP ---
-  let initialColor = '#00ffff'; // Default fallback
+  let initialColor = '#00ffff'; 
+  let initialShift = 0;
   try {
     const savedColor = localStorage.getItem(THEME_STORAGE_KEY);
-    // Validate it's a hex code
     if (savedColor && savedColor[0] === '#' && savedColor.length === 7) {
       initialColor = savedColor;
     }
-  } catch (e) {
-    console.warn("Could not load saved theme:", e);
-  }
+    const savedMode = localStorage.getItem('rp_light_mode');
+    if (savedMode === '1') {
+       document.documentElement.classList.add('light-mode');
+       if(lightToggle) lightToggle.checked = true;
+    }
+    const savedShift = localStorage.getItem('rp_hue_shift');
+    if(savedShift) initialShift = parseInt(savedShift);
+  } catch (e) { console.warn("Could not load saved theme:", e); }
 
-  // Apply the loaded color to UI inputs
   if (picker) picker.value = initialColor;
   if (hexInput) hexInput.value = initialColor.toUpperCase();
+  if (hueSlider) hueSlider.value = initialShift;
   
-  // Apply to CSS
-  changeAccentColor(initialColor);
+  changeAccentColor(initialColor, initialShift);
+  
+  if(hueSlider) {
+    hueSlider.addEventListener('change', function() {
+       localStorage.setItem('rp_hue_shift', hueSlider.value);
+    });
+  }
 
-  // Load app settings (options limit, etc.)
   loadAppSettings();
-  // Load history log
   loadHistoryLog();
-})();
+})(); 
+
+/* ==================== RESUME LOGIC ON STARTUP ==================== */
+function checkForSessionResume() {
+  loadHistoryLog(); 
+  const lastSession = quizHistoryLog
+    .filter(e => !e.isCompleted && e.resumeState)
+    .sort((a, b) => (b.startTime || 0) - (a.startTime || 0))[0];
+
+  if (lastSession) {
+    showResumeToast(lastSession.id);
+  }
+}
+
+function showResumeToast(sessionId) {
+  const toast = document.getElementById('resume-toast');
+  const countdownEl = document.getElementById('resume-countdown');
+  let seconds = 5;
+  
+  toast.classList.add('visible');
+  
+  const interval = setInterval(function() {
+    seconds--;
+    countdownEl.textContent = seconds;
+    if (seconds <= 0) {
+      clearInterval(interval);
+      triggerResume(sessionId);
+    }
+  }, 1000);
+  
+  toast.dataset.intervalId = interval;
+}
+
+function triggerResume(sessionId) {
+  const toast = document.getElementById('resume-toast');
+  if (toast.dataset.intervalId) {
+    clearInterval(parseInt(toast.dataset.intervalId));
+  }
+  toast.classList.remove('visible');
+  continueHistorySession(sessionId);
+}
+
+function cancelResumeAndStartFresh() {
+  const toast = document.getElementById('resume-toast');
+  if (toast.dataset.intervalId) {
+    clearInterval(parseInt(toast.dataset.intervalId));
+  }
+  toast.classList.remove('visible');
+}
+
+checkForSessionResume();
 </script>
 </body>
 </html>
