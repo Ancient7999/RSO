@@ -2219,7 +2219,7 @@
         <button class="q-menu-btn" onclick="toggleQuestionMenu(this)">⋮</button>
         <div class="q-menu-dropdown">
           <label class="q-menu-item">
-            <input type="checkbox" id="cb-show-formula" checked onchange="toggleFormulaHint(this.checked)">
+            <input type="checkbox" id="cb-show-formula" onchange="toggleFormulaHint(this.checked)">
             Show Formula
           </label>
         </div>
@@ -2546,8 +2546,7 @@ const DEFAULT_QUESTION_BANKS = {
 };
 // ==================== GLOBAL PREFERENCES ====================
 window.maxOptionsPerQuestion = 4; // Default: 4 options (user configurable: 4, 5, or 6)
-let showFormulaHints = true; // Default state for formula hints
-
+let showFormulaHints = false; // Default state for formula hints
 // ==================== QUIZ SESSION TIMER ====================
 let activeQuizTimer = {
   sessionId: null,
@@ -6919,6 +6918,7 @@ function toggleQuestionMenu(btn) {
 
 function toggleFormulaHint(isChecked) {
   showFormulaHints = isChecked;
+  saveAppSettings(); // Save the preference to storage
   // Re-render current question immediately
   if (window.currentQuestionData) {
     renderQuestionContent(window.currentQuestionData);
@@ -8776,7 +8776,8 @@ function setOptionsLimit(n) {
 function saveAppSettings() {
   try {
     localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify({
-      maxOptions: window.maxOptionsPerQuestion
+      maxOptions: window.maxOptionsPerQuestion,
+      showHints: showFormulaHints
     }));
   } catch(e) { console.warn("Settings save failed:", e); }
 }
@@ -8791,6 +8792,13 @@ function loadAppSettings() {
       document.querySelectorAll('.opt-limit-btn').forEach(b => {
         b.classList.toggle('active', parseInt(b.dataset.limit) === obj.maxOptions);
       });
+    }
+    
+    // Load Show Formula State
+    if (typeof obj.showHints === 'boolean') {
+      showFormulaHints = obj.showHints;
+      const cb = document.getElementById('cb-show-formula');
+      if (cb) cb.checked = obj.showHints;
     }
   } catch(e) { console.warn("Settings load failed:", e); }
 }
