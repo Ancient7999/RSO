@@ -183,7 +183,7 @@
     ["1.5 cm", "15 mm"]
   ],
   "correct": "0.5 cm",
-  "explanation": "The maximum range of a beta particle in soft tissue (density ≈ 1 g/cm³) is estimated using the standard rule of thumb: R (cm) ≈ E_max (MeV) / 2. For a 1 MeV beta particle, R ≈ 0.5 cm. Feather's empirical formula (valid for E > 0.8 MeV): R (g/cm²) = 0.542E − 0.133, gives R = 0.409 g/cm², approximating to 0.5 cm in soft tissue.",
+  "explanation": "The maximum range of a beta particle in soft tissue (density ≈ 1 g/cm³) is estimated using the standard rule of thumb: $R \\text{ (cm)} \\approx \\frac{E_{max} \\text{ (MeV)}}{2}$. For a 1 MeV beta particle, $R \\approx 0.5 \\text{ cm}$. Feather's empirical formula (valid for $E > 0.8 \\text{ MeV}$): $R \\text{ (g/cm}^2) = 0.542E - 0.133$, gives $R = 0.409 \\text{ g/cm}^2$, approximating to 0.5 cm in soft tissue.",
   "reward": 2
 },
 {
@@ -203,7 +203,7 @@
     ["1.5 cm", "15 mm"]
   ],
   "correct": "1 cm",
-  "explanation": "The maximum range of a beta particle in soft tissue (density ≈ 1 g/cm³) is estimated using the standard rule of thumb: R (cm) ≈ E_max (MeV) / 2. For a 2 MeV beta particle, R ≈ 1 cm. This is supported by Yttrium-90 (E_max = 2.27 MeV) which has a measured maximum range of ~1.1–1.15 cm in soft tissue. Feather's empirical formula: R (g/cm²) = 0.542(2) − 0.133 = 0.951 g/cm², which approximates to 1 cm in soft tissue.",
+  "explanation": "The maximum range of a beta particle in soft tissue (density ≈ 1 g/cm³) is estimated using the standard rule of thumb: $R \\text{ (cm)} \\approx \\frac{E_{max} \\text{ (MeV)}}{2}$. For a 1 MeV beta particle, $R \\approx 0.5 \\text{ cm}$. Feather's empirical formula (valid for $E > 0.8 \\text{ MeV}$): $R \\text{ (g/cm}^2) = 0.542E - 0.133$, gives $R = 0.409 \\text{ g/cm}^2$, approximating to 0.5 cm in soft tissue.",
   "reward": 2
 },
 {
@@ -475,16 +475,16 @@
 "The process that produces a β⁻ particle involves the conversion of:"
 ],
 "options": [
-    "a neutron into a proton",
-    "a proton into a neutron",
-    "a neutrino into a neutron",
-    "a positron into a proton",
-    "an electron into a proton",
-    "a proton into a neutron plus a positron",
-    "a proton and electron combining inside the nucleus",
-    "gamma emission followed by electron ejection"
+    "A neutron into a proton",
+    "A proton into a neutron",
+    "A neutrino into a neutron",
+    "A positron into a proton",
+    "An electron into a proton",
+    "A proton into a neutron plus a positron",
+    "A proton and electron combining inside the nucleus",
+    "Gamma emission followed by electron ejection"
   ],
-"correct": "a neutron into a proton",
+"correct": "A neutron into a proton",
 "explanation": "In beta-minus (β⁻) decay, a neutron in the nucleus is transformed into a proton, an electron (the negatively charged β⁻ particle), and an antineutrino: $  n \\to p + e^- + \\bar{\\nu}_e  $. This increases the atomic number Z by 1 while the mass number A remains unchanged. This decay mode occurs in neutron-rich (high N/Z) nuclei.",
 "reward": 2
 },
@@ -614,12 +614,12 @@
     "Alpha particles travel approximately 50–100 ___ in biological tissue."
   ],
   "options": [
-    ["centimeters"],
-    ["millimeters"],
-    ["microns"],
-    ["nanometers"]
+    ["Centimeters"],
+    ["Millimeters"],
+    ["Microns"],
+    ["Nanometers"]
   ],
-  "correct": "microns",
+  "correct": "Microns",
   "explanation": "Alpha particles are heavily charged (+2) and massive, so they interact strongly with matter and lose energy very rapidly through ionization and excitation. Their range in soft tissue is extremely short, typically 50 to 100 micrometers (microns) depending on initial energy (4–8 MeV). This distance corresponds to only a few cell diameters, which is why external alpha radiation cannot penetrate skin but is extremely hazardous if inhaled or ingested.",
   "reward": 2
 },
@@ -650,16 +650,16 @@
     "A characteristic feature of electron capture is:"
   ],
   "options": [
-    ["emits an electron, neutrino, and the characteristic x-rays of the daughter"],
-    ["emits a neutrino and the characteristic x-rays of the daughter"],
-    ["also decays by positron emission"],
-    ["also emits internal conversion electrons"],
-    ["makes an isomeric transformation"],
-    ["emits a positron and neutrino"],
-    ["emits two neutrinos"],
-    ["produces only Auger electrons with no X-rays"]
+    ["Emits an electron, neutrino, and the characteristic x-rays of the daughter"],
+    ["Emits a neutrino and the characteristic x-rays of the daughter"],
+    ["Also decays by positron emission"],
+    ["Also emits internal conversion electrons"],
+    ["Makes an isomeric transformation"],
+    ["Emits a positron and neutrino"],
+    ["Emits two neutrinos"],
+    ["Produces only Auger electrons with no X-rays"]
   ],
-  "correct": "emits a neutrino and the characteristic x-rays of the daughter",
+  "correct": "Emits a neutrino and the characteristic x-rays of the daughter",
   "explanation": "In orbital electron capture, a proton in the nucleus captures an inner-shell (usually K-shell) electron and converts into a neutron while emitting a neutrino. No charged particle is emitted from the nucleus. The resulting vacancy in the electron shell is filled by outer electrons, producing characteristic X-rays (or Auger electrons) of the daughter nuclide.",
   "reward": 2
 },
@@ -670,15 +670,15 @@
     "When thermal neutrons interact with soft tissue, the greatest absorbed dose results from:"
   ],
   "options": [
-    ["elastic scattering by hydrogen atoms"],
-    ["The n-14 (n,p) C-14 reaction"],
-    ["inelastic scattering by hydrogen atoms"],
-    ["the H-1 (n,gamma) H-2 reaction"],
+    ["Elastic scattering by hydrogen atoms"],
+    ["The N-14 (n,p) C-14 reaction"],
+    ["Inelastic scattering by hydrogen atoms"],
+    ["The H-1 (n,gamma) H-2 reaction"],
     ["The H-2 (n, gamma) H-3 reaction"],
-    ["fission of uranium contamination"],
-    ["pair production by secondary gammas"]
+    ["Fission of uranium contamination"],
+    ["Pair production by secondary gammas"]
   ],
-  "correct": "The n-14 (n,p) C-14 reaction",
+  "correct": "The N-14 (n,p) C-14 reaction",
   "explanation": "Thermal neutrons (< 0.5 eV) are captured primarily by nitrogen in tissue via the \\( ^{14}\text{N}(n,p)^{14}\text{C} \\) reaction. This releases a 0.58 MeV proton and a 0.04 MeV recoil carbon nucleus, both charged particles that deposit their energy over a very short distance (high-LET, local dose). According to ICRU-63 and BNCT dosimetry data, this reaction accounts for the majority (up to 80%) of the energy released and the dominant local absorbed dose component in tissue.",
   "reward": 2
 },
@@ -709,16 +709,14 @@
     "The SI equivalent of 1 roentgen of exposure is:"
   ],
   "options": [
-    ["1.0 coulomb/kg"],
-    ["1.00 × 10^{-3} coulomb/kg"],
-    ["5.28 × 10^{-3} coulomb/kg"],
-    ["2.58 × 10^{-4} coulomb/kg"],
-    ["5.28 × 10^{-4} coulomb/kg"],
-    ["2.58 × 10^{-3} coulomb/kg"],
-    ["1.00 × 10^{-4} coulomb/kg"],
-    ["5.28 × 10^{-2} coulomb/kg"]
+    ["2.58 × 10³ coulomb/kg"],
+    ["5.28 × 10⁻³ coulomb/kg"],
+    ["2.58 × 10⁻⁴ coulomb/kg"],
+	["5.28 × 10⁻⁴ coulomb/kg"],
+	["2.58 × 10⁻³ coulomb/kg"],
+	["2.58 × 10⁴ coulomb/kg"]
   ],
-  "correct": "2.58 × 10^{-4} coulomb/kg",
+  "correct": "2.58 × 10⁻⁴ coulomb/kg",
   "explanation": "By international definition (ICRU), exposure of 1 roentgen (R) produces ions carrying 1 esu of charge of either sign per 0.001293 g of dry air. This is exactly equivalent to \\( 2.58 \\times 10^{-4} \\) C/kg of air.",
   "reward": 2
 },
@@ -729,16 +727,16 @@
     "Which of the following statements accurately defines LET?"
   ],
   "options": [
-    ["refers to the energy lost by the charged particles per unit path traveled by the particle"],
-    ["refers to the energy deposited in the medium by collision per unit path traveled by the charged particle in the medium"],
-    ["includes both collision and radiation energy losses by the charged particle"],
-    ["has the same value for neutrons and gamma rays"],
-    ["is not related to quality factor"],
-    ["is the total stopping power of the charged particle"],
-    ["measures the total energy released per unit mass"],
-    ["applies equally to photons and neutrons"]
+    ["Refers to the energy lost by the charged particles per unit path traveled by the particle"],
+    ["Refers to the energy deposited in the medium by collision per unit path traveled by the charged particle in the medium"],
+    ["Includes both collision and radiation energy losses by the charged particle"],
+    ["Has the same value for neutrons and gamma rays"],
+    ["Is not related to quality factor"],
+    ["Is the total stopping power of the charged particle"],
+    ["Measures the total energy released per unit mass"],
+    ["Applies equally to photons and neutrons"]
   ],
-  "correct": "refers to the energy deposited in the medium by collision per unit path traveled by the charged particle in the medium",
+  "correct": "Refers to the energy deposited in the medium by collision per unit path traveled by the charged particle in the medium",
   "explanation": "Linear energy transfer (LET) is defined as the average energy locally imparted to the medium by a charged particle per unit distance traveled, considering only collision (electronic) losses: \\( \\text{LET} = \\frac{dE_{\\text{coll}}}{dl} \\). Radiative losses (bremsstrahlung) are excluded. It is expressed in keV/μm and is used to calculate quality factors and relative biological effectiveness.",
   "reward": 2
 },
@@ -768,16 +766,16 @@
     "Nuclides with N/Z ratio too large (neutron-rich) decay primarily by:"
   ],
   "options": [
-    ["beta-plus decay"],
-    ["beta-minus decay"],
-    ["electron capture decay"],
-    ["alpha decay"],
-    ["isomeric transition"],
-    ["positron emission only"],
-    ["neutron emission"],
-    ["proton emission"]
+    ["Beta-plus decay"],
+    ["Beta-minus decay"],
+    ["Electron capture decay"],
+    ["Alpha decay"],
+    ["Isomeric transition"],
+    ["Positron emission only"],
+    ["Neutron emission"],
+    ["Proton emission"]
   ],
-  "correct": "beta-minus decay",
+  "correct": "Beta-minus decay",
   "explanation": "When the neutron-to-proton ratio (N/Z) is too high, the nucleus is neutron-rich. Beta-minus (β⁻) decay converts a neutron into a proton, emitting an electron and antineutrino: \\( n \\to p + e^- + \\bar{\\nu}_e \\). This decreases N by 1 and increases Z by 1, lowering the N/Z ratio toward stability.",
   "reward": 2
 },
@@ -788,16 +786,16 @@
     "Exposure is quantitatively defined by the number of ion pairs produced in air; this is a direct measure of:"
   ],
   "options": [
-    ["stopping power"],
-    ["linear energy transfer"],
-    ["specific ionization"],
-    ["exposure"],
-    ["absorbed dose"],
-    ["kerma"],
-    ["quality factor"],
-    ["equivalent dose"]
+    ["Stopping power"],
+    ["Linear energy transfer"],
+    ["Specific ionization"],
+    ["Exposure"],
+    ["Absorbed dose"],
+    ["Kerma"],
+    ["Quality factor"],
+    ["Equivalent dose"]
   ],
-  "correct": "exposure",
+  "correct": "Exposure",
   "explanation": "The special unit of exposure (roentgen) is defined by the total charge of ions of one sign produced in air. The number of ion pairs formed in a small mass of air under electronic equilibrium conditions is the fundamental physical quantity used to measure exposure.",
   "reward": 2
 },
@@ -808,16 +806,16 @@
     "The principal mechanism by which fast neutrons deposit energy in tissue (80–95 %) is elastic scattering with:"
   ],
   "options": [
-    ["hydrogen"],
-    ["carbon"],
-    ["nitrogen"],
-    ["oxygen"],
-    ["sodium"],
-    ["phosphorus"],
-    ["calcium"],
-    ["all elements equally"]
+    ["Hydrogen"],
+    ["Carbon"],
+    ["Nitrogen"],
+    ["Oxygen"],
+    ["Sodium"],
+    ["Phosphorus"],
+    ["Calcium"],
+    ["All elements equally"]
   ],
-  "correct": "hydrogen",
+  "correct": "Hydrogen",
   "explanation": "Fast neutrons (0.1–10 MeV) lose most of their energy (80–95 %) via elastic scattering with hydrogen nuclei (protons) because the masses are nearly equal, allowing maximum energy transfer in a head-on collision. The recoil proton then ionizes the tissue locally (high-LET). Interactions with heavier nuclei (C, O, N) transfer far less energy per collision.",
   "reward": 2
 },
@@ -846,14 +844,14 @@
     "Which process(es) best describe(s) the most common energy-loss mechanisms for beta particles?"
   ],
   "options": [
-    ["ionization only", "ionization alone", "direct ionization only"],
-    ["ionization and excitation only", "ionization and atomic excitation", "excitation and ionization without bremsstrahlung"],
-    ["ionization, excitation, and bremsstrahlung", "ionization, excitation, and radiative loss", "Coulomb interactions and bremsstrahlung radiation"],
-    ["photoelectric effect only", "photoelectric absorption only", "photoelectric effect alone"],
-    ["photoelectric effect, Compton effect, and pair production", "photoelectric, Compton, and pair production", "photon interaction triad"],
-    ["pair production and excitation", "pair production only", "pair production and atomic excitation"]
+    ["Ionization only", "Ionization alone", "Direct ionization only"],
+    ["Ionization and excitation only", "Ionization and atomic excitation", "Excitation and ionization without bremsstrahlung"],
+    ["Ionization, excitation, and bremsstrahlung", "Ionization, excitation, and radiative loss", "Coulomb interactions and bremsstrahlung radiation"],
+    ["Photoelectric effect only", "Photoelectric absorption only", "Photoelectric effect alone"],
+    ["Photoelectric effect, Compton effect, and pair production", "Photoelectric, Compton, and pair production", "Photon interaction triad"],
+    ["Pair production and excitation", "Pair production only", "Pair production and atomic excitation"]
   ],
-  "correct": "ionization, excitation, and bremsstrahlung",
+  "correct": "Ionization, excitation, and bremsstrahlung",
   "explanation": "Beta particles (charged leptons) lose energy in matter primarily via: (1) **Ionization** , ejecting orbital electrons; (2) **Excitation** , raising electrons to higher energy levels; and (3) **Bremsstrahlung** , radiative energy loss from deceleration in the Coulomb field of nuclei. Bremsstrahlung production increases with electron kinetic energy and with the atomic number Z of the absorber (∝ Z²). Photoelectric effect, Compton scattering, and pair production are photon interaction mechanisms, not relevant to charged particle directly.",
   "reward": 2
 },
@@ -941,13 +939,13 @@
   ],
   "options": [
     ["Auger electron emission", "Auger effect", "Auger cascade"],
-    ["internal conversion", "internal conversion electron emission", "IC process"],
-    ["beta-minus decay", "negatron emission", "β⁻ decay"],
-    ["electron capture", "K-capture", "orbital electron capture"],
-    ["X-ray emission", "characteristic X-ray emission", "fluorescent X-ray emission"],
-    ["isomeric transition", "gamma decay", "nuclear de-excitation"]
+    ["Internal conversion", "Internal conversion electron emission", "IC process"],
+    ["Beta-minus decay", "Megatron emission", "β⁻ decay"],
+    ["Electron capture", "K-capture", "Orbital electron capture"],
+    ["X-ray emission", "Characteristic X-ray emission", "Fluorescent X-ray emission"],
+    ["Isomeric transition", "Gamma decay", "Nuclear de-excitation"]
   ],
-  "correct": "electron capture",
+  "correct": "Electron capture",
   "explanation": "Both positron (β⁺) decay and electron capture (EC) are competing processes that reduce the atomic number Z by 1 while leaving mass number A unchanged, effectively converting a proton into a neutron: $$ p \\rightarrow n + e^+ + \\nu_e \\quad (\\beta^+) $$ $$ p + e^- \\rightarrow n + \\nu_e \\quad (EC) $$ β⁺ decay requires a minimum Q-value of **1.022 MeV** (to produce the positron mass × 2). When Q < 1.022 MeV, only EC can occur; when Q > 1.022 MeV, both compete. Higher Z nuclei favor EC because inner-shell electrons are closer to the nucleus. Internal conversion competes with gamma emission, not β⁺. Auger electrons follow EC or IC but are not competing decay modes themselves.",
   "reward": 2
 },
@@ -994,14 +992,14 @@
     "External radiation protection is based on which three primary physical methods?"
   ],
   "options": [
-    ["film badges and dosimeters", "personal dosimetry devices", "TLD badges and pocket dosimeters"],
-    ["protective clothing", "lead aprons and gloves", "personal protective equipment"],
-    ["time, distance, and shielding", "minimizing exposure time, maximizing distance, and interposing shielding", "ALARA triad: time, distance, shielding"],
-    ["whole-body counting and bioassay", "internal contamination monitoring", "in vivo and in vitro monitoring"],
-    ["G-M survey meters", "Geiger–Müller detectors", "portable radiation survey instruments"],
-    ["administrative dose limits and zoning", "controlled area designation and dose constraints", "occupational dose limits and restricted zones"]
+    ["Film badges and dosimeters", "Personal dosimetry devices", "TLD badges and pocket dosimeters"],
+    ["Protective clothing", "Lead aprons and gloves", "Personal protective equipment"],
+    ["Time, distance, and shielding", "Minimizing exposure time, maximizing distance, and interposing shielding", "ALARA triad: time, distance, shielding"],
+    ["Whole-body counting and bioassay", "Internal contamination monitoring", "In vivo and in vitro monitoring"],
+    ["G-M survey meters", "Geiger–Müller detectors", "Portable radiation survey instruments"],
+    ["Administrative dose limits and zoning", "Controlled area designation and dose constraints", "Occupational dose limits and restricted zones"]
   ],
-  "correct": "time, distance, and shielding",
+  "correct": "Time, distance, and shielding",
   "explanation": "The three fundamental physical methods for external radiation protection are: (1) **Time** , minimizing exposure duration reduces dose proportionally (D ∝ t); (2) **Distance** , increasing distance reduces dose following the inverse-square law $$ D \\propto \\frac{1}{r^2} $$; (3) **Shielding** , interposing attenuating material reduces intensity exponentially $$ I = I_0 e^{-\\mu x} $$. These form the basis of the ALARA (As Low As Reasonably Achievable) principle per ICRP and NCRP. Film badges and dosimeters are **monitoring** tools, not protective methods. Protective clothing guards against contamination, not external penetrating radiation. Whole-body counting and bioassay monitor **internal** contamination.",
   "reward": 2
 },
@@ -1067,12 +1065,12 @@
     "Which unit correctly describes the quantity mu over rho (μ/ρ) in radiation physics?"
   ],
   "options": [
-    ["1/cm", "cm⁻¹", "inverse centimeter"],
-    ["g/cm²", "g·cm⁻²", "grams per square centimeter"],
-    ["g/cm³", "g·cm⁻³", "grams per cubic centimeter"],
-    ["cm²/g", "cm²·g⁻¹", "square centimeters per gram"],
-    ["cm³/g", "cm³·g⁻¹", "cubic centimeters per gram"],
-    ["cm/g", "cm·g⁻¹", "centimeters per gram"]
+    ["1/cm", "cm⁻¹", "Inverse centimeter"],
+    ["g/cm²", "g·cm⁻²", "Grams per square centimeter"],
+    ["g/cm³", "g·cm⁻³", "Grams per cubic centimeter"],
+    ["cm²/g", "cm²·g⁻¹", "Square centimeters per gram"],
+    ["cm³/g", "cm³·g⁻¹", "Cubic centimeters per gram"],
+    ["cm/g", "cm·g⁻¹", "Centimeters per gram"]
   ],
   "correct": "cm²/g",
   "explanation": "The **linear attenuation coefficient** μ has units of cm⁻¹ (or 1/cm). Dividing by mass density ρ (units: g/cm³) gives the **mass attenuation coefficient**:\n\n$$\\frac{\\mu}{\\rho} = \\frac{\\text{cm}^{-1}}{\\text{g/cm}^3} = \\frac{\\text{cm}^{-1} \\times \\text{cm}^3}{\\text{g}} = \\frac{\\text{cm}^2}{\\text{g}}$$\n\nThis quantity is material-dependent but density-independent, making it useful for comparing attenuation across materials of different physical states.\n\n**Why the distractors are wrong:**\n- **1/cm (cm⁻¹):** Units of the linear attenuation coefficient μ itself, not μ/ρ.\n- **g/cm²:** Inverted unit , this is areal density (mass per unit area), a separate quantity used in shielding calculations.\n- **g/cm³:** Units of density ρ alone, not the ratio μ/ρ.\n- **cm³/g:** Results from incorrectly cubing rather than squaring the length dimension , a common algebraic error.\n- **cm/g:** Arises if μ is incorrectly assigned units of cm⁻² instead of cm⁻¹, yielding one too few powers of cm.\n\nReference: ICRU Report 33; Bushberg et al., *The Essential Physics of Medical Imaging*, 3rd ed., Ch. 3.",
@@ -2049,8 +2047,7 @@
   ],
   "options": [
     [
-      "Equal to 1.",
-      "A multiplication factor of $M = 1$, meaning only primary ion pairs are collected."
+      "Equal to 1, a multiplication factor of 10⁰ = 1, meaning only primary ion pairs are collected."
     ],
     [
       "Greater than 1.",
@@ -2066,10 +2063,10 @@
       "A voltage-dependent value of $M$ that rises steeply with increasing electric field strength."
     ],
     [
-      "In the range of $10^3$ to $10^5$."
+      "In the range of 10³ to 10⁵."
     ]
   ],
-  "correct": "Equal to 1.",
+  "correct": "Equal to 1, a multiplication factor of 10⁰ = 1, meaning only primary ion pairs are collected.",
   "explanation": "The **gas amplification factor** (or gas multiplication factor, $M$) describes how many electrons are ultimately collected per primary ion pair formed by the incident radiation. In an **ionization chamber**, the applied voltage is in the saturation region , high enough to prevent ion-pair recombination and collect all primary ion pairs, but **not** high enough to accelerate electrons to energies sufficient for secondary ionization. Therefore $M = 1$ exactly: the collected charge equals the primary ionization charge with no amplification:\n\n$$Q_{collected} = M \\cdot n_0 \\cdot e = 1 \\cdot n_0 \\cdot e$$\n\nThis is why ionization chambers provide an **absolute measure of ionization** (and hence dose) without calibration of a multiplication factor. Option 2 ($M > 1$) applies to proportional counters ($M \\approx 10^3$–$10^5$) and GM tubes ($M \\approx 10^8$–$10^{10}$). Option 3 ($M < 1$) describes the recombination region (insufficient voltage). Option 4 (voltage-dependent) is true of the proportional region, where $M$ increases steeply with voltage. Option 5 (volume-dependent) is not a defining characteristic of $M$. Option 6 ($10^3$–$10^5$) is the range for **proportional counters**. Reference: Knoll, *Radiation Detection and Measurement*, 4th ed., Ch. 6; Attix, *Introduction to Radiological Physics and Radiation Dosimetry*, Ch. 12.",
   "reward": 2
 },
@@ -2086,13 +2083,11 @@
       "A multiplication factor of $M = 1$, indicating only primary ion pairs are collected."
     ],
     [
-      "Greater than 1.",
-      "Above unity, reflecting secondary Townsend avalanche multiplication of primary ion pairs.",
+      "Greater than 1, reflecting secondary Townsend avalanche multiplication of primary ion pairs.",
       "A multiplication factor $M > 1$, typically in the range of $10^3$–$10^5$, proportional to the initial ionization."
     ],
     [
-      "Less than 1.",
-      "Below unity due to incomplete collection of primary ion pairs by recombination.",
+      "Less than 1, due to incomplete collection of primary ion pairs by recombination.",
       "A multiplication factor $M < 1$ indicating ion-pair recombination before electrode collection."
     ],
     [
@@ -2106,12 +2101,12 @@
       "A value of $M$ that scales proportionally with the internal volume of the counter."
     ],
     [
-      "In the range of $10^8$ to $10^{10}$.",
+      "In the range of 10⁸ to 10¹⁰.",
       "Between one hundred million and ten billion, reflecting a full Geiger-Müller avalanche.",
       "A gas multiplication factor typical of GM tube operation, where all pulses are of equal amplitude."
     ]
   ],
-  "correct": "Greater than 1.",
+  "correct": "Greater than 1, reflecting secondary Townsend avalanche multiplication of primary ion pairs.",
   "explanation": "In the **proportional counter** operating region, the applied voltage is high enough to accelerate primary electrons to energies sufficient to cause **secondary ionization**, producing a localized Townsend avalanche around the anode wire. The gas amplification factor $M$ is therefore **greater than 1** , typically in the range of $10^3$–$10^5$. The critical feature of the proportional region is that $M$ is **constant for a given voltage** and the avalanche remains **proportional to the number of primary ion pairs**:\n\n$$Q_{collected} = M \\cdot n_0 \\cdot e$$\n\nBecause $M$ is constant, pulse height still encodes energy information , larger energy depositions produce larger pulses. This distinguishes proportional counters from GM tubes, where $M$ is so large ($10^8$–$10^{10}$) and the avalanche so complete that all pulses are identical regardless of initial ionization. Option 1 ($M = 1$) describes an **ionization chamber**. Option 3 ($M < 1$) describes the **recombination region**. Option 4 (independent of voltage) is incorrect , $M$ in the proportional region increases steeply and sensitively with applied voltage, which is why proportional counters require stable, well-regulated power supplies. Option 5 (volume-dependent) does not define $M$. Option 6 ($10^8$–$10^{10}$) is the range for **Geiger-Müller tubes**. Reference: Knoll, *Radiation Detection and Measurement*, 4th ed., Ch. 6; Bushberg et al., *Essential Physics of Medical Imaging*, 3rd ed., Ch. 20.",
   "reward": 2
 },
@@ -2123,12 +2118,11 @@
   ],
   "options": [
     [
-      "Equal to 1.",
-      "A multiplication factor of $M = 1$, indicating only primary ion pairs are collected."
+     "Equal to 1.",
+     "A multiplication factor of $$10^{0} = 1$$, indicating only primary ion pairs are collected."
     ],
     [
-      "Greater than 1, typically $10^8$–$10^{10}$.",
-      "A multiplication factor far exceeding unity due to a full avalanche discharge along the entire anode wire."
+      "Greater than 1, typically 10⁸ to 10¹⁰, due to a full avalanche discharge along the entire anode wire."
     ],
     [
       "Less than 1.",
@@ -2145,11 +2139,11 @@
       "A value of $M$ that scales with the internal volume of the counter."
     ],
     [
-      "In the range of $10^3$ to $10^5$.",
+      "In the range of 10³ to 10⁵.",
       "A gas multiplication factor typical of proportional counter operation, preserving energy information."
     ]
   ],
-  "correct": "Greater than 1, typically $10^8$–$10^{10}$.",
+  "correct": "Greater than 1, typically 10⁸ to 10¹⁰, due to a full avalanche discharge along the entire anode wire.",
   "explanation": "In the **Geiger-Müller (GM) tube** operating region, the applied voltage is sufficiently high that a single primary ionization event triggers a **self-propagating, full Townsend avalanche** that spreads along the entire length of the anode wire via UV photon emission and photoionization of the fill gas. The gas amplification factor is therefore **far greater than 1**, typically in the range of $M = 10^8$–$10^{10}$. Because the avalanche is total and saturated, **every radiation interaction produces an identical pulse** regardless of the type or energy of the incident radiation , GM tubes therefore provide **no energy information**. Comparison across detector regions:\n\n| Detector | Gas multiplication $M$ | Energy info? |\n|---|---|---|\n| Ionization chamber | $M = 1$ | Yes |\n| Proportional counter | $M = 10^3$–$10^5$ | Yes |\n| **Geiger-Müller tube** | $M = 10^8$–$10^{10}$ | **No** |\n\nOption 1 ($M = 1$) describes an **ionization chamber**. Option 3 ($M < 1$) describes the **recombination region**. Option 4 (voltage-dependent) is true of the **proportional region**, where $M$ is highly sensitive to voltage , in the GM plateau, $M$ is comparatively stable over a range of voltages. Option 5 (volume-dependent) does not define $M$. Option 6 ($10^3$–$10^5$) is the range for **proportional counters**. Reference: Knoll, *Radiation Detection and Measurement*, 4th ed., Ch. 6; Bushberg et al., *Essential Physics of Medical Imaging*, 3rd ed., Ch. 20.",
   "reward": 2
 },
@@ -2208,9 +2202,9 @@
       "Incoherent scattering of a photon by a loosely bound orbital electron."
     ],
     [
-      "Annihilation.",
-      "Positron-electron annihilation radiation.",
-      "Matter-antimatter annihilation producing two back-to-back 511 keV photons."
+	  "Matter-antimatter annihilation producing two back-to-back 511 keV photons.",
+	  "Annihilation.",
+      "Positron-electron annihilation radiation."
     ],
     [
       "Fusion.",
@@ -2233,7 +2227,7 @@
       "Complete absorption of a photon by a bound electron with ejection of a photoelectron."
     ]
   ],
-  "correct": "Annihilation.",
+  "correct": "Matter-antimatter annihilation producing two back-to-back 511 keV photons.",
   "explanation": "**Positron-electron annihilation** occurs when a positron ($e^+$) , after losing most of its kinetic energy through ionization interactions in matter , combines with an electron ($e^-$) at near-rest. The total rest mass energy of the two particles is converted into electromagnetic radiation:\n\n$$e^+ + e^- \\rightarrow 2\\gamma \\quad (E_\\gamma = 511\\text{ keV each})$$\n\nThe two photons are emitted **anticollinearly** (180° apart) to conserve momentum. Each photon energy equals the electron rest mass energy: $E = m_e c^2 = 0.511$ MeV. This is the physical basis of **positron emission tomography (PET)** , coincidence detection of the two 511 keV photons allows localization of the annihilation event. Compton effect (option A) involves partial energy transfer from a photon to a free/loosely-bound electron , no matter-antimatter conversion. Fusion (option C) involves combining light atomic nuclei , unrelated to electron-positron interactions. Electron fission (option D) is not a real physical process. **Pair production** (option E) is the **inverse** process: a high-energy photon ($E > 1.022$ MeV) is converted into an electron-positron pair in the Coulomb field of a nucleus , annihilation is its time-reverse. The photoelectric effect (option F) involves complete photon absorption by a bound electron. Reference: Bushberg et al., *Essential Physics of Medical Imaging*, 3rd ed., Ch. 3; Hall & Giaccia, *Radiobiology for the Radiologist*, 8th ed., Ch. 1.",
   "reward": 2
 },
@@ -2250,8 +2244,8 @@
       "Negatron emission, converting a nuclear neutron into a proton and decreasing the neutron-to-proton ratio."
     ],
     [
+	  "K-capture or orbital electron capture, in which a nuclear proton absorbs an inner-shell electron to form a neutron and emit a neutrino.",
       "Electron capture.",
-      "K-capture or orbital electron capture, in which a nuclear proton absorbs an inner-shell electron to form a neutron and emit a neutrino.",
       "Capture of an orbital electron by a proton: $p + e^- \\rightarrow n + \\nu_e$, increasing the neutron-to-proton ratio."
     ],
     [
@@ -2275,7 +2269,7 @@
       "Positron emission: $p \\rightarrow n + e^+ + \\nu_e$, which increases the neutron-to-proton ratio , the competing process to electron capture."
     ]
   ],
-  "correct": "Electron capture.",
+  "correct": "K-capture or orbital electron capture, in which a nuclear proton absorbs an inner-shell electron to form a neutron and emit a neutrino.",
   "explanation": "Two processes convert a proton to a neutron and thereby increase the neutron-to-proton ($n/p$) ratio: **electron capture** and **beta plus ($\\beta^+$) decay**. The question specifically describes the conversion of a proton to a neutron via a process that *involves* the nucleus capturing a particle , this is **electron capture** (also called K-capture when the captured electron originates from the K-shell): $$p + e^- \\rightarrow n + \\nu_e$$ The atomic number $Z$ decreases by 1, the mass number $A$ is unchanged, and the $n/p$ ratio increases. The vacancy left in the inner electron shell is filled by outer electrons, emitting characteristic x-rays or Auger electrons. Option 6 (β⁺ decay) also converts a proton to a neutron and increases the $n/p$ ratio, but requires the mass difference to be at least $2m_e c^2 = 1.022$ MeV and is not listed among the original options. Option 1 (β⁻ decay) does the opposite: it converts a **neutron to a proton**, **decreasing** the $n/p$ ratio , a common distractor. Options 3 and 4 (fission and fusion) are nuclear reactions that do not specifically involve proton-to-neutron conversion. Option 5 (isomeric transition) changes only the energy state of the nucleus, not its nucleon composition. (Bushberg et al., *Essential Physics of Medical Imaging*, 3rd ed., Ch. 2; Attix, *Introduction to Radiological Physics and Radiation Dosimetry*, Ch. 2; IAEA Nuclear Data Section.)",
   "reward": 2
 },
@@ -2329,7 +2323,7 @@
   ],
   "options": [
     [
-      "7.6 days",
+      "7.58 days",
       "182.4 hours"
     ],
     [
@@ -2353,8 +2347,8 @@
       "262.6 hours"
     ]
   ],
-  "correct": "7.6 days",
-  "explanation": "The effective half-life $T_{eff}$ accounts for both physical decay and biological elimination and is calculated using the reciprocal sum formula: $$\\frac{1}{T_{eff}} = \\frac{1}{T_{phys}} + \\frac{1}{T_{bio}}$$ For I-131: $T_{phys} = 8.02$ days (ICRP Publication 107), $T_{bio} = 138$ days (given). $$T_{eff} = \\frac{T_{phys} \\times T_{bio}}{T_{phys} + T_{bio}} = \\frac{8.02 \\times 138}{8.02 + 138} = \\frac{1106.76}{146.02} \\approx 7.58 \\text{ days} \\approx 7.6 \\text{ days}$$ Because $T_{phys} \\ll T_{bio}$, the effective half-life is dominated by the shorter physical half-life and is only slightly less than $T_{phys}$. Option 2 (8.05 days) reflects a student who simply reports the physical half-life without applying the biological clearance correction. Option 5 (73 days) arises from taking the arithmetic mean $(8 + 138)/2$, which has no physical basis. Option 6 (10.94 days) is the effective mean life $\\tau_{eff} = T_{eff}/\\ln 2 = 7.58/0.693$, confused with the effective half-life. (ICRP Publication 53; ICRP Publication 107; Bushberg et al., *Essential Physics of Medical Imaging*, 3rd ed., Ch. 2.)",
+  "correct": "7.58 days",
+  "explanation": "The effective half-life $T_{eff}$ accounts for both physical decay and biological elimination and is calculated using the reciprocal sum formula: $$\\frac{1}{T_{eff}} = \\frac{1}{T_{phys}} + \\frac{1}{T_{bio}}$$ For I-131: $T_{phys} = 8.02$ days (ICRP Publication 107), $T_{bio} = 138$ days (given). $$T_{eff} = \\frac{T_{phys} \\times T_{bio}}{T_{phys} + T_{bio}} = \\frac{8.02 \\times 138}{8.02 + 138} = \\frac{1106.76}{146.02} \\approx 7.58 \\text{ days} \\approx 7.58 \\text{ days}$$ Because $T_{phys} \\ll T_{bio}$, the effective half-life is dominated by the shorter physical half-life and is only slightly less than $T_{phys}$. Option 2 (8.05 days) reflects a student who simply reports the physical half-life without applying the biological clearance correction. Option 5 (73 days) arises from taking the arithmetic mean $(8 + 138)/2$, which has no physical basis. Option 6 (10.94 days) is the effective mean life $\\tau_{eff} = T_{eff}/\\ln 2 = 7.58/0.693$, confused with the effective half-life. (ICRP Publication 53; ICRP Publication 107; Bushberg et al., *Essential Physics of Medical Imaging*, 3rd ed., Ch. 2.)",
   "reward": 2
 },
 {
