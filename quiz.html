@@ -520,17 +520,18 @@
     margin: 30px 0;
     font-weight: var(--font-bold);
   }
-  /* ==================== KNOWLEDGE TAB SPECIFIC ==================== */
+    /* ==================== KNOWLEDGE TAB SPECIFIC ==================== */
   .section-card {
     background: var(--col-bg-btn);
     border: 2px solid var(--col-border);
     border-radius: var(--radius-lg);
     padding: 15px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column; /* Stack vertically */
+    align-items: stretch;
     cursor: pointer;
     transition: all 0.3s;
+    gap: 10px; /* Space between text and buttons */
   }
 
   .section-card:hover {
@@ -547,15 +548,16 @@
     display: flex;
     flex-direction: column;
     text-align: left;
+    cursor: pointer;
+    min-width: 0; /* Prevent overflow */
   }
 
   /* ==================== SECTION CARD INLINE ACTIONS ==================== */
-  .section-card { cursor: default; }
-  .section-card .section-info { cursor: pointer; flex: 1; }
   .section-card-actions {
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: flex-end;
+    gap: 8px;
     flex-shrink: 0;
   }
   .section-start-btn {
@@ -1120,7 +1122,6 @@
     border: 1px solid var(--col-border-light);
     border-radius: var(--radius-lg);
     margin-bottom: 8px;
-    overflow: hidden;
     transition: border-color 0.2s, box-shadow 0.2s;
     cursor: pointer;
   }
@@ -1137,6 +1138,8 @@
     align-items: center;
     padding: 14px 16px;
     gap: 12px;
+	position: relative;
+	padding-right: 50px;
   }
   .history-result-bar {
     width: 4px;
@@ -1227,6 +1230,69 @@
     cursor: default !important;
     opacity: 0.7 !important;
   }
+    /* History Row 3-Dot Menu */
+  .history-row .section-menu-wrapper {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 1; /* CHANGED: Always visible */
+    transition: opacity 0.2s;
+  }
+  .history-row .section-dots-btn {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 1.1em !important;
+  }
+
+  /* History Results Modal */
+  .history-results-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 10000;
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 40px;
+    overflow-y: auto;
+  }
+  .history-results-modal.active { display: flex; }
+  .history-results-content {
+    background: var(--col-bg-card);
+    border: 2px solid var(--accent-0);
+    border-radius: var(--radius-box);
+    max-width: 900px;
+    width: 90%;
+    padding: 25px;
+    position: relative;
+    max-height: 85vh;
+    overflow-y: auto;
+    margin-bottom: 40px;
+  }
+  .history-results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--col-border);
+    padding-bottom: 15px;
+  }
+  .history-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+  }
+  .history-stat-box {
+    background: var(--col-bg-main);
+    border: 1px solid var(--col-border-light);
+    border-radius: var(--radius-md);
+    padding: 15px;
+    text-align: center;
+  }
+  .history-stat-val { font-size: 1.8em; font-weight: bold; color: var(--accent-0); }
+  .history-stat-lbl { font-size: 0.8em; color: var(--col-text-muted); margin-top: 5px; }
   /* Expanded Detail */
   .history-detail-panel {
     display: none;
@@ -10970,7 +11036,1874 @@ const DEFAULT_QUESTION_BANKS = {
   "reward": 2
 }
 		],
-		}
+		},
+    "Fluoroscopy": {
+      "author": "Abdulaziz Alharbi",
+      "questions": [
+{
+  "variants": [
+    "The primary function of a fluoroscope is to provide:",
+    "What is the main purpose of fluoroscopic imaging?",
+    "Fluoroscopy is distinguished from radiography by its ability to provide:"
+  ],
+  "options": [
+    ["Real-time dynamic viewing of anatomic structures", "Live imaging of physiological motion", "Continuous visualization of internal anatomy"],
+    ["High-resolution static images of bone", "Detailed still images of skeletal structures", "Fixed imaging of dense tissues"],
+    ["Therapeutic delivery of radiation dose", "Treatment of tumors using ionizing radiation", "Ablation of tissue masses"],
+    ["Measurement of organ volume", "Calculation of internal organ size", "Quantification of anatomical volumes"],
+    ["Detection of radioactive tracers", "Imaging of radiopharmaceutical distribution", "Nuclear medicine scanning"],
+    ["Transmission of ultrasound waves", "Acoustic imaging of soft tissue", "Sonography of internal organs"]
+  ],
+  "correct": "Real-time dynamic viewing of anatomic structures",
+  "explanation": "Unlike radiography which produces static images, fluoroscopy provides continuous, real-time viewing to observe motion and dynamic processes like circulation.",
+  "reward": 2
+},
+{
+  "variants": [
+    "In an X-ray Image Intensifier (XRII), the correct sequence of signal conversion is:",
+    "What is the energy transformation pathway inside an image intensifier?",
+    "Which sequence accurately describes the conversion process within an XRII?"
+  ],
+  "options": [
+    ["X-rays → Light → Electrons → Light", "X-ray photons → Visible photons → Electrons → Visible photons", "Radiation → Optical light → Charge → Optical light"],
+    ["Light → Electrons → X-rays → Light", "Visible photons → Electrons → X-ray photons → Visible photons", "Optical light → Charge → Radiation → Optical light"],
+    ["Electrons → Light → X-rays → Electrons", "Charged particles → Optical photons → X-ray photons → Charged particles", "Charge → Light → Radiation → Charge"],
+    ["X-rays → Electrons → Light → Electrons", "X-ray photons → Charged particles → Optical photons → Charged particles", "Radiation → Charge → Light → Charge"],
+    ["Light → X-rays → Electrons → Light", "Visible photons → X-ray photons → Charged particles → Visible photons", "Optical light → Radiation → Charge → Optical light"],
+    ["X-rays → Protons → Light → Electrons", "X-ray photons → Heavy particles → Optical photons → Charged particles", "Radiation → Nucleons → Light → Charge"]
+  ],
+  "correct": "X-rays → Light → Electrons → Light",
+  "explanation": "The input phosphor absorbs X-rays and emits light, which strikes the photocathode to release electrons. These electrons are accelerated and focused to strike the output phosphor, producing the final light image.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Electrons released from the photocathode in an image intensifier are accelerated by a potential of:",
+    "What voltage is applied to accelerate electrons towards the anode in an XRII?",
+    "The acceleration potential for electrons in an image intensifier typically ranges from:"
+  ],
+  "options": [
+    ["25–30 kV", "25,000 to 30,000 volts", "25 to 30 kilovolts"],
+    ["50–80 kV", "50,000 to 80,000 volts", "50 to 80 kilovolts"],
+    ["5–10 kV", "5,000 to 10,000 volts", "5 to 10 kilovolts"],
+    ["100–120 kV", "100,000 to 120,000 volts", "100 to 120 kilovolts"],
+    ["0.5–1 kV", "500 to 1,000 volts", "0.5 to 1 kilovolts"],
+    ["40–60 kV", "40,000 to 60,000 volts", "40 to 60 kilovolts"],
+    ["200–300 V", "200 to 300 volts", "0.2 to 0.3 kV"]
+  ],
+  "correct": "25–30 kV",
+  "explanation": "A potential difference of 25-30 kV accelerates the electrons from the photocathode toward the output phosphor to maintain image brightness and minimize blur.",
+  "reward": 2
+},
+{
+  "variants": [
+    "A direct conversion flat panel detector differs from an indirect conversion detector because it uses a:",
+    "Which component is characteristic of a direct conversion flat panel detector?",
+    "In flat panel detector technology, direct conversion relies on a:"
+  ],
+  "options": [
+    ["Photoconductor layer", "Semiconductor material like a-Se", "Direct charge conversion layer"],
+    ["Phosphor layer", "Scintillator like CsI", "Light conversion layer"],
+    ["Photomultiplier tube", "PMT assembly", "Vacuum tube amplifier"],
+    ["Analog film screen", "Film cassette", "Radiographic film"],
+    ["Ionization chamber", "Gas-filled detector", "Pressurized gas sensor"],
+    ["Thermoluminescent dosimeter", "TLD chip", "Heat-sensitive crystal"],
+    ["Photodiode array coupled to a phosphor", "Indirect conversion array", "Scintillator-photodiode stack"]
+  ],
+  "correct": "Photoconductor layer",
+  "explanation": "Direct conversion detectors use a photoconductor (such as amorphous selenium) to convert X-rays directly into electrical charges, whereas indirect conversion uses a phosphor to first create light.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Activating magnification mode on a fluoroscopy system results in:",
+    "What are the consequences of using magnification mode in fluoroscopy?",
+    "When magnification is employed during fluoroscopy, which parameters change?"
+  ],
+  "options": [
+    ["Higher patient dose and better spatial resolution", "Increased dose rate and improved resolution", "Greater exposure and finer detail"],
+    ["Lower patient dose and worse spatial resolution", "Decreased dose and reduced detail", "Less exposure and coarser image"],
+    ["Lower patient dose and better spatial resolution", "Decreased dose and improved detail", "Less exposure and finer image"],
+    ["No change in patient dose but better contrast", "Unchanged exposure and higher contrast", "Same dose and better contrast"],
+    ["Higher patient dose and worse spatial resolution", "Increased dose and reduced detail", "Greater exposure and coarser image"],
+    ["Elimination of scatter radiation", "Removal of scattered photons", "Complete scatter rejection"],
+    ["Automatic reduction in exposure factors", "Lowering of kV and mA", "Self-adjustment of technique"]
+  ],
+  "correct": "Higher patient dose and better spatial resolution",
+  "explanation": "Magnification improves spatial resolution by using a smaller input field of view, but the automatic exposure rate control increases the dose rate to the patient to maintain image brightness.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The primary source of radiation exposure for staff in a fluoroscopy room is:",
+    "Where does the majority of scattered radiation originate in a fluoroscopy suite?",
+    "Staff radiation exposure during fluoroscopy is mainly attributed to:"
+  ],
+  "options": [
+    ["The patient", "Scattered radiation from the patient", "The irradiated volume of the patient"],
+    ["Leakage from the X-ray tube", "Radiation leaking from the tube housing", "Primary beam escaping the housing"],
+    ["The image intensifier", "Scatter from the detector", "Backscatter from the II"],
+    ["Background radiation", "Natural environmental radiation", "Cosmic rays and radon"],
+    ["The display monitor", "Radiation from the viewing screen", "Emissions from the TV screen"],
+    ["The collimator assembly", "Scatter from the shutters", "Radiation from the collimator leaves"],
+    ["The table structure", "Scatter from the patient table", "Radiation from the carbon fiber couch"]
+  ],
+  "correct": "The patient",
+  "explanation": "The patient acts as the primary scatterer. X-rays interacting within the patient produce scattered radiation that extends in all directions, presenting the main hazard to staff.",
+  "reward": 2
+},
+{
+  "variants": [
+    "For every 1000 photons reaching the patient in fluoroscopy, approximately how many reach the image detector?",
+    "What percentage of X-ray photons incident on a patient typically reach the image intensifier?",
+    "In fluoroscopy, the photon transmission efficiency through the patient is approximately:"
+  ],
+  "options": [
+    ["20 photons (2%)", "Approximately 2% of incident photons", "About 20 out of 1000 photons"],
+    ["100–200 photons (10–20%)", "Approximately 10–20% of incident photons", "About 100 to 200 out of 1000 photons"],
+    ["500 photons (50%)", "Approximately half of the incident photons", "About 500 out of 1000 photons"],
+    ["1 photon (0.1%)", "Approximately 0.1% of incident photons", "About 1 out of 1000 photons"],
+    ["800 photons (80%)", "Approximately 80% of incident photons", "About 800 out of 1000 photons"],
+    ["5 photons (0.5%)", "Approximately 0.5% of incident photons", "About 5 out of 1000 photons"],
+    ["900 photons (90%)", "Approximately 90% of incident photons", "About 900 out of 1000 photons"]
+  ],
+  "correct": "20 photons (2%)",
+  "explanation": "Of 1000 photons entering the patient, roughly 100–200 are scattered and the vast majority are absorbed. Only about 20 primary photons (approximately 2%) successfully traverse the patient to reach the detector and form the image.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The maximum fluoroscopic entrance skin dose rate (MFESDR) permitted during normal operation is:",
+    "What is the regulatory limit for entrance skin dose rate in standard fluoroscopy mode?",
+    "Under normal operation, fluoroscopic dose rates must not exceed:"
+  ],
+  "options": [
+    ["88 mGy/min (10 R/min)", "10 roentgen per minute", "88 milligray per minute"],
+    ["44 mGy/min (5 R/min)", "5 roentgen per minute", "44 milligray per minute"],
+    ["167 mGy/min (20 R/min)", "20 roentgen per minute", "167 milligray per minute"],
+    ["22 mGy/min (2.5 R/min)", "2.5 roentgen per minute", "22 milligray per minute"],
+    ["200 mGy/min (24 R/min)", "24 roentgen per minute", "200 milligray per minute"],
+    ["100 mGy/min (12 R/min)", "12 roentgen per minute", "100 milligray per minute"],
+    ["50 mGy/min (6 R/min)", "6 roentgen per minute", "50 milligray per minute"]
+  ],
+  "correct": "88 mGy/min (10 R/min)",
+  "explanation": "Regulatory standards limit the normal fluoroscopic entrance skin dose rate to 10 R/min (88 mGy/min) to prevent excessive patient radiation injury during standard procedures.",
+  "reward": 2
+},
+{
+  "variants": [
+    "In the optical system of an image intensifier, the aperture is responsible for:",
+    "What is the function of the aperture located between the objective lens and the video camera?",
+    "Which component limits the amount of light reaching the video camera in an XRII system?"
+  ],
+  "options": [
+    ["Limiting the amount of light reaching the video camera", "Controlling the light intensity entering the camera", "Restricting the photon flux to the sensor"],
+    ["Focusing the image onto the output phosphor", "Directing electrons to the anode", "Converging light rays at the input screen"],
+    ["Converting electrons to visible light", "Transforming the electron image to a light image", "Producing the final visual output"],
+    ["Accelerating electrons towards the anode", "Applying the 25–30 kV potential", "Speeding up the electron stream"],
+    ["Shaping the divergent light from the output phosphor", "Collimating the light rays", "Making light rays parallel"],
+    ["Generating the video signal", "Creating the analogue electrical output", "Producing the TV feed"],
+    ["Magnifying the output image", "Increasing the size of the visible field", "Enhancing spatial resolution optically"]
+  ],
+  "correct": "Limiting the amount of light reaching the video camera",
+  "explanation": "The aperture acts like an iris; closing it reduces light reaching the camera. This forces the automatic brightness control to increase radiation output to maintain image brightness, making it a critical setting for patient dose management.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Quality control standards require the Half Value Layer (HVL) at 80 kVp to be greater than:",
+    "What is the minimum acceptable HVL for a fluoroscopy unit operating at 80 kVp?",
+    "At a tube potential of 80 kVp, the filtration must be sufficient to produce an HVL of at least:"
+  ],
+  "options": [
+    ["2.3 mm Al", "2.3 millimeters of aluminum", "≥ 2.3 mm aluminum equivalent"],
+    ["1.8 mm Al", "1.8 millimeters of aluminum", "≥ 1.8 mm aluminum equivalent"],
+    ["2.1 mm Al", "2.1 millimeters of aluminum", "≥ 2.1 mm aluminum equivalent"],
+    ["3.0 mm Al", "3.0 millimeters of aluminum", "≥ 3.0 mm aluminum equivalent"],
+    ["1.5 mm Al", "1.5 millimeters of aluminum", "≥ 1.5 mm aluminum equivalent"],
+    ["2.5 mm Al", "2.5 millimeters of aluminum", "≥ 2.5 mm aluminum equivalent"],
+    ["4.0 mm Al", "4.0 millimeters of aluminum", "≥ 4.0 mm aluminum equivalent"]
+  ],
+  "correct": "2.3 mm Al",
+  "explanation": "Filtration requirements are defined by HVL values to ensure the removal of low-energy photons that contribute to patient dose but not to image formation. At 80 kVp, the HVL must exceed 2.3 mm of aluminum.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Which machine configuration is specifically designed for use in an operating room?",
+    "A C-arm fluoroscopy unit is primarily utilized in which setting?",
+    "What type of fluoroscopic equipment is standard for surgical procedures?"
+  ],
+  "options": [
+    ["C-arm", "Mobile C-arm system", "Surgical C-arm fluoroscope"],
+    ["Over-table fluoroscope", "Fixed overhead tube unit", "Radiography-fluoroscopy table"],
+    ["Under-table fluoroscope", "Remote-controlled table", "Undercouch tube system"],
+    ["Angiography suite", "Biplane cardiac lab", "Vascular imaging system"],
+    ["Portable X-ray machine", "Mobile radiography unit", "Handheld X-ray device"],
+    ["CT scanner", "Computed tomography system", "CAT scan machine"],
+    ["Mammography unit", "Breast imaging system", "Stereotactic biopsy unit"]
+  ],
+  "correct": "C-arm",
+  "explanation": "The C-arm configuration allows for flexible positioning around the patient on an operating table, making it the standard choice for intraoperative imaging in orthopedics and surgery.",
+  "reward": 2
+},
+{
+  "variants": [
+    "For an average-sized patient, the typical entrance skin dose rate in fluoroscopy is approximately:",
+    "What is the expected dose rate range for a patient of average thickness during fluoroscopy?",
+    "Under automatic exposure control, dose rates for average patients typically range from:"
+  ],
+  "options": [
+    ["26 to 44 mGy/min", "Approximately 26–44 milligray per minute", "26 to 44 mGy per minute"],
+    ["8.7 to 17 mGy/min", "Approximately 8.7–17 milligray per minute", "8.7 to 17 mGy per minute"],
+    ["70 to 87.3 mGy/min", "Approximately 70–87.3 milligray per minute", "70 to 87.3 mGy per minute"],
+    ["1 to 5 mGy/min", "Approximately 1–5 milligray per minute", "1 to 5 mGy per minute"],
+    ["100 to 120 mGy/min", "Approximately 100–120 milligray per minute", "100 to 120 mGy per minute"],
+    ["50 to 60 mGy/min", "Approximately 50–60 milligray per minute", "50 to 60 mGy per minute"],
+    ["200 to 250 mGy/min", "Approximately 200–250 milligray per minute", "200 to 250 mGy per minute"]
+  ],
+  "correct": "26 to 44 mGy/min",
+  "explanation": "Automatic brightness control adjusts the output based on patient thickness. For an average patient, the system typically modulates the output to maintain a dose rate in the 26 to 44 mGy/min range.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The photoconductive layer used in the target assembly of a vidicon TV camera tube is typically made of:",
+    "Which material constitutes the target in a standard fluoroscopic video camera tube?",
+    "Antimony trisulfide is utilized in television monitoring components as a:"
+  ],
+  "options": [
+    ["Antimony trisulfide", "Sb₂S₃", "Antimony trisulfide layer"],
+    ["Cesium iodide", "CsI", "Cesium iodide crystal"],
+    ["Amorphous selenium", "a-Se", "Selenium photoconductor"],
+    ["Gadolinium oxysulfide", "Gd₂O₂S", "Gadolinium phosphor"],
+    ["Lead oxide", "PbO", "Plumbicon layer"],
+    ["Silicon diode array", "Si", "Silicon sensor"],
+    ["Sodium iodide", "NaI", "Sodium iodide crystal"]
+  ],
+  "correct": "Antimony trisulfide",
+  "explanation": "In conventional vidicon camera tubes used in older fluoroscopy systems, the target is a photoconductive layer of antimony trisulfide (Sb₂S₃) that changes electrical resistance in response to light intensity.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Angiography and Cath Lab machines are distinct because they can be equipped with:",
+    "Why might an angiography suite require a dual-tube configuration?",
+    "Interventional vascular and cardiology suites often utilize machines with:"
+  ],
+  "options": [
+    ["Two x-ray tubes", "Biplane imaging capability", "Dual tube assemblies"],
+    ["A single under-table tube", "One fixed x-ray tube", "A monoplane configuration"],
+    ["A permanent C-arm", "A mobile C-arm unit", "A portable fluoroscope"],
+    ["Gamma camera detectors", "Nuclear medicine heads", "Scintillation cameras"],
+    ["Ultrasound transducers", "Sound wave probes", "Sonography attachments"],
+    ["MRI magnets", "Magnetic resonance coils", "Superconducting magnets"],
+    ["CT gantries", "Computed tomography rings", "Rotating x-ray tubes"]
+  ],
+  "correct": "Two x-ray tubes",
+  "explanation": "Advanced interventional suites (Cath Labs) often feature biplane systems with two tubes to image from different angles simultaneously without moving the patient.",
+  "reward": 2
+},
+{
+  "variants": [
+    "For a thin patient or body part, the typical entrance skin dose rate is approximately:",
+    "What is the expected dose rate range when imaging a thin patient under automatic brightness control?",
+    "Dose rates during fluoroscopy for thin patients generally fall within which range?"
+  ],
+  "options": [
+    ["8.7 to 17 mGy/min", "8.7–17 milligray per minute", "Roughly 9–17 mGy/min"],
+    ["26 to 44 mGy/min", "26–44 milligray per minute", "Roughly 26–44 mGy/min"],
+    ["70 to 87.3 mGy/min", "70–87.3 milligray per minute", "Roughly 70–87 mGy/min"],
+    ["50 to 60 mGy/min", "50–60 milligray per minute", "Roughly 50–60 mGy/min"],
+    ["1 to 5 mGy/min", "1–5 milligray per minute", "Roughly 1–5 mGy/min"],
+    ["100 to 120 mGy/min", "100–120 milligray per minute", "Roughly 100–120 mGy/min"],
+    ["2 to 4 mGy/min", "2–4 milligray per minute", "Roughly 2–4 mGy/min"]
+  ],
+  "correct": "8.7 to 17 mGy/min",
+  "explanation": "Automatic brightness control reduces exposure factors for thin patients to maintain a constant image brightness, resulting in lower dose rates typically in the 8.7 to 17 mGy/min range.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The suspension level for the typical patient entrance skin dose rate (ESDR) is exceeded if it is greater than:",
+    "At what dose rate threshold must a fluoroscopy unit be taken out of service for ESDR non-compliance?",
+    "Quality control protocols mandate suspension of a fluoroscope if the ESDR exceeds:"
+  ],
+  "options": [
+    ["100 mGy/min", "Greater than 100 milligray per minute", "Exceeding 100 mGy/min"],
+    ["50 mGy/min", "Greater than 50 milligray per minute", "Exceeding 50 mGy/min"],
+    ["88 mGy/min", "Greater than 88 milligray per minute", "Exceeding 88 mGy/min"],
+    ["167 mGy/min", "Greater than 167 milligray per minute", "Exceeding 167 mGy/min"],
+    ["25 mGy/min", "Greater than 25 milligray per minute", "Exceeding 25 mGy/min"],
+    ["200 mGy/min", "Greater than 200 milligray per minute", "Exceeding 200 mGy/min"],
+    ["10 mGy/min", "Greater than 10 milligray per minute", "Exceeding 10 mGy/min"]
+  ],
+  "correct": "100 mGy/min",
+  "explanation": "According to IPEM Report 91, the suspension level for entrance skin dose rate is exceeded if the measurement deviates by ±50% from baseline or is greater than 100 mGy/min.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The detector element size in an indirect flat panel detector array is typically:",
+    "What is the standard pixel pitch for photodiode arrays in indirect FPD systems?",
+    "Each element in a flat panel photodiode array typically measures:"
+  ],
+  "options": [
+    ["200 microns (0.2 mm)", "0.2 mm pixel pitch", "200 μm detector element"],
+    ["100 microns (0.1 mm)", "0.1 mm pixel pitch", "100 μm detector element"],
+    ["400 microns (0.4 mm)", "0.4 mm pixel pitch", "400 μm detector element"],
+    ["500 microns (0.5 mm)", "0.5 mm pixel pitch", "500 μm detector element"],
+    ["50 microns (0.05 mm)", "0.05 mm pixel pitch", "50 μm detector element"],
+    ["1 mm (1000 microns)", "1.0 mm pixel pitch", "1000 μm detector element"],
+    ["250 microns (0.25 mm)", "0.25 mm pixel pitch", "250 μm detector element"]
+  ],
+  "correct": "200 microns (0.2 mm)",
+  "explanation": "Indirect flat panel detectors use a photodiode array where each detector element (pixel) is typically 200 microns (0.2 mm), balancing resolution and dose efficiency.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Which factor does NOT affect staff radiation dose in a fluoroscopy room?",
+    "Which of the following is irrelevant to the radiation dose received by personnel?",
+    "Identify the item that does not influence occupational dose during fluoroscopy:"
+  ],
+  "options": [
+    ["Patient thickness", "Size of the patient", "Body habitus of the subject"],
+    ["Relative position with respect to the patient", "Staff location relative to the source", "Distance from the irradiated volume"],
+    ["X-ray tube position", "Location of the tube (over/under table)", "Tube orientation"],
+    ["Effective use of articulated shielding", "Proper use of lead shields", "Deployment of protective screens"],
+    ["Patient blood pressure", "Systolic/Diastolic pressure", "Hemodynamic status"],
+    ["Field size", "Collimated area", "X-ray beam area"],
+    ["kV and mA", "Technique factors", "Exposure settings"]
+  ],
+  "correct": "Patient blood pressure",
+  "explanation": "Staff dose is determined by geometric factors (distance, position), technique (kV, mA, field size), shielding, and patient thickness (which influences scatter). Patient physiological metrics like blood pressure do not influence radiation scatter.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Quality control standards require the coefficient of variation (COV) for kVp accuracy to be:",
+    "What is the maximum allowable coefficient of variation for kilovoltage reproducibility?",
+    "To pass QC testing, kVp reproducibility must have a COV of:"
+  ],
+  "options": [
+    ["≤ 0.05", "Less than or equal to 0.05", "0.05 or lower"],
+    ["≤ 0.10", "Less than or equal to 0.10", "0.10 or lower"],
+    ["≤ 0.02", "Less than or equal to 0.02", "0.02 or lower"],
+    ["≤ 0.20", "Less than or equal to 0.20", "0.20 or lower"],
+    ["≤ 0.01", "Less than or equal to 0.01", "0.01 or lower"],
+    ["≤ 0.50", "Less than or equal to 0.50", "0.50 or lower"],
+    ["≤ 1.00", "Less than or equal to 1.00", "1.00 or lower"]
+  ],
+  "correct": "≤ 0.05",
+  "explanation": "AAPM Report 74 specifies that the coefficient of variation for kVp reproducibility must be 0.05 or less, indicating that the output is consistent and reliable.",
+  "reward": 2
+},
+{
+  "variants": [
+    "For cardiac cine mode, the suspension level for dose per frame is exceeded if it is greater than:",
+    "What is the maximum permissible dose per frame in cardiac acquisition mode before suspension is required?",
+    "Quality control protocols mandate suspension for cardiac cine if the dose per frame exceeds:"
+  ],
+  "options": [
+    ["0.2 mGy/frame", "Greater than 0.2 mGy per frame", "Exceeding 0.2 mGy/frame"],
+    ["2 mGy/frame", "Greater than 2 mGy per frame", "Exceeding 2 mGy/frame"],
+    ["5 mGy/frame", "Greater than 5 mGy per frame", "Exceeding 5 mGy/frame"],
+    ["1 mGy/frame", "Greater than 1 mGy per frame", "Exceeding 1 mGy/frame"],
+    ["10 mGy/frame", "Greater than 10 mGy per frame", "Exceeding 10 mGy/frame"],
+    ["0.5 mGy/frame", "Greater than 0.5 mGy per frame", "Exceeding 0.5 mGy/frame"],
+    ["0.02 mGy/frame", "Greater than 0.02 mGy per frame", "Exceeding 0.02 mGy/frame"]
+  ],
+  "correct": "0.2 mGy/frame",
+  "explanation": "Cardiac procedures involve long fluoroscopy times and high frame rates; therefore, the suspension limit is set lower at 0.2 mGy/frame compared to general acquisition to prevent excessive skin dose.",
+  "reward": 2
+},
+{
+  "variants": [
+    "A remedial action level for typical patient entrance skin dose rates is triggered if the measurement deviates from baseline by:",
+    "What deviation from baseline necessitates remedial action for entrance skin dose rates?",
+    "If the entrance skin dose rate varies from the baseline by ±25%, what action is required?"
+  ],
+  "options": [
+    ["± 25%", "Plus or minus 25 percent", "Deviation of 25%"],
+    ["± 50%", "Plus or minus 50 percent", "Deviation of 50%"],
+    ["± 10%", "Plus or minus 10 percent", "Deviation of 10%"],
+    ["± 5%", "Plus or minus 5 percent", "Deviation of 5%"],
+    ["± 100%", "Plus or minus 100 percent", "Deviation of 100%"],
+    ["± 75%", "Plus or minus 75 percent", "Deviation of 75%"],
+    ["± 20%", "Plus or minus 20 percent", "Deviation of 20%"]
+  ],
+  "correct": "± 25%",
+  "explanation": "A deviation of ±25% from the established baseline signals that the equipment performance has drifted significantly and requires investigation and repair (remedial action).",
+  "reward": 2
+},
+{
+  "variants": [
+    "During continuous fluoroscopy, the image intensifier input dose rate (IIIDR) should typically be maintained at:",
+    "What is the acceptable IIIDR range for standard continuous fluoroscopy operation?",
+    "The input dose rate to the image intensifier under continuous operation is typically:"
+  ],
+  "options": [
+    ["75 to 100 μR/sec", "75–100 microroentgen per second", "Approximately 0.08 mR/sec"],
+    ["5 to 10 μR/sec", "5–10 microroentgen per second", "Approximately 0.007 mR/sec"],
+    ["500 to 600 μR/sec", "500–600 microroentgen per second", "Approximately 0.5 mR/sec"],
+    ["1 to 2 mR/sec", "1–2 milliroentgen per second", "Approximately 1000 μR/sec"],
+    ["10 to 20 μR/sec", "10–20 microroentgen per second", "Approximately 0.015 mR/sec"],
+    ["200 to 300 μR/sec", "200–300 microroentgen per second", "Approximately 0.25 mR/sec"],
+    ["50 to 60 μR/sec", "50–60 microroentgen per second", "Approximately 0.05 mR/sec"]
+  ],
+  "correct": "75 to 100 μR/sec",
+  "explanation": "This dose rate range ensures sufficient light output from the image intensifier for the video camera to generate a usable image without delivering unnecessary dose to the patient.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The electron beam in a television camera tube is steered and focused by:",
+    "Which components control the path and focus of the electron beam in a vidicon tube?",
+    "Deflection, focusing, and alignment coils are essential components of the:"
+  ],
+  "options": [
+    ["Electromagnetic coils", "Deflection and focusing coils", "Magnetic steering assembly"],
+    ["Target assembly", "Photoconductive layer", "Signal plate"],
+    ["Input phosphor", "CsI layer", "Scintillator"],
+    ["Optical lens system", "Objective and focusing lenses", "Aperture assembly"],
+    ["Anode assembly", "Accelerating grids", "High-voltage electrodes"],
+    ["Photocathode", "Light-sensitive layer", "Electron emitter"],
+    ["Output phosphor", "Viewing screen", "Fiber optic plate"]
+  ],
+  "correct": "Electromagnetic coils",
+  "explanation": "Electromagnetic coils surrounding the tube create magnetic fields that precisely deflect, focus, and align the electron beam as it scans the target.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The target assembly of a television camera tube consists of which three layers?",
+    "What are the structural components of the vidicon target assembly?",
+    "Which combination of layers forms the target in a fluoroscopic TV camera?"
+  ],
+  "options": [
+    ["Window, signal plate, and photoconductive layer", "Glass face, conductive film, and antimony trisulfide", "Window, metal plate, and target"],
+    ["Input phosphor, photocathode, and output phosphor", "Scintillator, light emitter, and electron source", "X-ray converter, light sensor, and light output"],
+    ["Cathode, grid, and anode", "Electron gun, control grid, and accelerator", "Emitter, gate, and collector"],
+    ["Focusing lens, aperture, and video sensor", "Optical elements, iris, and chip", "Lens, light limiter, and detector"],
+    ["Glass envelope, vacuum tube, and base", "Outer shell, evacuated space, and pins", "Body, vacuum, and connector"],
+    ["Fiber optic, caesium iodide, and lead glass", "Light guide, phosphor, and shielding", "Fiber, scintillator, and protector"],
+    ["Faceplate, gel, and semiconductor chip", "Front window, coupling gel, and sensor", "Glass, adhesive, and diode"]
+  ],
+  "correct": "Window, signal plate, and photoconductive layer",
+  "explanation": "The target assembly is where the image is formed; it is built from the glass window, a thin conductive signal plate, and a photoconductive layer (usually antimony trisulfide) that stores the charge image.",
+  "reward": 2
+},
+{
+  "variants": [
+    "In flat panel detectors, readout binning is typically employed for:",
+    "When is pixel binning most likely to be used in flat panel fluoroscopy?",
+    "Readout binning in a flat panel detector is used to optimize imaging for:"
+  ],
+  "options": [
+    ["Large fields of view", "Wider imaging areas", "Large FOV settings"],
+    ["Magnification modes", "Zoomed views", "High-resolution imaging"],
+    ["Spot film recording", "Static image capture", "Radiographic mode"],
+    ["Low-dose fluoroscopy only", "Pulsed fluoro at low rates", "Dose reduction protocols"],
+    ["Cardiac cine runs", "Fast frame rates in heart imaging", "Dynamic cardiac studies"],
+    ["Single shot radiography", "Static X-ray acquisition", "Fixed image capture"],
+    ["Automatic brightness control", "Dose rate adjustment", "Exposure regulation"]
+  ],
+  "correct": "Large fields of view",
+  "explanation": "Binning combines adjacent pixels into a larger effective pixel, which speeds up readout and improves signal-to-noise ratio for large fields of view where the highest spatial resolution is not the primary requirement.",
+  "reward": 2
+},
+{
+  "variants": [
+    "For a heavy patient, the typical entrance skin dose rate in fluoroscopy is approximately:",
+    "What is the expected dose rate range when imaging a heavy patient under automatic brightness control?",
+    "Dose rates during fluoroscopy for heavy patients generally fall within which range?"
+  ],
+  "options": [
+    ["70 to 87.3 mGy/min", "70–87.3 milligray per minute", "Roughly 70–87 mGy/min"],
+    ["8.7 to 17 mGy/min", "8.7–17 milligray per minute", "Roughly 9–17 mGy/min"],
+    ["26 to 44 mGy/min", "26–44 milligray per minute", "Roughly 26–44 mGy/min"],
+    ["100 to 120 mGy/min", "100–120 milligray per minute", "Roughly 100–120 mGy/min"],
+    ["50 to 60 mGy/min", "50–60 milligray per minute", "Roughly 50–60 mGy/min"],
+    ["150 to 200 mGy/min", "150–200 milligray per minute", "Roughly 150–200 mGy/min"],
+    ["30 to 50 mGy/min", "30–50 milligray per minute", "Roughly 30–50 mGy/min"]
+  ],
+  "correct": "70 to 87.3 mGy/min",
+  "explanation": "Imaging heavy patients requires significantly higher exposure factors to penetrate the tissue, resulting in dose rates approaching the regulatory maximum limits.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Gastrointestinal and genitourinary fluoroscopy machines are typically configured with:",
+    "What are the common tube configurations for GI/GU fluoroscopy units?",
+    "Which tube placement options exist for standard fluoroscopy rooms used for GI/GU studies?"
+  ],
+  "options": [
+    ["Under-table or over-table x-ray tubes", "Tube positioned below or above the patient", "Undercouch or overcouch configurations"],
+    ["A fixed C-arm mount", "A rotating C-arm gantry", "A stationary arc-shaped support"],
+    ["Biplane tube assemblies", "Two tubes fixed at 90 degrees", "Dual source configurations"],
+    ["A portable hand-held tube", "A mobile tube on a wand", "A handheld emitter"],
+    ["A single vertical tube only", "A tube fixed directly above", "An overhead-only configuration"],
+    ["A horizontal tube only", "A tube fixed to the side", "A lateral-only configuration"],
+    ["A ceiling-suspended tube only", "A tube mounted on ceiling rails", "An overhead track system"]
+  ],
+  "correct": "Under-table or over-table x-ray tubes",
+  "explanation": "GI/GU fluoroscopy units are versatile and may feature an x-ray tube positioned beneath the patient table (under-table) for shielding convenience or above (over-table) for easier access.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Direct conversion flat panel detectors typically use which photoconductor material?",
+    "What material is most commonly employed in direct conversion detectors for mammography?",
+    "Amorphous selenium (a-Se) is utilized in flat panel detectors for which conversion method?"
+  ],
+  "options": [
+    ["Amorphous selenium (a-Se)", "a-Se photoconductor", "Selenium layer"],
+    ["Cesium iodide (CsI)", "CsI scintillator", "Cesium iodide crystal"],
+    ["Gadolinium oxysulfide", "Gd₂O₂S phosphor", "Gadox screen"],
+    ["Amorphous silicon (a-Si)", "a-Si photodiode", "Silicon panel"],
+    ["Lead oxide (PbO)", "PbO layer", "Plumbicon material"],
+    ["Bismuth germanate (BGO)", "BGO crystal", "Bismuth germanate scintillator"],
+    ["Barium fluorobromide (BaFBr)", "BaFBr phosphor", "Photostimulable phosphor"]
+  ],
+  "correct": "Amorphous selenium (a-Se)",
+  "explanation": "Direct conversion detectors use high-voltage bias across a photoconductor like amorphous selenium to directly convert X-ray photons into electron-hole pairs without an intermediate light step.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The suspension level for image intensifier input dose rate (IIIDR) in cine film mode is:",
+    "At what IIIDR threshold must a cine film mode be suspended for quality control failure?",
+    "Quality control guidelines mandate suspension for cine mode if the IIIDR exceeds:"
+  ],
+  "options": [
+    ["> 5.0 μGy/frame", "Greater than 5.0 μGy/frame", "Exceeding 5.0 μGy/frame"],
+    ["> 0.5 μGy/frame", "Greater than 0.5 μGy/frame", "Exceeding 0.5 μGy/frame"],
+    ["> 50 μGy/frame", "Greater than 50 μGy/frame", "Exceeding 50 μGy/frame"],
+    ["> 10 μGy/frame", "Greater than 10 μGy/frame", "Exceeding 10 μGy/frame"],
+    ["> 1.0 μGy/frame", "Greater than 1.0 μGy/frame", "Exceeding 1.0 μGy/frame"],
+    ["> 100 μGy/frame", "Greater than 100 μGy/frame", "Exceeding 100 μGy/frame"],
+    ["> 2.0 μGy/frame", "Greater than 2.0 μGy/frame", "Exceeding 2.0 μGy/frame"]
+  ],
+  "correct": "> 5.0 μGy/frame",
+  "explanation": "For general cine film modes, an input dose rate exceeding 5.0 μGy/frame indicates excessive radiation output that could unnecessarily increase patient dose during recording.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The objective lens in the optical system of an image intensifier serves to:",
+    "What is the primary function of the objective lens located after the output phosphor?",
+    "In an XRII optical chain, the collimating lens shapes which type of light?"
+  ],
+  "options": [
+    ["Shape the divergent light from the output phosphor", "Collimate the light rays exiting the phosphor", "Direct divergent beams toward the camera"],
+    ["Limit the amount of light entering the camera", "Act as an aperture to reduce intensity", "Restrict photon flux"],
+    ["Convert electrons into visible light", "Produce the final image light", "Emit photons from electron impact"],
+    ["Focus the image onto the film plane", "Project the image onto a spot film", "Concentrate light for recording"],
+    ["Accelerate electrons toward the output", "Focus light onto the video sensor", "Concentrate rays on the target"],
+    ["Accelerate electrons towards the output screen", "Apply potential to the electron stream", "Speed up electrons"],
+    ["Magnify the image size", "Increase the field of view", "Zoom the optical image"],
+    ["Absorb scattered light", "Reduce glare and veiling glare", "Filter unwanted reflections"]
+  ],
+  "correct": "Shape the divergent light from the output phosphor",
+  "explanation": "Light emitted from the output phosphor is divergent; the objective (or collimating) lens shapes these rays into a parallel or convergent beam suitable for transmission through the optical system.",
+  "reward": 2
+},
+{
+  "variants": [
+    "During High-Level fluoroscopy, the maximum fluoroscopic entrance skin dose rate (MFESDR) must not exceed:",
+    "What is the regulatory limit for entrance skin dose rate in High-Level control mode?",
+    "Special High-Level fluoroscopy modes are permitted to reach a maximum dose rate of:"
+  ],
+  "options": [
+    ["167 mGy/min (20 R/min)", "20 roentgen per minute", "167 milligray per minute"],
+    ["88 mGy/min (10 R/min)", "10 roentgen per minute", "88 milligray per minute"],
+    ["44 mGy/min (5 R/min)", "5 roentgen per minute", "44 milligray per minute"],
+    ["200 mGy/min (24 R/min)", "24 roentgen per minute", "200 milligray per minute"],
+    ["100 mGy/min (12 R/min)", "12 roentgen per minute", "100 milligray per minute"],
+    ["250 mGy/min (30 R/min)", "30 roentgen per minute", "250 milligray per minute"],
+    ["50 mGy/min (6 R/min)", "6 roentgen per minute", "50 milligray per minute"]
+  ],
+  "correct": "167 mGy/min (20 R/min)",
+  "explanation": "High-Level control modes, used for challenging interventional cases, allow a higher dose rate limit of 20 R/min (167 mGy/min), usually requiring a continuous audible alarm to alert the operator.",
+  "reward": 2
+},
+{
+  "variants": [
+    "For cardiac mode cine, the suspension level for Image Intensifier Input Dose Rate (IIIDR) is:",
+    "What is the IIIDR suspension threshold specifically for cardiac imaging modes?",
+    "Quality control testing requires suspension if cardiac IIIDR exceeds:"
+  ],
+  "options": [
+    ["> 0.5 μGy/frame", "Greater than 0.5 μGy/frame", "Exceeding 0.5 μGy/frame"],
+    ["> 5.0 μGy/frame", "Greater than 5.0 μGy/frame", "Exceeding 5.0 μGy/frame"],
+    ["> 2.0 μGy/frame", "Greater than 2.0 μGy/frame", "Exceeding 2.0 μGy/frame"],
+    ["> 1.0 μGy/frame", "Greater than 1.0 μGy/frame", "Exceeding 1.0 μGy/frame"],
+    ["> 10.0 μGy/frame", "Greater than 10.0 μGy/frame", "Exceeding 10.0 μGy/frame"],
+    ["> 50 μGy/frame", "Greater than 50 μGy/frame", "Exceeding 50 μGy/frame"],
+    ["> 0.05 μGy/frame", "Greater than 0.05 μGy/frame", "Exceeding 0.05 μGy/frame"]
+  ],
+  "correct": "> 0.5 μGy/frame",
+  "explanation": "Cardiac modes operate at higher frame rates and sensitivity, so the suspension limit for input dose is set lower at 0.5 μGy/frame to prevent excessive cumulative patient dose.",
+  "reward": 2
+},
+{
+  "variants": [
+    "In indirect conversion flat panel detectors, the input phosphor is typically made of:",
+    "Which scintillator material is used in indirect FPDs to convert X-rays to light?",
+    "Cesium iodide (CsI) is utilized in flat panel detectors for which function?"
+  ],
+  "options": [
+    ["Cesium iodide (CsI)", "CsI scintillator", "Cesium iodide phosphor"],
+    ["Amorphous selenium (a-Se)", "a-Se photoconductor", "Selenium layer"],
+    ["Gadolinium oxysulfide", "Gd₂O₂S", "Gadox phosphor"],
+    ["Amorphous silicon (a-Si)", "a-Si panel", "Silicon photodiode"],
+    ["Bismuth germanate (BGO)", "BGO crystal", "Bismuth germanate"],
+    ["Calcium tungstate", "CaWO₄", "Intensifying screen phosphor"],
+    ["Barium fluorochloride", "BaFCl", "Storage phosphor"]
+  ],
+  "correct": "Cesium iodide (CsI)",
+  "explanation": "Indirect detectors use a scintillator layer, typically structured CsI, to absorb X-rays and emit light, which is then captured by the underlying photodiode array.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The internal components of an X-ray Image Intensifier are housed within a(n):",
+    "To function correctly, the XRII tube must be:",
+    "Which feature is essential to the operation of an image intensifier tube?"
+  ],
+  "options": [
+    ["Evacuated tube", "Vacuum environment", "Air-tight glass envelope"],
+    ["Pressurized gas chamber", "Xenon-filled tube", "High-pressure vessel"],
+    ["Oil-filled casing", "Dielectric oil bath", "Insulated fluid tank"],
+    ["Water-cooled jacket", "Circulating coolant", "Liquid cooling system"],
+    ["Open-air frame", "Vented housing", "Air-cooled assembly"],
+    ["Magnetic coil housing", "Solenoid enclosure", "Electromagnetic cage"],
+    ["Lead-lined box", "Shielded container", "Radiation-proof case"]
+  ],
+  "correct": "Evacuated tube",
+  "explanation": "The tube must be evacuated (vacuum) to allow electrons to travel freely from the photocathode to the output phosphor without colliding with air molecules.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The input phosphor surface of an X-ray image intensifier is typically:",
+    "What is the geometric shape of the input screen in an XRII?",
+    "Image intensifier design utilizes a curved input surface to:"
+  ],
+  "options": [
+    ["Curved", "Spherical", "Concave"],
+    ["Flat", "Planar", "Flat panel"],
+    ["Conical", "Cone-shaped", "Tapered"],
+    ["Cylindrical", "Tube-shaped", "Round column"],
+    ["Convex", "Dome-shaped outward", "Bulging surface"],
+    ["Angulated", "Tilted", "Angled plane"],
+    ["Irregular", "Asymmetric", "Non-uniform"]
+  ],
+  "correct": "Curved",
+  "explanation": "The input phosphor is curved to maintain a consistent electron path length from the photocathode to the output phosphor, ensuring uniform focus and minimizing image distortion (vignetting).",
+  "reward": 2
+},
+{
+  "variants": [
+    "The output phosphor of an image intensifier is typically constructed on a:",
+    "What material substrate is used for the output surface of an XRII?",
+    "The 'Fiber Output Surface' in an image intensifier refers to:"
+  ],
+  "options": [
+    ["Fiber optic plate", "Fiber output surface", "Fiber optic window"],
+    ["Glass lens", "Optical lens assembly", "Simple glass plate"],
+    ["Metal screen", "Aluminum substrate", "Metal backing"],
+    ["Plastic film", "Polymer sheet", "Plastic layer"],
+    ["Cesium iodide crystal", "CsI block", "Solid scintillator"],
+    ["Amorphous silicon", "a-Si layer", "Silicon wafer"],
+    ["Lead glass", "Shielded glass", "Radiation-shielding glass"]
+  ],
+  "correct": "Fiber optic plate",
+  "explanation": "A fiber optic plate is used at the output to transmit the light image efficiently to the subsequent optical system or camera while maintaining hermetic sealing of the vacuum tube.",
+  "reward": 2
+},
+{
+  "variants": [
+    "In addition to the video camera, the optical system of a fluoroscopy unit often includes a:",
+    "Which component allows for the recording of static high-resolution images in older fluoroscopy systems?",
+    "The optical distributor often directs light to both a video camera and a:"
+  ],
+  "options": [
+    ["Spot-film camera", "Film recording device", "Cine camera"],
+    ["Flat panel detector", "Digital sensor", "Direct capture panel"],
+    ["Ultrasound probe", "Sonography transducer", "Acoustic imager"],
+    ["CT detector ring", "Tomographic array", "Ring detector"],
+    ["MRI coil", "Resonance receiver", "Radiofrequency coil"],
+    ["PET detector", "Scintillation crystal", "Nuclear detector"],
+    ["Fluoroscopy table", "Patient couch", "Operating table"]
+  ],
+  "correct": "Spot-film camera",
+  "explanation": "The optical system uses beam splitters or mirrors to direct light to the video camera for live viewing and a spot-film camera for recording high-resolution static images or cine runs.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Direct conversion flat panel detectors utilizing amorphous selenium are the standard technology for which imaging application?",
+    "In which modality is the direct conversion method using a-Se most commonly employed?",
+    "Amorphous selenium direct conversion detectors are primarily used in:"
+  ],
+  "options": [
+    ["Mammography", "Breast imaging", "Mammographic screening"],
+    ["General radiography", "Plain film X-ray", "Conventional skeletal imaging"],
+    ["Computed tomography", "CT scanning", "Cross-sectional imaging"],
+    ["Fluoroscopy", "Dynamic imaging", "Real-time X-ray"],
+    ["Nuclear medicine", "Scintigraphy", "Radionuclide imaging"],
+    ["Ultrasound", "Sonography", "Acoustic imaging"],
+    ["Magnetic resonance imaging", "MRI", "Nuclear magnetic resonance"]
+  ],
+  "correct": "Mammography",
+  "explanation": "Direct conversion detectors using amorphous selenium provide the high spatial resolution required for detecting microcalcifications in breast tissue.",
+  "reward": 2
+},
+{
+  "variants": [
+    "When magnification mode is activated on a fluoroscopy system, what is the effect on contrast resolution?",
+    "How does magnification mode influence the contrast resolution of a fluoroscopic image?",
+    "Which statement accurately describes contrast resolution during magnification fluoroscopy?"
+  ],
+  "options": [
+    ["It improves", "Contrast resolution becomes better", "Image contrast is enhanced"],
+    ["It degrades significantly", "Contrast resolution becomes worse", "Image contrast is reduced"],
+    ["It remains unchanged", "No effect on contrast", "Contrast stays the same"],
+    ["It becomes inverted", "Contrast is reversed", "Image polarity flips"],
+    ["It eliminates all contrast", "Contrast is removed entirely", "Image becomes blank"],
+    ["It depends solely on patient size", "Unrelated to magnification settings", "Only affected by thickness"],
+    ["It reduces signal-to-noise ratio", "Decreases SNR", "Lowers image quality"]
+  ],
+  "correct": "It improves",
+  "explanation": "Magnification mode improves contrast resolution due to the air gap effect reducing scatter reaching the detector and the effective improvement in spatial resolution.",
+  "reward": 2
+},
+{
+  "variants": [
+    "What material is typically used for the entrance window of a flat panel detector housing?",
+    "Which substance constitutes the front cover of a flat panel detector to minimize attenuation?",
+    "The entry surface of a flat panel detector assembly is typically made of:"
+  ],
+  "options": [
+    ["Thin carbon fiber", "Carbon fiber composite", "Thin carbon fiber layer"],
+    ["Thick lead glass", "Lead shielding", "Radiation-blocking glass"],
+    ["Aluminum sheet", "Aluminum alloy", "Metal casing"],
+    ["Standard glass", "Silica glass", "Plate glass"],
+    ["Plastic polymer", "Acrylic", "Lucite"],
+    ["Copper mesh", "Copper grid", "Metallic screen"],
+    ["Stainless steel", "Steel plate", "Metal cover"]
+  ],
+  "correct": "Thin carbon fiber",
+  "explanation": "Carbon fiber is used for the detector window because it provides structural support with minimal X-ray attenuation, ensuring high detector quantum efficiency.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Fluoroscopy systems designed for a Cath Lab environment are optimized for imaging which primary organ system?",
+    "A Cath Lab fluoroscopy unit is specifically configured to support procedures involving the:",
+    "Which medical specialty is the primary user of dedicated Cath Lab fluoroscopy equipment?"
+  ],
+  "options": [
+    ["Heart", "Cardiovascular system", "Cardiac anatomy"],
+    ["Brain", "Nervous system", "Neurological structures"],
+    ["Digestive tract", "Gastrointestinal system", "Abdominal organs"],
+    ["Lungs", "Respiratory system", "Pulmonary structures"],
+    ["Kidneys", "Urinary system", "Renal anatomy"],
+    ["Bones", "Skeletal system", "Osseous structures"],
+    ["Liver", "Hepatobiliary system", "Abdominal gland"]
+  ],
+  "correct": "Heart",
+  "explanation": "Cath Labs are specialized suites for cardiac catheterization procedures to visualize coronary arteries and heart chambers, primarily serving cardiology.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The electron gun in a television camera tube is responsible for:",
+    "What is the primary function of the electron gun within a vidicon tube?",
+    "In a fluoroscopic TV camera, the electron gun serves to:"
+  ],
+  "options": [
+    ["Emitting the electron beam", "Producing the scanning beam", "Generating the electron stream"],
+    ["Converting X-rays to light", "Acting as a phosphor", "Scintillating upon radiation impact"],
+    ["Storing the latent image", "Holding the charge pattern", "Retaining the signal"],
+    ["Focusing light rays", "Acting as an optical lens", "Concentrating photons"],
+    ["Generating the high voltage", "Supplying the kV potential", "Providing acceleration power"],
+    ["Detecting the video signal", "Reading the output voltage", "Measuring the charge"],
+    ["Absorbing stray electrons", "Blocking scattered particles", "Shielding the tube"]
+  ],
+  "correct": "Emitting the electron beam",
+  "explanation": "The electron gun is the cathode assembly that generates and emits the focused electron beam used to scan the target and read the stored charge image.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The release of electrons from the photocathode in an image intensifier occurs via the:",
+    "Which physical phenomenon is responsible for electron emission at the photocathode?",
+    "Electrons are liberated from the photocathode layer through the action of:"
+  ],
+  "options": [
+    ["Photoelectric effect", "Photoemission", "Photon-induced electron emission"],
+    ["Thermionic emission", "Heat-induced electron release", "Thermal generation of electrons"],
+    ["Compton scattering", "Photon scattering interaction", "Inelastic scattering process"],
+    ["Pair production", "Matter creation from energy", "High-energy photon conversion"],
+    ["Bremsstrahlung process", "Braking radiation mechanism", "Deceleration radiation emission"],
+    ["Ionization by collision", "Impact ionization", "Collisional electron removal"],
+    ["Tunneling effect", "Quantum tunneling", "Wavefunction penetration"]
+  ],
+  "correct": "Photoelectric effect",
+  "explanation": "Light photons striking the photocathode surface transfer their energy to electrons, overcoming the work function and releasing them into the vacuum tube.",
+  "reward": 2
+},
+{
+  "variants": [
+    "A dynamic study in fluoroscopy is defined as an examination that demonstrates:",
+    "What is the defining characteristic of a dynamic fluoroscopic study?",
+    "Which phrase best describes the purpose of a dynamic study?"
+  ],
+  "options": [
+    ["The motion of circulation or internal structures", "Movement of blood flow or organs", "Physiological motion in real time"],
+    ["The static density of bone tissues", "Fixed images of skeletal anatomy", "Stationary views of calcified structures"],
+    ["The temperature distribution of the body", "Thermal imaging of the patient", "Heat patterns within anatomy"],
+    ["The chemical composition of organs", "Metabolic activity of tissues", "Biochemical analysis of tissues"],
+    ["The electrical activity of the heart", "Electrocardiogram tracing", "Cardiac electrical signals"],
+    ["The acoustic properties of tissue", "Ultrasound characteristics", "Sound wave transmission"],
+    ["The three-dimensional volume of a tumor", "Volumetric rendering of a mass", "3D reconstruction of a lesion"]
+  ],
+  "correct": "The motion of circulation or internal structures",
+  "explanation": "Dynamic studies utilize the real-time capability of fluoroscopy to visualize moving anatomy, such as blood flow or peristalsis.",
+  "reward": 2
+},
+{
+  "variants": [
+    "In an indirect conversion flat panel detector, the correct sequence of signal transformation is:",
+    "What is the energy conversion pathway for an indirect FPD?",
+    "Which flowchart accurately represents the function of an indirect flat panel detector?"
+  ],
+  "options": [
+    ["X-rays → Light → Electrical Charge", "Radiation → Visible photons → Electronic signal", "X-ray photons → Optical photons → Charge"],
+    ["X-rays → Electrical Charge → Light", "Radiation → Electronic signal → Visible photons", "X-ray photons → Charge → Light"],
+    ["Light → X-rays → Electrical Charge", "Visible photons → Radiation → Electronic signal", "Optical photons → X-ray photons → Charge"],
+    ["Electrical Charge → X-rays → Light", "Electronic signal → Radiation → Visible photons", "Charge → X-ray photons → Optical photons"],
+    ["X-rays → Electrons → Light", "Radiation → Charged particles → Optical photons", "X-ray photons → Beta particles → Visible light"],
+    ["Light → Electrical Charge → X-rays", "Visible photons → Electronic signal → Radiation", "Optical photons → Charge → X-ray photons"],
+    ["Electrons → X-rays → Electrical Charge", "Charged particles → Radiation → Electronic signal", "Beta particles → X-ray photons → Charge"]
+  ],
+  "correct": "X-rays → Light → Electrical Charge",
+  "explanation": "Indirect detectors use a scintillator (like CsI) to turn X-rays into light, which is then converted to an electrical charge by the photodiode array.",
+  "reward": 2
+},
+{
+  "variants": [
+    "When switching from full-field to magnification mode, the field of view (FOV) at the input phosphor:",
+    "What happens to the input field of view when magnification mode is activated?",
+    "Magnification mode is achieved by electronically selecting a smaller area on the input phosphor, which does what to the FOV?"
+  ],
+  "options": [
+    ["Decreases", "Becomes smaller", "Is reduced in size"],
+    ["Increases", "Becomes larger", "Expands to cover more area"],
+    ["Remains constant", "Stays the same size", "Does not change"],
+    ["Inverts", "Flips orientation", "Becomes reversed"],
+    ["Disappears", "Is eliminated", "Vanishes completely"],
+    ["Rotates 90 degrees", "Turns sideways", "Shifts laterally"],
+    ["Becomes elliptical", "Changes shape to an oval", "Distorts into an ellipse"]
+  ],
+  "correct": "Decreases",
+  "explanation": "Magnification mode electronically focuses on a smaller central portion of the input phosphor, reducing the field of view to enlarge the image of the region of interest.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The primary function of the accelerating grid in a television camera tube is to:",
+    "What is the role of the accelerating grid located near the electron gun?",
+    "Which component in the vidicon tube is responsible for increasing the kinetic energy of the electron beam?"
+  ],
+  "options": [
+    ["Increase the speed of the electron beam", "Accelerate electrons towards the target", "Add kinetic energy to the beam"],
+    ["Focus the beam to a fine point", "Converge electrons into a tight stream", "Sharpen the beam profile"],
+    ["Deflect the beam horizontally", "Steer the beam across the target", "Move the beam side-to-side"],
+    ["Generate the electron beam", "Emit electrons from the cathode", "Produce the primary stream"],
+    ["Control the beam intensity", "Regulate the number of electrons", "Adjust the current flow"],
+    ["Absorb stray electrons", "Capture scattered particles", "Clean up the beam edges"],
+    ["Convert light to electrons", "Act as a photocathode", "Perform photoemission"]
+  ],
+  "correct": "Increase the speed of the electron beam",
+  "explanation": "The accelerating grid applies a positive voltage to propel the electrons forward, giving them the necessary velocity to scan the target effectively.",
+  "reward": 2
+},
+{
+  "variants": [
+    "In the electron gun assembly of a television camera tube, the control grid is responsible for:",
+    "What is the specific role of the control grid within a vidicon camera tube?",
+    "Which component regulates the flow of electrons from the cathode to the accelerating grid in a TV tube?"
+  ],
+  "options": [
+    ["Modulating the intensity of the electron beam", "Controlling the beam current", "Regulating the number of electrons in the beam"],
+    ["Accelerating the electrons toward the target", "Speeding up the electron stream", "Providing kinetic energy to the beam"],
+    ["Focusing the electron beam to a fine point", "Converging the electrons", "Sharpening the beam cross-section"],
+    ["Deflecting the beam across the target", "Scanning the image", "Moving the beam horizontally and vertically"],
+    ["Generating the electron beam", "Emitting electrons", "Acting as the electron source"],
+    ["Absorbing excess electrons", "Collecting stray charge", "Grounding the tube components"],
+    ["Converting light into electrical signals", "Performing photoelectric conversion", "Acting as the photosensitive layer"]
+  ],
+  "correct": "Modulating the intensity of the electron beam",
+  "explanation": "The control grid, located just after the cathode, regulates the number of electrons passing through, thereby controlling the beam current or intensity.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The conductive layer in the target assembly of a vidicon tube that collects the charge image is called the:",
+    "Which component serves as the signal electrode in the target assembly of a television camera tube?",
+    "In a vidicon tube, the transparent conductive coating that carries the video signal is known as the:"
+  ],
+  "options": [
+    ["Signal plate", "Conductive signal layer", "Transparent electrode"],
+    ["Photoconductive layer", "Target layer", "Antimony trisulfide coating"],
+    ["Glass window", "Faceplate", "Input window"],
+    ["Electron gun", "Cathode assembly", "Emitter"],
+    ["Grid assembly", "Accelerating grid", "Control grid"],
+    ["Focusing coil", "Electromagnetic coil", "Deflection yoke"],
+    ["Output phosphor", "Fiber optic plate", "Screen"]
+  ],
+  "correct": "Signal plate",
+  "explanation": "The signal plate is a transparent conductive film deposited on the glass window; it collects the charge from the photoconductive layer to form the video signal.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Electrons emitted from the photocathode are initially driven toward the anode by being:",
+    "What force primarily initiates the movement of electrons away from the photocathode surface?",
+    "The text notes that electrons are 'repulsed from photocathode' due to:"
+  ],
+  "options": [
+    ["Repulsed by the negative potential of the photocathode", "Electrostatic repulsion from the cathode surface", "Charge repulsion from the emitting layer"],
+    ["Attracted by the input phosphor", "Gravitational pull", "Magnetic attraction"],
+    ["Thermionic emission forces", "Heat-induced pressure", "Thermal expansion"],
+    ["Mechanical propulsion", "Physical ejection", "Kinetic impact"],
+    ["Gravitational acceleration", "Earth's gravity", "Mass attraction"],
+    ["Air pressure differential", "Vacuum suction", "Atmospheric push"],
+    ["Photon pressure", "Light impact force", "Radiation pressure"]
+  ],
+  "correct": "Repulsed by the negative potential of the photocathode",
+  "explanation": "The photocathode is maintained at a high negative potential, creating an electrostatic field that repels the newly emitted electrons, propelling them toward the positive anode.",
+  "reward": 2
+},
+{
+  "variants": [
+    "In a direct conversion flat panel detector, the component that physically stores the generated electrical charge is the:",
+    "Which element within a direct FPD pixel acts as a capacitor to hold the image charge?",
+    "The 'Storage Electrode' in a direct conversion flat panel detector serves to:"
+  ],
+  "options": [
+    ["Storage electrode", "Charge collection electrode", "Capacitive storage element"],
+    ["Photoconductor layer", "a-Se layer", "Conversion layer"],
+    ["Dielectric layer", "Insulating layer", "Non-conductive barrier"],
+    ["TFT switch", "Thin film transistor", "Readout switch"],
+    ["Pixel electrode", "Collection plate", "Top electrode"],
+    ["Scintillator", "Phosphor layer", "Light emitter"],
+    ["Photodiode", "Light sensor", "Silicon diode"]
+  ],
+  "correct": "Storage electrode",
+  "explanation": "The storage electrode collects and holds the electrons generated by the photoconductor until the TFT switch is activated to read the charge.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The final step in the signal processing chain of a flat panel detector involves converting the analog voltage to a digital signal via a(n):",
+    "Which component is responsible for digitizing the electrical signal in a flat panel detector system?",
+    "In an indirect FPD system, the analog electrical charge is converted to a binary signal by the:"
+  ],
+  "options": [
+    ["Analog-to-Digital Converter (ADC)", "A/D converter", "Digitizer unit"],
+    ["Digital-to-Analog Converter (DAC)", "D/A converter", "Signal reconstructer"],
+    ["TFT array", "Thin film transistor panel", "Switching matrix"],
+    ["Photodiode array", "Light sensor grid", "Silicon detector"],
+    ["Scintillator crystal", "CsI layer", "Phosphor screen"],
+    ["Operational amplifier", "Op-amp", "Signal booster"],
+    ["Video processor", "Image engine", "Graphics unit"]
+  ],
+  "correct": "Analog-to-Digital Converter (ADC)",
+  "explanation": "After the charge is read out and amplified, the analog voltage signal must be converted into digital data by an ADC for processing and display.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Indirect conversion flat panel detectors are the primary technology used for which clinical application?",
+    "Which imaging modality typically employs indirect conversion detectors with a phosphor layer?",
+    "Digital General Radiography predominantly utilizes which type of flat panel detector technology?"
+  ],
+  "options": [
+    ["General radiography", "Digital static X-ray imaging", "Conventional planar imaging"],
+    ["Mammography", "Breast cancer screening", "High-resolution breast imaging"],
+    ["Computed tomography", "CT scanning", "Cross-sectional imaging"],
+    ["Fluoroscopy", "Real-time dynamic imaging", "Live X-ray guidance"],
+    ["Dental radiography", "Intraoral imaging", "Dental X-rays"],
+    ["Bone densitometry", "DEXA scanning", "Osteoporosis screening"],
+    ["Interventional radiology", "Catheter-based procedures", "Minimally invasive imaging"]
+  ],
+  "correct": "General radiography",
+  "explanation": "Indirect conversion detectors using a phosphor layer like CsI are the standard for digital general radiography due to their good balance of resolution and dose efficiency.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The active matrix array in an indirect conversion flat panel detector is composed of:",
+    "Which electronic component is used in the pixel array of an indirect FPD to detect light?",
+    "Unlike direct conversion detectors that use simple electrodes, indirect detectors require which component in the pixel?"
+  ],
+  "options": [
+    ["Photodiodes", "Light-sensitive diodes", "Silicon photodiode elements"],
+    ["Pixel electrodes only", "Simple charge collection plates", "Conductive pads"],
+    ["Storage capacitors only", "Charge holding cells", "Capacitive plates"],
+    ["TFTs (Thin Film Transistors) only", "Switching transistors", "Active switches"],
+    ["Photoconductors", "a-Se layers", "Direct conversion layers"],
+    ["Scintillator crystals", "Phosphor blocks", "Light emission layers"],
+    ["Dielectric layers"],
+    ["Insulating sheets"],
+    ["Non-conductive barriers"]
+  ],
+  "correct": "Photodiodes",
+  "explanation": "Indirect conversion requires a photodiode in each pixel to convert the light emitted by the phosphor layer into an electrical charge.",
+  "reward": 2
+},
+{
+  "variants": [
+    "In a direct conversion flat panel detector, the dielectric layer functions to:",
+    "What is the role of the dielectric layer situated within the structure of a direct FPD?",
+    "Which layer in a direct conversion detector prevents electrical charge from leaking into the substrate?"
+  ],
+  "options": [
+    ["Prevent charge injection into the substrate", "Block charge leakage to underlying layers", "Insulate the electrode from the base"],
+    ["Convert X-rays into electrical charge", "Act as the primary detector layer", "Perform photoconductivity"],
+    ["Store the generated electrical charge", "Act as a capacitor", "Hold the image signal"],
+    ["Emit visible light when struck by X-rays", "Scintillate upon radiation exposure", "Produce optical photons"],
+    ["Amplify the electrical signal", "Increase the voltage of the charge", "Boost the signal strength"],
+    ["Focus the X-ray beam onto the pixel", "Collimate radiation", "Narrow the beam geometry"],
+    ["Filter low-energy X-ray photons", "Absorb soft radiation", "Harden the beam"]
+  ],
+  "correct": "Prevent charge injection into the substrate",
+  "explanation": "The dielectric layer acts as an insulator, ensuring that the charges generated by the photoconductor are collected by the electrodes rather than leaking into the substrate or ground.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The glass envelope or sleeve of a television camera tube provides the function of:",
+    "What is the purpose of the glass sleeve component shown in the television monitoring diagram?",
+    "Structural integrity and a vacuum seal for the vidicon tube are provided by the:"
+  ],
+  "options": [
+    ["Maintaining the vacuum seal", "Preserving the evacuated environment", "Ensuring an airtight enclosure"],
+    ["Focusing the electron beam", "Magnetic focusing of electrons", "Beam collimation"],
+    ["Generating the electron beam", "Electron emission source", "Cathode function"],
+    ["Deflecting the scanning beam", "Steering the electron stream", "Beam movement control"],
+    ["Converting light to charge", "Photoelectric conversion", "Image formation"],
+    ["Shielding against magnetic fields", "Magnetic screening", "Interference protection"],
+    ["Cooling the tube components", "Heat dissipation", "Thermal management"]
+  ],
+  "correct": "Maintaining the vacuum seal",
+  "explanation": "The glass envelope provides the structural outer shell that maintains the high vacuum necessary for the electron beam to travel unimpeded.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The specific function of the input phosphor in an X-ray Image Intensifier is to convert:",
+    "What is the primary energy transformation performed by the input phosphor layer?",
+    "Which conversion process occurs at the input screen of an image intensifier?"
+  ],
+  "options": [
+    ["X-rays to light", "Radiation to optical photons", "X-ray photons to visible light"],
+    ["Light to electrons", "Optical photons to charge", "Visible light to electron stream"],
+    ["Electrons to light", "Charge to optical photons", "Electron stream to visible light"],
+    ["Light to X-rays", "Optical photons to radiation", "Visible light to X-ray photons"],
+    ["Electrons to X-rays", "Charge to radiation", "Beta particles to X-ray photons"],
+    ["X-rays to electrons", "Radiation to charge", "Direct quantum conversion"],
+    ["Light to a digital signal", "Optical photons to binary data", "Analog to digital conversion"]
+  ],
+  "correct": "X-rays to light",
+  "explanation": "The input phosphor, typically made of Cesium Iodide, absorbs incoming X-ray photons and re-emits their energy as visible light photons.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The specific function of the output phosphor in an X-ray Image Intensifier is to convert:",
+    "What energy transformation takes place at the output screen of the XRII?",
+    "Which process characterizes the final conversion step inside the image intensifier tube?"
+  ],
+  "options": [
+    ["Electrons to light", "Kinetic energy to optical photons", "Accelerated electrons to visible light"],
+    ["X-rays to light", "Radiation to optical photons", "X-ray photons to visible light"],
+    ["Light to electrons", "Optical photons to charge", "Visible light to electron stream"],
+    ["Electrons to X-rays", "Charge to radiation", "Kinetic energy to X-ray photons"],
+    ["Light to X-rays", "Optical photons to radiation", "Visible light to penetrating radiation"],
+    ["Electrons to heat", "Kinetic energy to thermal energy", "Charge to temperature"],
+    ["X-rays to electrons", "Radiation to charge", "Photon to electron interaction"]
+  ],
+  "correct": "Electrons to light",
+  "explanation": "The output phosphor is struck by the accelerated electron beam, causing it to fluoresce and produce the intensified visible light image.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Angiography machines used for Interventional Vascular procedures are typically located in:",
+    "Which clinical departments primarily utilize angiography equipment for vascular surgery?",
+    "Interventional Vascular suites equipped with angiography machines serve which specialties?"
+  ],
+  "options": [
+    ["Vascular surgery and Radiology", "Vascular surgery and Interventional Radiology", "Surgery and Diagnostic Imaging departments"],
+    ["Cardiology", "Cardiac catheterization labs", "Heart centers"],
+    ["Orthopedics", "Bone surgery suites", "Operating rooms for skeletal repair"],
+    ["Neurology", "Brain imaging centers", "Neuroscience departments"],
+    ["Pediatrics", "Children's hospitals", "Neonatal intensive care units"],
+    ["Gastroenterology", "Digestive disease centers", "Endoscopy suites"],
+    ["Oncology", "Cancer treatment centers", "Radiation therapy departments"]
+  ],
+  "correct": "Vascular surgery and Radiology",
+  "explanation": "The text specifies that Interventional Vascular capabilities on angiography machines are utilized by Vascular Surgery and Radiology departments.",
+  "reward": 2
+},
+{
+  "variants": [
+    "In a flat panel detector, the magnitude of the stored electrical charge is directly proportional to:",
+    "What determines the amount of charge stored in a pixel of a flat panel detector?",
+    "The signal generated by a flat panel detector element correlates with which factor?"
+  ],
+  "options": [
+    ["The amount of incident X-ray radiation", "The quantity of X-rays striking the pixel", "The intensity of radiation exposure"],
+    ["The temperature of the detector surface", "The heat generated by the electronics", "The ambient room temperature"],
+    ["The voltage of the main power supply", "The electrical input from the wall outlet", "The line voltage stability"],
+    ["The speed of the data readout cable", "The transmission rate of the signal", "The bandwidth of the connection"],
+    ["The thickness of the carbon fiber cover", "The depth of the protective housing", "The width of the entry window"],
+    ["The magnetic field strength in the room", "The intensity of the Earth's magnetic field", "External magnetic interference"],
+    ["The duration of the display monitor", "The length of time the screen is on", "The monitor refresh rate"]
+  ],
+  "correct": "The amount of incident X-ray radiation",
+  "explanation": "The fundamental principle of digital radiography detectors is that the electrical charge accumulated in each pixel is linearly related to the number of X-ray photons absorbed.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Which component within the X-ray Image Intensifier is responsible for converting visible light into electrons?",
+    "The conversion of light photons into an electron stream occurs at which XRII component?",
+    "Identify the layer inside the image intensifier that performs the light-to-electron conversion:"
+  ],
+  "options": [
+    ["Photocathode", "Photocathode layer", "Light-sensitive cathode"],
+    ["Input phosphor", "Input screen", "Cesium iodide layer"],
+    ["Output phosphor", "Output screen", "Viewing screen"],
+    ["Anode", "Accelerating electrode", "Positive terminal"],
+    ["Focusing lenses", "Electrostatic lenses", "Electron optics"],
+    ["Glass envelope", "Tube housing", "Vacuum enclosure"],
+    ["Fiber optic plate", "Output window", "Fiber bundle"]
+  ],
+  "correct": "Photocathode",
+  "explanation": "The photocathode is a thin metal layer that emits electrons when struck by the light photons generated by the input phosphor.",
+  "reward": 2
+},
+{
+  "variants": [
+    "A dedicated Cardiac Catheterization Laboratory (Cath Lab) is primarily utilized by which medical specialty?",
+    "Fluoroscopy equipment in a Cath Lab is specifically designed to support procedures in:",
+    "Which department is the primary user of a dedicated Cath Lab fluoroscopy suite?"
+  ],
+  "options": [
+    ["Cardiology", "Cardiac medicine", "Heart specialists"],
+    ["Orthopedic surgery", "Bone surgery", "Musculoskeletal medicine"],
+    ["Gastroenterology", "Digestive diseases", "GI medicine"],
+    ["Neurology", "Brain and nerve specialists", "Neurosciences"],
+    ["Vascular surgery", "Vascular intervention", "Blood vessel surgery"],
+    ["Pulmonology", "Respiratory medicine", "Lung specialists"],
+    ["Urology", "Urinary tract medicine", "Renal specialists"]
+  ],
+  "correct": "Cardiology",
+  "explanation": "Cath Labs are specialized suites designed for cardiac catheterization procedures to visualize and treat heart conditions, primarily serving the cardiology department.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The electronic foundation of a flat panel detector, which contains the switching and charge collection elements, is called the:",
+    "What is the name of the solid-state array used in flat panel detectors to capture the signal?",
+    "Which layer in an FPD consists of a grid of thin-film transistors and detectors?"
+  ],
+  "options": [
+    ["Active matrix array", "TFT array", "Active matrix substrate"],
+    ["Scintillator layer", "Phosphor layer", "Conversion layer"],
+    ["Photoconductor layer", "a-Se layer", "Direct conversion layer"],
+    ["Carbon fiber substrate", "Support panel", "Structural base"],
+    ["Protective housing", "Outer casing", "Enclosure"],
+    ["Glass envelope", "Vacuum tube", "Glass housing"],
+    ["Signal processor", "Data acquisition system", "Image processor"]
+  ],
+  "correct": "Active matrix array",
+  "explanation": "The active matrix array is the underlying electronic grid containing the individual pixel elements (TFTs and electrodes or photodiodes) that capture and read the image signal.",
+  "reward": 2
+},
+{
+  "variants": [
+    "In a direct conversion flat panel detector, the active matrix array uses a:",
+    "Which type of element is used in the active matrix of a direct FPD to collect charge?",
+    "Direct conversion detectors utilize a simple conductive element on the active matrix known as a:"
+  ],
+  "options": [
+    ["Pixel electrode", "Charge collection electrode", "Simple conductive pad"],
+    ["Photodiode", "Light-sensitive diode", "Silicon photodiode"],
+    ["Capacitor bank", "Charge storage bank", "Capacitive array"],
+    ["Scintillator crystal", "Phosphor element", "Light emitter"],
+    ["Photoconductor grid", "a-Se matrix", "Selenium array"],
+    ["CMOS sensor", "Complementary metal-oxide-semiconductor chip", "Active pixel sensor"],
+    ["CCD chip", "Charge-coupled device", "Capacitive bucket brigade"]
+  ],
+  "correct": "Pixel electrode",
+  "explanation": "Direct conversion detectors use a simple pixel electrode on the active matrix to directly collect the charge generated by the photoconductor layer.",
+  "reward": 2
+},
+  {
+    "variants": [
+      "Which statement accurately describes the distribution of scattered radiation around a patient during fluoroscopy?",
+      "Is scattered radiation uniform around the patient during a fluoroscopic procedure?",
+      "What is the nature of scattered radiation originating from the patient?"
+    ],
+    "options": [
+      ["It is not uniform around the patient", "Distribution varies depending on the angle", "It is asymmetrically distributed"],
+      ["It is uniform in all directions", "It is equally distributed 360 degrees", "It forms a perfect sphere of intensity"],
+      ["It is concentrated only at the head", "It affects only the cranial region", "It is localized to the upper body"],
+      ["It is absent on the tube side", "No scatter exists on the anode side", "It is zero near the x-ray tube"],
+      ["It is directed only downwards", "It scatters exclusively towards the floor", "It is trapped by the table"],
+      ["It is blocked completely by the patient", "The body absorbs all scatter", "No scatter exits the patient"],
+      ["It is focused only at the beam entry point", "It emerges solely from the central ray", "It is restricted to the primary field"]
+    ],
+    "correct": "It is not uniform around the patient",
+    "explanation": "Scattered radiation intensity varies significantly based on angle and distance relative to the patient, requiring staff to be aware of their position.",
+    "reward": 2
+  },
+  {
+    "variants": [
+      "What is the typical mA range for fluoroscopy procedures compared to radiography?",
+      "Which current range is characteristic of fluoroscopic operation?",
+      "Fluoroscopy typically operates at what mA level?"
+    ],
+    "options": [
+      ["0.5 to 5 mA", "Current between 0.5 and 5 mA"],
+      ["100 to 1000 mA", "High milliamperage ranging from 100 to 1000", "Current between 100 and 1000 mA"],
+      ["10 to 50 mA", "Milliamperage ranging from 10 to 50", "Current between 10 and 50 mA"],
+      ["50 to 200 mA", "Milliamperage ranging from 50 to 200", "Current between 50 and 200 mA"],
+      ["1000 to 2000 mA", "Current exceeding 1000 mA"],
+      ["0.1 to 0.5 mA", "Current below 0.5 mA"],
+      ["200 to 500 mA", "Current between 200 and 500 mA"]
+    ],
+    "correct": "0.5 to 5 mA",
+    "explanation": "Fluoroscopy uses significantly lower current (mA) than radiography to manage continuous heat load and minimize patient dose.",
+    "reward": 2
+  },
+  {
+    "variants": [
+      "How does the X-ray tube focal spot size in fluoroscopy typically compare to that used in radiography?",
+      "What is the typical focal spot size range for fluoroscopy tubes?",
+      "Fluoroscopy tubes generally utilize smaller focal spots in which range?"
+    ],
+    "options": [
+      ["0.3 to 0.8 mm", "Smaller spots ranging from 0.3 to 0.8 mm", "Focal spots between 0.3 and 0.8 mm"],
+      ["0.6 to 1.2 mm", "Larger spots ranging from 0.6 to 1.2 mm", "Focal spots between 0.6 and 1.2 mm"],
+      ["1.0 to 2.0 mm", "Very large spots ranging from 1.0 to 2.0 mm", "Focal spots between 1.0 and 2.0 mm"],
+      ["0.1 to 0.3 mm", "Focal spots smaller than 0.3 mm"],
+      ["2.0 to 3.0 mm", "Focal spots greater than 2.0 mm"],
+      ["0.5 to 1.5 mm", "Focal spots around 1.0 mm"],
+      ["1.5 to 2.5 mm"]
+    ],
+    "correct": "0.3 to 0.8 mm",
+    "explanation": "Fluoroscopy typically employs smaller focal spots (0.3–0.8 mm) to provide high resolution for dynamic imaging, whereas radiography often uses larger spots for higher heat capacity.",
+    "reward": 2
+  },
+  {
+    "variants": [
+      "What is the effect of increasing the X-ray field size on scattered radiation levels?",
+      "How does field size dependence influence staff exposure in fluoroscopy?",
+      "Enlarging the collimation field from 11x11 cm to 17x17 cm has what effect on scatter?"
+    ],
+    "options": [
+      ["Increases scattered radiation", "Generates more scatter due to larger irradiated volume", "Raises the intensity of scattered photons"],
+      ["Decreases scattered radiation", "Reduces scatter due to smaller irradiated volume", "Lowers the intensity of scattered photons"],
+      ["Has no effect on scattered radiation", "Scatter remains constant regardless of field size", "Does not change the scatter profile"],
+      ["Eliminates scattered radiation entirely", "Removes all scatter from the room", "Creates a scatter-free zone"],
+      ["Inverts the direction of scattered radiation", "Redirects scatter back to the tube", "Changes scatter direction by 180 degrees"],
+      ["Only affects primary radiation, not scatter", "Modifies the beam but not the scatter", "Influences only the direct beam"],
+      ["Reduces staff dose but increases patient dose", "Inverse relationship between staff and patient dose", "Trade-off effect"]
+    ],
+    "correct": "Increases scattered radiation",
+    "explanation": "Larger field sizes increase the volume of tissue irradiated, resulting in a greater number of scattered photons reaching the staff.",
+    "reward": 2
+  },
+  {
+    "variants": [
+      "What is the primary advantage of using pulsed fluoroscopy compared to continuous fluoroscopy?",
+      "Why might an operator select a pulsed mode (e.g., 15 or 30 fps) over continuous mode?",
+      "Pulsed fluoroscopy is primarily utilized to:"
+    ],
+    "options": [
+      ["Reduce radiation dose", "Lower patient and staff exposure", "Decrease the total number of pulses"],
+      ["Improve spatial resolution", "Enhance image sharpness significantly", "Increase detail visibility"],
+      ["Increase the frame rate", "Speed up the dynamic display", "Provide smoother motion rendition"],
+      ["Magnify the image", "Zoom in on the region of interest", "Enlarge the displayed anatomy"],
+      ["Cool the x-ray tube faster", "Enhance heat dissipation", "Prevent tube overheating"],
+      ["Eliminate motion artifacts", "Freeze motion completely", "Remove all blurring from movement"],
+      ["Increase contrast resolution", "Make soft tissue more visible", "Enhance gray scale differentiation"]
+    ],
+    "correct": "Reduce radiation dose",
+    "explanation": "Pulsed fluoroscopy emits X-rays only during specific intervals, reducing the 'on' time compared to continuous mode, thereby lowering dose.",
+    "reward": 2
+  },
+  {
+    "variants": [
+      "What is the standard maximum matrix presentation size for fluoroscopic images?",
+      "Digital fluoroscopy systems typically display images with a maximum matrix of:",
+      "The resolution presentation during fluoroscopy is typically capped at:"
+    ],
+    "options": [
+      ["1024 x 1024", "A matrix size of 1024 by 1024 pixels"],
+      ["512 x 512", "A matrix size of 512 by 512 pixels"],
+      ["2048 x 2048", "A matrix size of 2048 by 2048 pixels"],
+      ["256 x 256", "A matrix size of 256 by 256 pixels"],
+      ["4096 x 4096", "A matrix size of 4096 by 4096 pixels"],
+      ["800 x 600"],
+      ["1920 x 1080", "High definition 1080p", "Full HD resolution"]
+    ],
+    "correct": "1024 x 1024",
+    "explanation": "Even if the flat panel detector has a higher native resolution, the fluoroscopic presentation is often limited to a 1024 x 1024 matrix for display.",
+    "reward": 2
+  },
+  {
+    "variants": [
+      "How does the position of the X-ray tube (over-table vs. under-table) affect staff radiation exposure?",
+      "Why is the X-ray tube position considered a factor affecting staff doses?",
+      "The location of the x-ray tube impacts staff dose because:"
+    ],
+    "options": [
+      ["It changes the direction and intensity of scattered radiation", "Tube position alters the scatter distribution pattern", "Over-table tubes can increase head/neck exposure compared to under-table"],
+      ["It has no impact on staff dose", "Tube position is irrelevant to scatter", "Location does not matter"],
+      ["It only affects the image quality, not dose", "Tube position determines resolution only", "Exposure is independent of tube location"],
+      ["It determines the kVp setting", "Tube position dictates the energy used", "Location sets the technique factors"],
+      ["It controls the magnification factor", "Tube position sets the zoom level", "Location determines the SID"],
+      ["It changes the patient's position on the table", "Tube location moves the patient", "The table orientation shifts"],
+      ["It adjusts the filtration automatically", "Tube position adds or removes filters", "Inherent filtration changes"]
+    ],
+    "correct": "It changes the direction and intensity of scattered radiation",
+    "explanation": "An over-table tube directs scatter upwards towards the operator's upper body, while an under-table tube directs scatter downwards, often reducing head and neck exposure.",
+    "reward": 2
+  },
+  {
+    "variants": [
+      "What is the effect of increasing the irradiated patient volume on scattered radiation?",
+      "How does the volume of tissue irradiated influence the scatter hazard?",
+      "A larger irradiated patient volume results in:"
+    ],
+    "options": [
+      ["Higher levels of scattered radiation", "Increased scatter production", "More secondary radiation emitted"],
+      ["Lower levels of scattered radiation", "Decreased scatter production", "Less secondary radiation emitted"],
+      ["No change in scattered radiation", "Scatter remains constant", "Independent of tissue volume"],
+      ["Absorption of all scattered radiation", "Elimination of scatter", "Complete attenuation of scatter"],
+      ["Better image quality", "Higher resolution", "Improved contrast"],
+      ["Reduced patient dose", "Lower entrance skin dose", "Less absorption by the patient"],
+      ["A narrower beam width", "Tighter collimation", "Smaller field size"]
+    ],
+    "correct": "Higher levels of scattered radiation",
+    "explanation": "A larger volume of irradiated tissue provides more atoms for X-ray interactions, resulting in a greater quantity of scattered photons.",
+    "reward": 2
+  },
+  {
+    "variants": [
+      "Which protective equipment is explicitly mentioned as effective for staff radiation protection?",
+      "What gear should staff utilize to minimize exposure from scattered radiation?",
+      "Effective radiation protection for staff includes the use of:"
+    ],
+    "options": [
+      ["Articulated shielding and protection goggles", "Mobile lead screens and leaded glasses", "Lead shields and eye protection"],
+      ["Lead aprons only", "Protective body wear exclusively", "Gowns without shields"],
+      ["Dosimeters only", "Monitoring devices exclusively", "Badges without other protection"],
+      ["Thyroid collars only", "Neck protection exclusively", "Single-piece shields"],
+      ["Lead gloves only", "Hand protection exclusively", "Radiation-resistant gloves"],
+      ["Lead walls only", "Fixed barriers exclusively", "Permanent construction"],
+      ["Respiratory masks", "Air filtration devices", "Dust protection masks"]
+    ],
+    "correct": "Articulated shielding and protection goggles",
+    "explanation": "Articulated (mobile) shields provide a barrier between the staff and the scatter source, while goggles protect the lens of the eye from cataract-inducing doses.",
+    "reward": 2
+  },
+  {
+    "variants": [
+      "According to the inverse square law, how does distance affect the scattered radiation dose rate?",
+      "What is the relationship between distance from the patient and scatter exposure?",
+      "Moving further away from the patient during fluoroscopy:"
+    ],
+    "options": [
+      ["Decreases the dose rate significantly", "Reduces exposure intensity", "Lowers the received dose"],
+      ["Increases the dose rate", "Enhances exposure intensity", "Raises the received dose"],
+      ["Has no effect on dose rate", "Exposure remains constant", "Distance is not a factor"],
+      ["Changes the quality of radiation", "Alters the kV of scatter", "Modifies the energy spectrum"],
+      ["Increases the scatter production", "Generates more scatter", "Amplifies the scatter source"],
+      ["Improves image resolution", "Sharpens the fluoro image", "Enhances detail"],
+      ["Reduces the patient dose", "Lowers the primary beam", "Protects the patient"]
+    ],
+    "correct": "Decreases the dose rate significantly",
+    "explanation": "Radiation intensity decreases with the square of the distance; doubling the distance from the scatter source reduces the dose rate to one-quarter.",
+    "reward": 2
+  },
+  {
+    "variants": [
+      "What are the standard pulse rates typically available in pulsed fluoroscopy modes?",
+      "Which frame rates are commonly displayed in pulsed fluoroscopy diagrams for 15 and 30 pulses per second?",
+      "Pulsed fluoroscopy operation often allows selection between which frame rates?"
+    ],
+    "options": [
+      ["15 and 30 pulses per second", "15 FPS and 30 FPS", "15 and 30 frames per second"],
+      ["60 and 120 pulses per second", "60 FPS and 120 FPS", "60 and 120 frames per second"],
+      ["1 and 5 pulses per second", "1 FPS and 5 FPS", "1 and 5 frames per second"],
+      ["25 and 50 pulses per second", "25 FPS and 50 FPS", "25 and 50 frames per second"],
+      ["10 and 20 pulses per second", "10 FPS and 20 FPS", "10 and 20 frames per second"],
+      ["24 and 48 pulses per second", "24 FPS and 48 FPS", "24 and 48 frames per second"],
+      ["50 and 100 pulses per second", "50 FPS and 100 FPS", "50 and 100 frames per second"]
+    ],
+    "correct": "15 and 30 pulses per second",
+    "explanation": "The operation modes diagram illustrates pulsed fluoroscopy with standard settings of 15 and 30 pulses per second (FPS).",
+    "reward": 2
+  },
+  {
+    "variants": [
+      "In the angle dependence diagram, the scattered radiation dose rate at 1 meter from the patient varied between:",
+      "What range of scatter dose rates (mGy/h) is illustrated at different angles relative to the patient?",
+      "The diagram demonstrating angle dependence shows scatter values ranging from 0.3 up to:"
+    ],
+    "options": [
+      ["0.3 to 0.9 mGy/h", "0.3, 0.6, and 0.9 mGy/h", "Ranging from 0.3 to 0.9 mGy/h"],
+      ["1.0 to 5.0 mGy/h", "1.0, 2.0, and 5.0 mGy/h", "Ranging from 1.0 to 5.0 mGy/h"],
+      ["0.1 to 0.2 mGy/h", "0.1 and 0.2 mGy/h", "Ranging from 0.1 to 0.2 mGy/h"],
+      ["10 to 20 mGy/h", "10 and 20 mGy/h", "Ranging from 10 to 20 mGy/h"],
+      ["0.5 to 1.5 mGy/h", "0.5 and 1.5 mGy/h", "Ranging from 0.5 to 1.5 mGy/h"],
+      ["2.0 to 4.0 mGy/h", "2.0 and 4.0 mGy/h", "Ranging from 2.0 to 4.0 mGy/h"],
+      ["0.05 to 0.1 mGy/h", "0.05 and 0.1 mGy/h", "Ranging from 0.05 to 0.1 mGy/h"]
+    ],
+    "correct": "0.3 to 0.9 mGy/h",
+    "explanation": "The angle dependence diagram explicitly labels scatter dose rates at 0.3, 0.6, and 0.9 mGy/h depending on the position relative to the patient.",
+    "reward": 2
+  },
+{
+  "variants": [
+    "Quality control standards require the Half Value Layer (HVL) at 60 kVp to be greater than:",
+    "What is the minimum acceptable HVL for a fluoroscopy unit operating at 60 kVp?",
+    "At a tube potential of 60 kVp, the filtration must be sufficient to produce an HVL of at least:"
+  ],
+  "options": [
+    ["1.8 mm Al", "1.8 millimeters of aluminum", "≥ 1.8 mm aluminum equivalent"],
+    ["2.1 mm Al", "2.1 millimeters of aluminum", "≥ 2.1 mm aluminum equivalent"],
+    ["2.3 mm Al", "2.3 millimeters of aluminum", "≥ 2.3 mm aluminum equivalent"],
+    ["1.5 mm Al", "1.5 millimeters of aluminum", "≥ 1.5 mm aluminum equivalent"],
+    ["2.5 mm Al", "2.5 millimeters of aluminum", "≥ 2.5 mm aluminum equivalent"],
+    ["3.0 mm Al", "3.0 millimeters of aluminum", "≥ 3.0 mm aluminum equivalent"],
+    ["0.8 mm Al", "0.8 millimeters of aluminum", "≥ 0.8 mm aluminum equivalent"]
+  ],
+  "correct": "1.8 mm Al",
+  "explanation": "Regulatory standards specify minimum HVL values at different kVp levels to ensure adequate beam filtration; at 60 kVp, the HVL must exceed 1.8 mm Al.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Quality control standards require the Half Value Layer (HVL) at 70 kVp to be greater than:",
+    "What is the minimum acceptable HVL for a fluoroscopy unit operating at 70 kVp?",
+    "At a tube potential of 70 kVp, the filtration must be sufficient to produce an HVL of at least:"
+  ],
+  "options": [
+    ["2.1 mm Al", "2.1 millimeters of aluminum", "≥ 2.1 mm aluminum equivalent"],
+    ["1.8 mm Al", "1.8 millimeters of aluminum", "≥ 1.8 mm aluminum equivalent"],
+    ["2.3 mm Al", "2.3 millimeters of aluminum", "≥ 2.3 mm aluminum equivalent"],
+    ["2.5 mm Al", "2.5 millimeters of aluminum", "≥ 2.5 mm aluminum equivalent"],
+    ["1.5 mm Al", "1.5 millimeters of aluminum", "≥ 1.5 mm aluminum equivalent"],
+    ["3.0 mm Al", "3.0 millimeters of aluminum", "≥ 3.0 mm aluminum equivalent"],
+    ["1.0 mm Al", "1.0 millimeters of aluminum", "≥ 1.0 mm aluminum equivalent"]
+  ],
+  "correct": "2.1 mm Al",
+  "explanation": "As the tube potential increases, the minimum required HVL also increases; at 70 kVp, the HVL must be greater than 2.1 mm Al.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Quality control protocols require that the mean kVp must not differ from the nominal kVp by more than:",
+    "What is the acceptable tolerance for kVp accuracy relative to the nominal setting?",
+    "The mean measured kVp should fall within what percentage of the nominal value?"
+  ],
+  "options": [
+    ["± 10%", "Plus or minus 10 percent", "Within 10% of the nominal value"],
+    ["± 5%", "Plus or minus 5 percent", "Within 5% of the nominal value"],
+    ["± 2%", "Plus or minus 2 percent", "Within 2% of the nominal value"],
+    ["± 15%", "Plus or minus 15 percent", "Within 15% of the nominal value"],
+    ["± 20%", "Plus or minus 20 percent", "Within 20% of the nominal value"],
+    ["± 1%", "Plus or minus 1 percent", "Within 1% of the nominal value"],
+    ["± 0.5%", "Plus or minus 0.5 percent", "Within 0.5% of the nominal value"]
+  ],
+  "correct": "± 10%",
+  "explanation": "The mean kVp output must be within 10% of the selected nominal value to ensure the beam penetrability is consistent with the technique chart.",
+  "reward": 2
+},
+{
+  "variants": [
+    "For every 1000 photons reaching the patient in fluoroscopy, approximately how many are scattered?",
+    "What proportion of incident X-ray photons undergoes scattering within the patient?",
+    "Of 1000 photons incident on the patient, the approximate number of scattered photons is:"
+  ],
+  "options": [
+    ["100–200 photons", "Approximately 10–20%", "100 to 200 out of 1000 photons"],
+    ["20 photons", "Approximately 2%", "20 out of 1000 photons"],
+    ["500 photons", "Approximately 50%", "500 out of 1000 photons"],
+    ["800 photons", "Approximately 80%", "800 out of 1000 photons"],
+    ["50 photons", "Approximately 5%", "50 out of 1000 photons"],
+    ["10 photons", "Approximately 1%", "10 out of 1000 photons"],
+    ["900 photons", "Approximately 90%", "900 out of 1000 photons"]
+  ],
+  "correct": "100–200 photons",
+  "explanation": "While only about 20 photons reach the detector, a significant portion (100–200) is scattered by the patient, creating the primary hazard for staff.",
+  "reward": 2
+},
+{
+  "variants": [
+    "How does increasing the X-ray field size affect the scattered radiation dose to staff?",
+    "What is the relationship between collimated field size and occupational exposure in fluoroscopy?",
+    "Enlarging the irradiated field size during fluoroscopy results in which of the following?"
+  ],
+  "options": [
+    ["Increases scattered radiation dose", "Higher scatter intensity", "Greater occupational exposure"],
+    ["Decreases scattered radiation dose", "Lower scatter intensity", "Reduced occupational exposure"],
+    ["Has no effect on scattered radiation dose", "Scatter remains constant", "No change in occupational exposure"],
+    ["Decreases patient dose but increases staff dose", "Lowers patient exposure while raising staff exposure", "Inversely affects patient and staff dose"],
+    ["Improves image quality while decreasing scatter", "Better resolution with less scatter", "Enhanced image with reduced hazard"],
+    ["Eliminates scattered radiation entirely", "Removes all scatter", "Zero scatter production"],
+    ["Reduces scatter only if kVp is increased", "Lowers scatter with higher kVp", "Dose reduction dependent on kVp"]
+  ],
+  "correct": "Increases scattered radiation dose",
+  "explanation": "Larger field sizes irradiate a greater volume of patient tissue, resulting in the production of more scattered radiation that increases dose to personnel.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Of every 1000 photons reaching the patient in fluoroscopy, the vast majority are:",
+    "What is the ultimate fate of most X-ray photons incident on the patient during fluoroscopy?",
+    "The primary interaction outcome for the majority of photons entering the patient is:"
+  ],
+  "options": [
+    ["Absorbed by the patient", "Depositing energy in tissue", "Attenuated within the body"],
+    ["Transmitted to the image receptor", "Passing through to the detector", "Reaching the image intensifier"],
+    ["Scattered into the room", "Deflected as secondary radiation", "Producing scatter dose to staff"],
+    ["Reflected back towards the tube", "Bouncing off the skin surface", "Back-scattered to the source"],
+    ["Converted to visible light immediately", "Transformed into optical photons", "Generating light at the skin surface"],
+    ["Absorbed by the table or mattress", "Stopped by the patient couch", "Interacting with the padding"],
+    ["Transmitted through the patient and staff", "Passing through both subject and personnel", "Exiting the body towards staff"]
+  ],
+  "correct": "Absorbed by the patient",
+  "explanation": "Of 1000 incident photons, approximately 100-200 scatter and about 20 transmit to the detector; the remaining majority are absorbed, contributing directly to patient dose.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The 'Angle Dependence' factor indicates that scattered radiation around the patient is:",
+    "How does the angle of observation relative to the patient affect scattered radiation levels?",
+    "Measurements of scatter dose at different positions around the patient demonstrate that:"
+  ],
+  "options": [
+    ["Variable depending on the position relative to the patient", "Non-uniformly distributed", "Dependent on the angle of measurement"],
+    ["Uniform in all directions", "Equal at every angle around the table", "Isotropic and constant"],
+    ["Highest directly behind the image intensifier", "Concentrated at the detector input", "Maximal at the II surface"],
+    ["Lowest at the X-ray tube side", "Minimal near the source", "Reduced close to the tube"],
+    ["Independent of the X-ray tube orientation", "Unaffected by tube position", "Constant regardless of beam direction"],
+    ["Only present at 90 degrees to the beam", "Limited to the lateral position", "Exclusively side-scattered"],
+    ["Negligible for staff protection purposes", "Too low to consider for shielding", "Insufficient to impact dose"]
+  ],
+  "correct": "Variable depending on the position relative to the patient",
+  "explanation": "Scatter distribution is anisotropic; diagrams in the text show dose rates varying significantly (e.g., 0.3, 0.6, 0.8 mGy/h) at different angles around the patient.",
+  "reward": 2
+},
+{
+  "variants": [
+    "According to the distance variation factor, moving from 1 meter to 0.5 meters from the patient causes the scatter dose rate to:",
+    "How does decreasing the distance between staff and the patient affect scattered radiation exposure?",
+    "The relationship between distance and scatter dose rate is characterized by:"
+  ],
+  "options": [
+    ["Increase significantly", "Rise according to the inverse square law", "Become substantially higher"],
+    ["Decrease proportionally", "Drop linearly with distance", "Reduce by half"],
+    ["Remain constant", "Stay the same regardless of distance", "Be unaffected by position"],
+    ["Decrease slightly", "Drop by a small margin", "Reduce minimally"],
+    ["Increase only if kVp is increased", "Rise solely with higher technique", "Depend on tube potential"],
+    ["Fluctuate randomly", "Vary without a pattern", "Change unpredictably"],
+    ["Decrease only if shielding is used", "Drop with lead protection", "Reduce with barriers"]
+  ],
+  "correct": "Increase significantly",
+  "explanation": "Scatter intensity follows the inverse square law; halving the distance from the source (the patient) increases the dose rate by a factor of four.",
+  "reward": 2
+},
+{
+  "variants": [
+    "In addition to the electron gun, the television camera tube contains internal components called:",
+    "Which electrostatic elements are located inside the TV tube to control the electron beam?",
+    "The internal assembly of a television monitoring tube includes the electron gun and:"
+  ],
+  "options": [
+    ["Control grid and Accelerator grids", "Grids for beam control and acceleration", "Electrostatic focusing and accelerating elements"],
+    ["Input phosphor and Photocathode", "Scintillator and photocathode", "X-ray converter layers"],
+    ["Deflection coils and Focusing coils", "Electromagnetic steering elements", "External magnetic assemblies"],
+    ["Target and Signal plate", "Photoconductive layer and conductor", "Charge storage components"],
+    ["Anode and Filament", "Target and cathode", "Tube electrodes"],
+    ["Optical lens and Aperture", "Light focusing elements", "Optical coupling devices"],
+    ["Output phosphor and Fiber optic", "Light emitter and guide", "Image output components"]
+  ],
+  "correct": "Control grid and Accelerator grids",
+  "explanation": "Inside the TV camera tube, the control grid regulates electron flow from the gun, while accelerator grids speed up the beam towards the target.",
+  "reward": 2
+},
+{
+  "variants": [
+    "In addition to percentage deviation, the remedial action level for typical patient entrance skin dose rate is triggered if the value exceeds:",
+    "What is the absolute dose rate threshold that requires remedial action for entrance skin dose rates?",
+    "Quality control protocols mandate remedial action if the ESDR exceeds 50 mGy/min, regardless of:"
+  ],
+  "options": [
+    ["> 50 mGy/min", "Greater than 50 mGy/min", "Exceeding 50 milligray per minute"],
+    ["> 100 mGy/min", "Greater than 100 mGy/min", "Exceeding 100 milligray per minute"],
+    ["> 25 mGy/min", "Greater than 25 mGy/min", "Exceeding 25 milligray per minute"],
+    ["> 88 mGy/min", "Greater than 88 mGy/min", "Exceeding 88 milligray per minute"],
+    ["> 10 mGy/min", "Greater than 10 mGy/min", "Exceeding 10 milligray per minute"],
+    ["> 20 mGy/min", "Greater than 20 mGy/min", "Exceeding 20 milligray per minute"],
+    ["> 200 mGy/min", "Greater than 200 mGy/min", "Exceeding 200 milligray per minute"]
+  ],
+  "correct": "> 50 mGy/min",
+  "explanation": "Remedial action is required if the dose rate deviates significantly from baseline or if it exceeds the absolute safety threshold of 50 mGy/min.",
+  "reward": 2
+},
+{
+  "variants": [
+    "For general image acquisition modes (non-cardiac), the suspension level for dose per frame is exceeded if it is greater than:",
+    "What is the absolute dose per frame limit that mandates suspension of a fluoroscopy unit for general use?",
+    "Quality control guidelines require suspension if the general dose per frame exceeds:"
+  ],
+  "options": [
+    ["2 mGy/frame", "Greater than 2 mGy/frame", "Exceeding 2 mGy per frame"],
+    ["0.2 mGy/frame", "Greater than 0.2 mGy/frame", "Exceeding 0.2 mGy per frame"],
+    ["5 mGy/frame", "Greater than 5 mGy/frame", "Exceeding 5 mGy per frame"],
+    ["1 mGy/frame", "Greater than 1 mGy/frame", "Exceeding 1 mGy per frame"],
+    ["10 mGy/frame", "Greater than 10 mGy/frame", "Exceeding 10 mGy per frame"],
+    ["0.5 mGy/frame", "Greater than 0.5 mGy/frame", "Exceeding 0.5 mGy per frame"],
+    ["50 mGy/frame", "Greater than 50 mGy/frame", "Exceeding 50 mGy per frame"]
+  ],
+  "correct": "2 mGy/frame",
+  "explanation": "For general fluoroscopic acquisition, a dose per frame exceeding 2 mGy indicates a malfunction that warrants taking the unit out of service.",
+  "reward": 2
+},
+{
+  "variants": [
+    "The signal plate in the target assembly of a television camera tube is composed of a thin layer of:",
+    "Which material is used to construct the signal plate in a vidicon tube target assembly?",
+    "The conductive layer known as the signal plate is typically made of:"
+  ],
+  "options": [
+    ["Metal or graphite", "Thin conductive metal or graphite layer", "Conductive material like metal or graphite"],
+    ["Antimony trisulfide", "Sb₂S₃", "Photoconductive material"],
+    ["Cesium iodide", "CsI", "Scintillator crystal"],
+    ["Glass or plastic", "Silica or polymer", "Insulating materials"],
+    ["Aluminum oxide", "Ceramic substrate", "Insulating ceramic"],
+    ["Lead oxide", "PbO", "Plumbicon material"],
+    ["Amorphous selenium", "a-Se", "Photoconductor layer"]
+  ],
+  "correct": "Metal or graphite",
+  "explanation": "The signal plate is a thin conductive layer, distinct from the photoconductive layer, made of metal or graphite that collects the charge signal.",
+  "reward": 2
+},
+{
+  "variants": [
+    "How do the typical mA values used in fluoroscopy compare to those used in radiography?",
+    "Which statement accurately contrasts the tube current (mA) in fluoroscopy versus radiography?",
+    "Compared to the high mA used in radiography, fluoroscopy typically operates with:"
+  ],
+  "options": [
+    ["Much lower mA values", "Significantly reduced tube current", "mA values usually below 5 mA"],
+    ["Much higher mA values", "Significantly increased tube current", "mA values exceeding 500 mA"],
+    ["Identical mA values", "The same tube current range", "Matching current settings"],
+    ["Variable mA depending on patient size", "Adjustable current unlike fixed radiography", "Patient-dependent current only"],
+    ["Higher mA for pulsed modes only", "Increased current during pulsing", "Elevated mA in pulse mode"],
+    ["Lower mA only in cardiac modes", "Reduced current for heart imaging", "Decreased mA specifically for cardiology"],
+    ["Unmeasurable mA values", "No tube current reading", "Current too low to detect"]
+  ],
+  "correct": "Much lower mA values",
+  "explanation": "Fluoroscopy operates at very low currents (0-5 mA continuous or up to 100 mA pulsed) to manage continuous heat loading, whereas radiography uses high currents (200-800 mA) for short, high-intensity exposures.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Which of the following is a standard Quality Control test performed on fluoroscopy equipment?",
+    "Identify the test included in the Quality Control protocol for fluoroscopy systems.",
+    "Which parameter is specifically listed as a fluoroscopy QC test?"
+  ],
+  "options": [
+    ["Image Intensifier Input Dose Rate", "IIIDR measurement", "Input dose rate to the detector"],
+    ["Fluoscopy number linearity", "Hounsfield Unit calibration", "Fluoroscopy density accuracy"],
+    ["RF coil turning", "B0 uniformity", "Main field shimming"],
+    ["Dead zone evaluation", "Transducer focusing", "Acoustic output measurement"],
+    ["Fluoroscopy SUV accuracy", "Standardized Uptake Value calibration", "Activity concentration quantification"],
+    ["MRI slice thickness", "Imaging plane resolution", "Z-axis accuracy"],
+    ["Fluoroscopy camera energy resolution", "Scintillation crystal performance", "Energy window testing"]
+  ],
+  "correct": "Image Intensifier Input Dose Rate",
+  "explanation": "IIIDR is a critical QC test to ensure the dose rate at the image intensifier input is sufficient for proper image brightness without excessive patient dose.",
+  "reward": 2
+},
+{
+  "variants": [
+    "When comparing fluoroscopy to radiography, the focal spot size in fluoroscopy is typically:",
+    "How does the focal spot size used in fluoroscopy differ from that used in general radiography?",
+    "Which comparison correctly describes the focal spot size relationship between fluoroscopy and radiography?"
+  ],
+  "options": [
+    ["Smaller than radiography", "Finer focal spot size", "Less than 0.6 mm typically"],
+    ["Larger than radiography", "Coarser focal spot size", "Greater than 1.0 mm typically"],
+    ["The same size as radiography", "Identical focal spot dimensions", "No difference in size"],
+    ["Variable, while radiography is fixed", "Adjustable spot size vs fixed", "Dynamic vs static focal spot"],
+    ["Undefined in fluoroscopy", "Not specified for fluoro tubes", "Irrelevant parameter"],
+    ["Dependent on grid usage", "Determined by anti-scatter grid", "Grid-controlled focal spot"],
+    ["Inverse to the mA setting", "Larger at higher mA", "Current-dependent size"]
+  ],
+  "correct": "Smaller than radiography",
+  "explanation": "Fluoroscopy tubes typically use smaller focal spots (0.3–0.6 mm) to improve spatial resolution for the smaller field of view, compared to radiography tubes (1.0–1.2 mm).",
+  "reward": 2
+},
+{
+  "variants": [
+    "What phantoms are specified for testing Typical Patient Entrance Skin Dose Rates (ESDR)?",
+    "Which materials are used to simulate patient attenuation during ESDR quality control measurements?",
+    "Quality control protocols for ESDR utilize which specific phantom configurations?"
+  ],
+  "options": [
+    ["(10, 20) cm PMMA or (2.5, 5) cm Al", "Polymethyl methacrylate or Aluminum phantoms", "Plastic or aluminum attenuators of specific thicknesses"],
+    ["(5, 10) cm Water", "Water bath phantoms", "Liquid-filled tanks"],
+    ["(1, 2) cm Lead", "Lead sheets", "High-Z shielding phantoms"],
+    ["(20, 30) cm Lucite", "Thick acrylic phantoms", "Large plastic blocks"],
+    ["(5, 10) cm Copper", "Copper filters", "Metallic attenuators"],
+    ["Tissue-equivalent gel phantoms", "Gelatin molds", "Soft tissue simulating gels"],
+    ["Alderson Rando Phantom", "Anthropomorphic phantom", "Human-mimicking dummy"]
+  ],
+  "correct": "(10, 20) cm PMMA or (2.5, 5) cm Al",
+  "explanation": "Standardized phantoms of PMMA (10 or 20 cm) or Aluminum (2.5 or 5 cm) are used to simulate patient thickness when measuring entrance skin dose rates.",
+  "reward": 2
+},
+{
+  "variants": [
+    "In the SI system, the Image Intensifier Input Dose Rate (IIIDR) for continuous fluoroscopy is typically maintained at approximately:",
+    "What is the IIIDR value in nanograys per second for standard continuous fluoroscopy?"
+  ],
+  "options": [
+    ["880 nGy/sec", "880 nanograys per second", "0.88 μGy/sec"],
+    ["75 nGy/sec", "75 nanograys per second", "0.075 μGy/sec"],
+    ["100 nGy/sec", "100 nanograys per second", "0.1 μGy/sec"],
+    ["8800 nGy/sec", "8800 nanograys per second", "8.8 μGy/sec"],
+    ["220 nGy/sec", "220 nanograys per second", "0.22 μGy/sec"],
+    ["5000 nGy/sec", "5000 nanograys per second", "5.0 μGy/sec"],
+    ["50 nGy/sec", "50 nanograys per second", "0.05 μGy/sec"]
+  ],
+  "correct": "880 nGy/sec",
+  "explanation": "The standard IIIDR range of 75–100 μR/sec converts to approximately 880 nGy/sec in SI units.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Quality Control tests for Image Quality in fluoroscopy evaluate which primary parameters?",
+    "Which characteristics of the fluoroscopic image are assessed during Image Quality QC?",
+    "The Image Quality test specifically measures the system's:"
+  ],
+  "options": [
+    ["High contrast resolution and low contrast resolution", "Spatial resolution and contrast detectability", "Detail visibility and contrast sensitivity"],
+    ["kVp accuracy and mA linearity", "Tube potential and current output", "Exposure technique consistency"],
+    ["HVL and filtration", "Beam quality and hardening", "Radiation penetration depth"],
+    ["Entrance skin dose and scatter", "Patient exposure and background", "Primary beam intensity"],
+    ["Grid ratio and focal spot size", "Scatter rejection and geometric blur", "Anti-scatter efficiency"],
+    ["Motion blur and lag", "Temporal resolution", "Image persistence"],
+    ["Electrical safety and grounding", "Equipment safety checks", "Electrical isolation"]
+  ],
+  "correct": "High contrast resolution and low contrast resolution",
+  "explanation": "Image quality QC tests utilize phantoms to objectively measure the system's ability to resolve fine detail (high contrast) and detect subtle differences in density (low contrast).",
+  "reward": 2
+},
+{
+  "variants": [
+    "When performing Image Quality tests on a fluoroscopy system, the setup typically requires the:",
+    "Which setup conditions are specified for the Image Quality test shown in Slide 40?",
+    "To ensure accurate measurement of high and low contrast resolution, the test is performed with the:"
+  ],
+  "options": [
+    ["Grid removed and a copper filter added", "Anti-scatter grid removed and Cu filtration used", "Grid out and specific filtration applied"],
+    ["Grid in place and no filtration", "Anti-scatter grid engaged and no filter", "Standard clinical configuration"],
+    ["Patient table removed", "Table displaced", "Couch completely removed"],
+    ["Maximum mA and kVp settings", "Highest technique factors", "Full power settings"],
+    ["Lead aprons covering the detector", "Shielding over the II", "Protective covers on the input phosphor"],
+    ["Fluoroscopy room lights on", "Ambient lighting conditions", "Bright room illumination"],
+    ["Collimators fully open", "Maximum field size", "Wide open shutters"]
+  ],
+  "correct": "Grid removed and a copper filter added",
+  "explanation": "The test protocol specifies removing the grid and adding copper filtration to standardize the beam quality and eliminate scatter artifacts that could skew resolution measurements.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Comparing Normal mode to Magnification modes (Mag 1, Mag 2) in Image Quality tests reveals that spatial resolution typically:",
+    "How does switching from Normal to Magnification mode affect the measured High Contrast Resolution?",
+    "The table in the Image Quality slide demonstrates that as magnification increases, spatial resolution:"
+  ],
+  "options": [
+    ["Improves", "Increases", "Becomes better"],
+    ["Degrades", "Decreases", "Becomes worse"],
+    ["Remains unchanged", "Stays the same", "Is unaffected"],
+    ["Becomes variable", "Fluctuates randomly", "Is unpredictable"],
+    ["Inverts", "Reverses polarity", "Flips values"],
+    ["Doubles", "Increases by a factor of two", "Is exactly 2x higher"],
+    ["Depends on patient thickness", "Is determined by body habitus", "Varies with anatomy"]
+  ],
+  "correct": "Improves",
+  "explanation": "Magnification modes electronically zoom into the central portion of the input phosphor, effectively utilizing a smaller area with higher pixel density relative to the displayed image, thereby improving spatial resolution.",
+  "reward": 2
+},
+{
+  "variants": [
+    "Comparing the kVp ranges for General Interventional (GI) fluoroscopy and radiography, which statement is accurate?",
+    "What is the typical kVp operating range for GI fluoroscopy compared to radiography?",
+    "According to the comparison table, the kVp range for fluoroscopy is:"
+  ],
+  "options": [
+    ["60–120 kVp for fluoroscopy vs 50–130 kVp for radiography", "Narrower range for fluoro (60-120) vs broader range for rad (50-130)", "60 to 120 kVp compared to 50 to 130 kVp"],
+    ["Identical for both modalities", "Same kVp range used", "No difference in operating range"],
+    ["Higher for fluoroscopy", "Fluoro uses higher kVp than rad", "Fluoro range is shifted up"],
+    ["Lower for fluoroscopy", "Fluoro uses lower kVp than rad", "Fluoro range is shifted down"],
+    ["Fixed at 80 kVp for fluoroscopy", "Constant kVp for fluoro", "Non-variable kVp for fluoro"],
+    ["50–100 kVp for fluoroscopy vs 60–120 kVp for radiography", "Lower range for fluoro", "Shifted range"],
+    ["Unspecified for fluoroscopy", "Variable range for fluoro", "Open range for fluoro"]
+  ],
+  "correct": "60–120 kVp for fluoroscopy vs 50–130 kVp for radiography",
+  "explanation": "Fluoroscopy typically operates within a slightly narrower and shifted range (60–120 kVp) compared to the broader range used in general radiography (50–130 kVp).",
+  "reward": 2
+},
+{
+  "variants": [
+    "When performing Image Quality tests on a fluoroscopy system, the pulse rate setting should be tested in:",
+    "Which fluoro modes must be verified during the Image Quality assessment?",
+    "The Image Quality protocol requires testing which pulse rate modes?"
+  ],
+  "options": [
+    ["Low, Normal, and High fluoro modes", "All dose rate settings", "Low, Normal, and High pulse rates"],
+    ["Continuous mode only", "Standard fluoroscopy only", "Single mode operation"],
+    ["High Level mode only", "High-dose rate mode only", "Boost mode only"],
+    ["Cine mode only", "Acquisition mode only", "Recording mode only"],
+    ["Pulsed fluoroscopy only", "Pulse rates below 15 fps", "Low pulse settings only"],
+    ["Automatic mode only", "ABC mode only", "Auto-brightness mode only"],
+    ["Manual mode only", "Fixed technique mode only", "Non-AEC mode only"]
+  ],
+  "correct": "Low, Normal, and High fluoro modes",
+  "explanation": "Comprehensive Image Quality testing requires evaluating the system across all standard operating modes (Low, Normal, High) to ensure performance is consistent regardless of the dose rate setting selected.",
+  "reward": 2
+}
+      ],
+    },
 		}
 };
 // ==================== GLOBAL PREFERENCES ====================
@@ -11083,7 +13016,147 @@ function finalizeHistoryEntry(sessionId, score, total, history, isCompleted) {
   if (isCompleted) entry.resumeState = null;
   saveHistoryLog();
 }
+// ==================== HISTORY ENTRY DELETION ====================
+function deleteHistoryEntry(sessionId) {
+  if(!confirm("Delete this history entry? This cannot be undone.")) return;
+  quizHistoryLog = quizHistoryLog.filter(e => e.id !== sessionId);
+  saveHistoryLog();
+  
+  // If this was the active resume session, clear it
+  if(getAutoResumeId() === sessionId) clearAutoResumeId();
+  
+  renderHistoryTab();
+}
 
+// ==================== HISTORY RESULTS MODAL ====================
+function showHistoryResults(sessionId) {
+  const entry = quizHistoryLog.find(e => e.id === sessionId);
+  if(!entry) return;
+
+  // Create Modal Container
+  let modal = document.getElementById('history-results-modal');
+  if(!modal) {
+    modal = document.createElement('div');
+    modal.id = 'history-results-modal';
+    modal.className = 'history-results-modal';
+    modal.onclick = (e) => { if(e.target === modal) modal.classList.remove('active'); };
+    document.body.appendChild(modal);
+  }
+
+  // Generate Content based on Mode
+  let contentHTML = '';
+  const isProgressive = (entry.mode === 'progressive');
+
+  if (isProgressive) {
+    // --- PROGRESSIVE MODE STATS ---
+    let shownCount = entry.history ? entry.history.length : 0;
+    let correctCount = entry.history ? entry.history.filter(h => h.isCorrect).length : 0;
+    let incorrectCount = shownCount - correctCount;
+
+    contentHTML = `
+      <div class="history-results-content">
+        <div class="history-results-header">
+          <h2 style="margin:0; color:var(--accent-0);">Progressive Session Results</h2>
+          <button class="help-close-btn" onclick="document.getElementById('history-results-modal').classList.remove('active')">✕</button>
+        </div>
+        
+        <div class="history-stats-grid">
+          <div class="history-stat-box">
+            <div class="history-stat-val">${shownCount}</div>
+            <div class="history-stat-lbl">Times Shown</div>
+          </div>
+          <div class="history-stat-box">
+            <div class="history-stat-val" style="color:var(--col-success);">${correctCount}</div>
+            <div class="history-stat-lbl">Correct Attempts</div>
+          </div>
+          <div class="history-stat-box">
+            <div class="history-stat-val" style="color:var(--col-error);">${incorrectCount}</div>
+            <div class="history-stat-lbl">Incorrect Attempts</div>
+          </div>
+        </div>
+
+        <h3 style="color:var(--col-text-main); margin-top:20px; border-bottom:1px solid var(--col-border); padding-bottom:10px;">Question Review</h3>
+        ${renderHistoryDetailQuestions(entry)}
+      </div>
+    `;
+  } else {
+    // --- STANDARD / CONVENTIONAL MODE ---
+    const pct = entry.total > 0 ? Math.round(entry.score / entry.total * 100) : 0;
+    
+    contentHTML = `
+      <div class="history-results-content">
+        <div class="history-results-header">
+          <h2 style="margin:0; color:var(--accent-0);">Quiz Results</h2>
+          <button class="help-close-btn" onclick="document.getElementById('history-results-modal').classList.remove('active')">✕</button>
+        </div>
+        
+        <div style="text-align:center; margin: 20px 0;">
+           <div class="final-score-display">${entry.score} / ${entry.total} (${pct}%)</div>
+        </div>
+
+        <h3 style="color:var(--col-text-main); margin-top:20px; border-bottom:1px solid var(--col-border); padding-bottom:10px;">Question Review</h3>
+        ${renderHistoryDetailQuestions(entry)}
+      </div>
+    `;
+  }
+
+  modal.innerHTML = contentHTML;
+  modal.classList.add('active');
+}
+
+// Helper to generate question list for the modal
+function renderHistoryDetailQuestions(entry) {
+  if(!entry.history || entry.history.length === 0) {
+    return '<p style="text-align:center; color:var(--col-text-muted);">No question details available.</p>';
+  }
+
+  let html = '<div style="max-height: 50vh; overflow-y: auto;">';
+  entry.history.forEach((item, i) => {
+    const markerClass = item.isCorrect ? 'correct' : 'wrong';
+    const markerIcon = item.isCorrect ? '✔' : '✖';
+    const questionText = item.q || item.questionHTML || 'Question ' + (i+1);
+    
+    // Options display
+    let optsHTML = '<div class="history-q-opts">';
+    if (item.allOptions) {
+      item.allOptions.forEach((opt, idx) => {
+        let optClass = 'history-q-opt opt-neutral';
+        let prefix = '';
+        if (idx === item.correctIndex) {
+          optClass = 'history-q-opt opt-correct';
+          prefix = '✔ ';
+        } else if (idx === item.selectedIndex && !item.isCorrect) {
+          optClass = 'history-q-opt opt-wrong-chosen';
+          prefix = '✖ ';
+        }
+        optsHTML += `<div class="${optClass}">${prefix}${formatRichText(opt)}</div>`;
+      });
+    } else {
+      const answerHTML = item.isCorrect 
+        ? `<span class="correct-ans">${formatRichText(item.userAns || item.correctAns)}</span>`
+        : `<span class="wrong-ans">${formatRichText(item.userAns)}</span> → <span class="correct-ans">${formatRichText(item.correctAns)}</span>`;
+      optsHTML = `<div class="history-q-answer">${answerHTML}</div>`;
+    }
+    optsHTML += '</div>';
+
+    const explHTML = (item.expl || item.explanation) 
+      ? `<div class="history-q-expl">${formatRichText(item.expl || item.explanation)}</div>` 
+      : '';
+
+    html += `
+      <div class="history-q-item">
+        <div class="history-q-marker ${markerClass}">${markerIcon}</div>
+        <div class="history-q-content">
+          <div class="history-q-text">${formatRichText(questionText)}</div>
+          ${optsHTML}
+          ${explHTML}
+        </div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  return html;
+}
 // Active session ID tracking
 let currentSessionId = null;
 let lastPausedSessionId = null;
@@ -14247,6 +16320,11 @@ function renderKnowledgeSections() {
 
   let isFirst = true;
 
+  // --- DETECT CURRENT MODE FROM TOGGLE ---
+  const isProgressiveToggle = document.getElementById('progressive-toggle').checked;
+  const currentMode = isProgressiveToggle ? 'progressive' : 'standard';
+  const currentModeLabel = isProgressiveToggle ? 'Progressive' : 'Standard';
+
   sections.forEach(([key, section]) => {
     if (section.type && section.type !== 'MCQ') return;
 
@@ -14265,18 +16343,20 @@ function renderKnowledgeSections() {
             !e.isCompleted && 
             e.resumeState &&
             !e.dismissedResume &&
+            e.mode === currentMode && // MATCH MODE
             Array.isArray(e.sections) && 
             e.sections.includes(displayTitle)
         );
         if (targetEntry) incompleteSession = targetEntry;
     }
     
-    // 2. Fallback: Most recent incomplete session for this section
+    // 2. Fallback: Most recent incomplete session for this section AND MODE
     if (!incompleteSession) {
         const candidates = quizHistoryLog
           .filter(e => e.type === 'knowledge' && !e.isCompleted && e.resumeState
                     && Array.isArray(e.sections) && e.sections.includes(displayTitle)
-                    && !e.dismissedResume)
+                    && !e.dismissedResume
+                    && e.mode === currentMode) // MATCH MODE
           .sort((a, b) => (b.startTime || 0) - (a.startTime || 0));
         
         if (candidates.length > 0) incompleteSession = candidates[0];
@@ -14315,14 +16395,15 @@ function renderKnowledgeSections() {
       `;
     }
 
-    const btnLabel  = hasContinue ? 'Continue' : 'Start';
+    // --- DYNAMIC BUTTON LABELS ---
+    const btnLabel  = hasContinue ? `Continue ${currentModeLabel}` : `Start ${currentModeLabel}`;
     const btnClass  = 'section-start-btn' + (hasContinue ? ' is-continue' : '');
     const btnAction = hasContinue
       ? `continueHistorySession(${JSON.stringify(incompleteSession.id)})`
       : `startSectionQuiz(${JSON.stringify(key)})`;
 
     card.innerHTML = `
-      <div class="section-info" onclick="toggleSectionCard(this.closest('.section-card'))">
+      <div class="section-info">
         <div class="section-title">${displayTitle}</div>
         <div class="section-count">${count} Questions ${isDefault ? '<span style="color:var(--col-text-muted); font-size:0.8em">(Default)</span>' : ''}</div>
       </div>
@@ -14334,6 +16415,10 @@ function renderKnowledgeSections() {
         </div>
       </div>
     `;
+
+    // Add click listener to the whole card for selection
+    card.onclick = () => toggleSectionCard(card);
+    card.style.cursor = 'pointer';
 
     list.appendChild(card);
   });
@@ -16440,20 +18525,18 @@ function renderHistoryTab() {
     const typeBadge = `<span class="history-badge badge-${entry.type}">${entry.type}</span>`;
     const modeBadge = entry.mode ? `<span class="history-badge badge-${entry.mode}">${entry.mode}</span>` : '';
     
-    // Section names
+	// Section names
     const sectionText = entry.sections ? entry.sections.join(', ') : 'Quiz';
-    const authorText = entry.author ? `by ${entry.author}` : '';
+    // Author text removed as requested
     
     // Date/time
     const dateStr = entry.startTime ? new Date(entry.startTime).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
     const timeStr = entry.startTime ? new Date(entry.startTime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : '';
     const durationStr = entry.timeSpent ? formatDuration(entry.timeSpent) : '--';
     
-    // Action button
+    // Action button (Only for incomplete)
     let actionBtn = '';
-    if (entry.isCompleted) {
-      actionBtn = `<button class="history-action-btn btn-completed" disabled>Completed</button>`;
-    } else {
+    if (!entry.isCompleted) {
       actionBtn = `<button class="history-action-btn btn-continue" onclick="event.stopPropagation(); continueHistorySession('${entry.id}')">Continue</button>`;
     }
     
@@ -16462,6 +18545,17 @@ function renderHistoryTab() {
       ? `Q${entry.currentQuestion}/${entry.total}` 
       : '';
     
+        // Generate Score / Results Button Logic
+    let scoreDisplayHTML = '';
+    if (entry.isCompleted) {
+      scoreDisplayHTML = `<button class="history-action-btn btn-continue" onclick="event.stopPropagation(); showHistoryResults('${entry.id}')" style="min-width:100px;">Results</button>`;
+    } else {
+      scoreDisplayHTML = `
+        ${pct !== null ? `<div class="history-score-pct ${scoreClass}">${pct}%</div>` : `<div class="history-score-pct na">--</div>`}
+        <div class="history-score-detail">${entry.score}/${entry.total}</div>
+      `;
+    }
+
     html += `
       <div class="history-row ${isExpanded ? 'expanded' : ''}" onclick="toggleHistoryExpand('${entry.id}')">
         <div class="history-row-header">
@@ -16470,17 +18564,23 @@ function renderHistoryTab() {
             <div class="history-title">${sectionText}</div>
             <div class="history-meta">
               ${typeBadge}${modeBadge}
-              ${authorText ? `<span class="history-detail-small">${authorText}</span>` : ''}
               <span class="history-detail-small">${dateStr} ${timeStr}</span>
-              <span class="history-detail-small">⏱ ${durationStr}</span>
               ${progressText ? `<span class="history-detail-small">${progressText}</span>` : ''}
             </div>
           </div>
           <div class="history-score">
-            ${pct !== null ? `<div class="history-score-pct ${scoreClass}">${pct}%</div>` : `<div class="history-score-pct na">--</div>`}
-            <div class="history-score-detail">${entry.score}/${entry.total}</div>
+            ${scoreDisplayHTML}
           </div>
           ${actionBtn}
+          
+          <!-- 3 Dot Menu -->
+          <div class="section-menu-wrapper">
+            <button class="section-dots-btn" onclick="event.stopPropagation(); toggleSectionMenu(this)">⋮</button>
+            <div class="section-dots-menu">
+              <button class="section-menu-item menu-danger" onclick="deleteHistoryEntry('${entry.id}')">🗑 Delete Entry</button>
+            </div>
+          </div>
+
         </div>
         <div class="history-detail-panel" id="history-detail-${entry.id}">
           ${isExpanded ? renderHistoryDetail(entry) : ''}
@@ -17256,6 +19356,13 @@ function startNewSessionFromToast() {
 }
 document.addEventListener('DOMContentLoaded', function() {
   checkForSessionResume();
+
+  // Update "Start/Continue" buttons when toggle changes
+  const progressiveToggle = document.getElementById('progressive-toggle');
+  if (progressiveToggle) {
+    progressiveToggle.addEventListener('change', renderKnowledgeSections);
+  }
+
     document.addEventListener('click', function(e) {
     // Close section menus
     if (!e.target.closest('.section-menu-wrapper')) {
