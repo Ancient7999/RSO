@@ -40859,6 +40859,8 @@ const symbols = {
 for (const [key, val] of Object.entries(symbols)) {
 text = text.split(key).join(val);
 }
+text = text.replace(/\$\$(.*?)\$\$/g, function(_,m){return '<span class="math-block">'+m+'</span>';});
+text = text.replace(/\$(.*?)\$/g, function(_,m){return '<span class="math-inline">'+m+'</span>';});
 text = text.replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1/$2)');
 text = text.replace(/\^{([^}]+)}/g, '<sup>$1</sup>');
 text = text.replace(/\^\[([^\]]+)\]/g, '<sup>$1</sup>');
@@ -40867,12 +40869,10 @@ text = text.replace(/\^\\{([^}]*)\\}/g, '<sup>$1</sup>');
 text = text.replace(/_\\{([^}]*)\\}/g, '<sub>$1</sub>');
 text = text.replace(/\\text\\{([^}]*)\\}/g, '$1');
 text = text.replace(/\^([^\s\{\[])/g, '<sup>$1</sup>');
-text = text.replace(/_([^\s\{])/g, '<sub>$1</sub>');
+text = text.replace(/_{([^}]*)}/g, '<sub>$1</sub>');
 text = text.replace(/(?<![a-zA-Z])e(?![a-zA-Z])/g, '<i>e</i>');
 text = text.replace(/(?<![a-zA-Z])ln(?![a-zA-Z])/g, '<i>ln</i>');
 text = text.replace(/(?<![a-zA-Z])log(?![a-zA-Z])/g, '<i>log</i>');
-text = text.replace(/\$\$(.*?)\$\$/g, '<span class="math-block">$1</span>');
-text = text.replace(/\$(.*?)\$/g, '<span class="math-inline">$1</span>');
 return text;
 }
 function escapeHTML(str) {
@@ -42900,7 +42900,7 @@ if (qEngine.shuffledOptions.find(o => o.text === b.textContent && o.isCorrect)) 
 b.classList.add('correct');
 }
 });
-resultEl.innerHTML = isKnowledgeProgressive ? `❌ Incorrect.` : `❌ Incorrect.<br><small>${qEngine.explanation}</small>`;
+resultEl.innerHTML = isKnowledgeProgressive ? `❌ Incorrect.` : `❌ Incorrect.<br><small>${formatRichText(qEngine.explanation)}</small>`;
 resultEl.style.color = "var(--col-error)";
 if (isKnowledgeProgressive) {
 vibeStreakCount = 0;
@@ -43158,7 +43158,7 @@ qDiv.appendChild(optionsContainer);
 if (existingHistory && qEngine.explanation) {
 const expDiv = document.createElement('div');
 expDiv.className = 'rso-explanation visible';
-expDiv.innerHTML = qEngine.explanation;
+expDiv.innerHTML = formatRichText(qEngine.explanation);
 qDiv.appendChild(expDiv);
 }
 quizEl.appendChild(qDiv);
@@ -43452,7 +43452,7 @@ optsDiv.appendChild(btn);
 const resultEl = document.getElementById('knowledge-result');
 const statusText = item.isCorrect ? '✅ Correct' : '❌ Wrong';
 const partyFlag = item._partyMode ? ' <span style="font-size:0.75em; color:var(--col-text-muted); font-weight:normal;">· Solved in Party Mode</span>' : '';
-const explText = item.expl ? `<br><small>${item.expl}</small>` : '';
+const explText = item.expl ? `<br><small>${formatRichText(item.expl)}</small>` : '';
 resultEl.innerHTML = statusText + partyFlag + explText;
 resultEl.style.color = item.isCorrect ? 'var(--col-success)' : 'var(--col-error)';
 currentHintsHTML = item.hintsHTML || "";
@@ -43926,7 +43926,7 @@ optsDiv.appendChild(btn);
 }
 const resultEl = document.getElementById('result');
 const statusText = item.isCorrect ? '✅ Correct' : '❌ Wrong';
-const explText = item.expl ? `<br><small>${item.expl}</small>` : '';
+const explText = item.expl ? `<br><small>${formatRichText(item.expl)}</small>` : '';
 resultEl.innerHTML = statusText + explText;
 resultEl.style.color = item.isCorrect ? '#00ff88' : '#ff4444';
 currentHintsHTML = item.hintsHTML || "";
@@ -50991,7 +50991,7 @@ resizeObserver.observe(hintsWidget);
 }
 });
 const APP_INFO = {
-version: '0.16',
+version: '0.17',
 revisionDate: '11/04/2026',
 changelog: [
 "Big fixes and improvements",
@@ -51000,7 +51000,8 @@ changelog: [
 "Search menu added",
 "Hide individual questiosn/variants",
 "Mastery system",
-"Question banks added"
+"Question banks added",
+"Hot fixes to LaTeX text"
 ]
 };
 const versionFooterEl = document.getElementById('version-footer');
