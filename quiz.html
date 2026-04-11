@@ -1573,6 +1573,11 @@ style="display:block;">
 </div>
 </div>
 <script>
+var _lsPrefix=(document.title||'quiz').replace(/[^a-zA-Z0-9]/g,'_').substring(0,30)+'_';
+var _origGetItem=Storage.prototype.getItem;var _origSetItem=Storage.prototype.setItem;var _origRemoveItem=Storage.prototype.removeItem;
+Storage.prototype.getItem=function(k){return _origGetItem.call(this,_lsPrefix+k)};
+Storage.prototype.setItem=function(k,v){return _origSetItem.call(this,_lsPrefix+k,v)};
+Storage.prototype.removeItem=function(k){return _origRemoveItem.call(this,_lsPrefix+k)};
 window.USE_BUILDUP_FACTOR = true;
 window.decimalPrecision = parseInt(localStorage.getItem('rp_decimal_precision') || '4', 10);
 window.tooltipsEnabled = localStorage.getItem('rp_tooltips_enabled') === 'true';
@@ -51001,7 +51006,8 @@ changelog: [
 "Hide individual questions/variants",
 "Mastery system",
 "Question banks added",
-"Hot fixes to LaTeX text"
+"Hot fixes to LaTeX text",
+"Next update expected to be around 18th of April"
 ]
 };
 const versionFooterEl = document.getElementById('version-footer');
