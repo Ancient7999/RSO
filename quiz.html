@@ -648,8 +648,8 @@ body:not(.party-mode-on) .kb-mode-btn[data-mode^="party"] { display: none !impor
 .settings-nav-btn { display: inline-block !important; width: auto !important; padding: 8px 13px !important; white-space: nowrap; border-left: none !important; border-bottom: 3px solid transparent !important; flex-shrink: 0; }
 .settings-nav-btn.active { border-left-color: transparent !important; border-bottom-color: var(--accent-0) !important; }
 .settings-panels { padding: 16px; } }
-.math-inline { font-family: 'Courier New', monospace; background: rgba(255,255,255,0.06); padding: 1px 4px; border-radius: 4px; font-size: 0.98em; white-space: nowrap; }
-.math-block { display: block; font-family: 'Courier New', monospace; background: rgba(255,255,255,0.06); padding: 4px 8px; border-radius: 4px; margin: 5px 0; text-align: center; }
+.math-inline { font-family: 'Courier New', monospace; padding: 1px 4px; border-radius: 4px; font-size: 0.98em; white-space: nowrap; }
+.math-block { display: block; font-family: 'Courier New', monospace; padding: 4px 8px; border-radius: 4px; margin: 5px 0; text-align: center; }
 .settings-panel:not(#settings-panel-about) .setting-item { margin-bottom: 18px; }
 .settings-panel:not(#settings-panel-about) .setting-item-label { font-size: 0.88em; margin-bottom: 5px; }
 .settings-panel:not(#settings-panel-about) .setting-item-desc { font-size: 0.75em; margin-top: 5px; }
@@ -717,7 +717,7 @@ body:not(.party-mode-on) .kb-mode-btn[data-mode^="party"] { display: none !impor
 :root.light-mode .number-input:focus,
 :root.light-mode input[type="text"]:focus { border-color: var(--col-primary) !important; }
 :root.light-mode .math-inline,
-:root.light-mode .math-block,
+:root.light-mode .math-block { color: #111 !important; border: 1px solid var(--col-border-light) !important; }
 :root.light-mode .code-block { background: rgba(0, 0, 0, 0.06) !important; color: #111 !important; border: 1px solid var(--col-border-light) !important; }
 :root.light-mode body { background: linear-gradient(135deg, #c8cdd1 0%, #d4d8db 100%); }
 :root.light-mode .question { color: #000 !important; text-shadow: none; }
@@ -66756,6 +66756,7 @@ if (masteryPlusLevel >= 1) { masteryPlusLevel++; knowledgeClearedVariants = 0; b
 }
 const pick = progressiveQueue.shift();
 const stateObj = knowledgeQuestionState[pick.qID];
+if (!stateObj) { nextKnowledgeQuestion(); return; }
 const isCleared = stateObj.cleared[pick.variantIdx];
 const _sfv = searchQuizForcedVariants ? searchQuizForcedVariants[pick.qID] : null;
 const qEngine = generateKnowledgeQuestionHTML(stateObj.questionData, pick.variantIdx, _sfv ? _sfv.searchTerm : null);
@@ -75045,12 +75046,13 @@ resizeObserver.observe(hintsWidget);
 }
 });
 const APP_INFO = {
-version: '0.31',
+version: '0.32',
 revisionDate: '08/05/2026',
 changelog: [
 "Please note that some question banks still require revision; most are not yet final",
 "Project is on hold until further notice",
-"Corrected some LaTeX formatting"
+"Corrected some LaTeX formatting",
+"Bug fixes"
 ]
 };
 const versionFooterEl = document.getElementById('version-footer');
