@@ -648,8 +648,8 @@ body:not(.party-mode-on) .kb-mode-btn[data-mode^="party"] { display: none !impor
 .settings-nav-btn { display: inline-block !important; width: auto !important; padding: 8px 13px !important; white-space: nowrap; border-left: none !important; border-bottom: 3px solid transparent !important; flex-shrink: 0; }
 .settings-nav-btn.active { border-left-color: transparent !important; border-bottom-color: var(--accent-0) !important; }
 .settings-panels { padding: 16px; } }
-.math-inline { font-family: 'Courier New', monospace; background: rgba(0,0,0,0.2); padding: 1px 4px; border-radius: 4px; font-size: 0.95em; white-space: nowrap; }
-.math-block { display: block; font-family: 'Courier New', monospace; background: rgba(0,0,0,0.2); padding: 4px 8px; border-radius: 4px; margin: 5px 0; text-align: center; }
+.math-inline { font-family: 'Courier New', monospace; background: rgba(255,255,255,0.06); padding: 1px 4px; border-radius: 4px; font-size: 0.98em; white-space: nowrap; }
+.math-block { display: block; font-family: 'Courier New', monospace; background: rgba(255,255,255,0.06); padding: 4px 8px; border-radius: 4px; margin: 5px 0; text-align: center; }
 .settings-panel:not(#settings-panel-about) .setting-item { margin-bottom: 18px; }
 .settings-panel:not(#settings-panel-about) .setting-item-label { font-size: 0.88em; margin-bottom: 5px; }
 .settings-panel:not(#settings-panel-about) .setting-item-desc { font-size: 0.75em; margin-top: 5px; }
@@ -718,7 +718,7 @@ body:not(.party-mode-on) .kb-mode-btn[data-mode^="party"] { display: none !impor
 :root.light-mode input[type="text"]:focus { border-color: var(--col-primary) !important; }
 :root.light-mode .math-inline,
 :root.light-mode .math-block,
-:root.light-mode .code-block { background: rgba(0, 0, 0, 0.05) !important; color: #111 !important; border: 1px solid var(--col-border-light) !important; }
+:root.light-mode .code-block { background: rgba(0, 0, 0, 0.06) !important; color: #111 !important; border: 1px solid var(--col-border-light) !important; }
 :root.light-mode body { background: linear-gradient(135deg, #c8cdd1 0%, #d4d8db 100%); }
 :root.light-mode .question { color: #000 !important; text-shadow: none; }
 :root.light-mode .hoverable { color: #0055aa; border-bottom: 1px dotted #0055aa; }
@@ -1487,8 +1487,8 @@ style="display:block;">
  "Rem"
   ],
 <span class="hoverable" data-tooltip="Matches one of the options (or a synonym). Case-sensitive.">"correct"</span>: "Sv",
-<span class="hoverable" data-tooltip="Builds the structural conclusion, bringing the user one step from the answer.">"hint1"</span>: "Dose equivalent weights absorbed dose by biological impact on human tissue.",
-<span class="hoverable" data-tooltip="Surveys related units or concepts without resolving the answer.">"hint2"</span>: "Gray, Rem, and Sievert are all dose-related units — each used in different systems or for different quantities.",
+<span class="hoverable" data-tooltip="Builds the structural conclusion, bringing the user one step from the answer.">"hint"</span>: "Dose equivalent weights absorbed dose by biological impact on human tissue.",
+<span class="hoverable" data-tooltip="Surveys related units or concepts without resolving the answer.">"insight"</span>: "Gray, Rem, and Sievert are all dose-related units — each used in different systems or for different quantities.",
 <span class="hoverable" data-tooltip="Concisely resolves the question and clarifies common confusions.">"explanation"</span>: "Sievert (Sv) is the SI unit for dose equivalent, replacing the Rem. Gray (Gy) is the SI unit for absorbed dose, replacing the Rad."
 }</div>
  </div>
@@ -1506,9 +1506,9 @@ style="display:block;">
 "question": "What is the SI unit for Activity?",
  "options": ["Becquerel", "Gray", "Sievert"],
  "correct": "Becquerel",
- "hint1": "Activity measures the rate of radioactive decay events occurring per second.",
- "hint2": "Becquerel, Curie, and Gray are all nuclear-related units — each measuring a different physical quantity.",
- "explanation": "Becquerel (Bq) is the SI unit for activity, equal to one decay per second. The Curie is its older non-SI equivalent."
+"hint": "Activity measures the rate of radioactive decay events occurring per second.",
+"insight": "Becquerel, Curie, and Gray are all nuclear-related units, each measuring a different physical quantity.",
+"explanation": "Becquerel (Bq) is the SI unit for activity, equal to one decay per second. The Curie is its older non-SI equivalent."
   },
   {
  "variants": [
@@ -1517,9 +1517,9 @@ style="display:block;">
  ],
  "options": [ ["Sievert", "Sv"], "Gray", "Rad" ],
 "correct": "Sv",
- "hint1": "Dose equivalent weights absorbed dose by biological impact on human tissue.",
- "hint2": "Gray, Rem, and Sievert are all dose-related units — each used in different systems or for different quantities.",
- "explanation": "Sievert (Sv) is the SI unit for dose equivalent, replacing the Rem. Gray (Gy) is the SI unit for absorbed dose, replacing the Rad."
+"hint": "Dose equivalent weights absorbed dose by biological impact on human tissue.",
+"insight": "Gray, Rem, and Sievert are all dose-related units, each used in different systems or for different quantities.",
+"explanation": "Sievert (Sv) is the SI unit for dose equivalent, replacing the Rem. Gray (Gy) is the SI unit for absorbed dose, replacing the Rad."
   }
 ]
  },
@@ -1530,9 +1530,9 @@ style="display:block;">
 "question": "What is the first priority in a radiological emergency?",
  "options": ["Protect People", "Contain Spill", "Notify RSO"],
  "correct": "Protect People",
- "hint1": "Emergency response follows a hierarchy that places human welfare above all procedural steps.",
- "hint2": "Containing the spill, notifying the RSO, and protecting people are all necessary steps — but their order matters.",
- "explanation": "Protecting people is always the first priority in a radiological emergency, before containment or notification."
+"hint": "Emergency response follows a hierarchy that places human welfare above all procedural steps.",
+"insight": "Containing the spill, notifying the RSO, and protecting people are all necessary steps, but their order matters.",
+"explanation": "Protecting people is always the first priority in a radiological emergency, before containment or notification."
   }
 ]
  }
@@ -4094,7 +4094,7 @@ const DEFAULT_QUESTION_BANKS = {
   "explanation": "Gamma photons are indirectly ionizing radiation , they do not themselves carry charge, but they transfer energy to charged secondary particles that then produce ionization. There are three principal mechanisms: (1) **Photoelectric effect** , the photon is completely absorbed by an inner-shell electron, which is ejected as a photoelectron (dominant at low energies, $E < 100$ keV in tissue); (2) **Compton scattering** , the photon transfers partial energy to a loosely bound outer-shell electron, producing a recoil (Compton) electron and a scattered photon of lower energy (dominant at diagnostic and therapeutic energies, ~100 keV to 10 MeV in tissue); (3) **Pair production** , in the Coulomb field of a nucleus, a photon with energy $\\geq 1.022$ MeV is converted into an electron–positron pair, both of which ionize matter (dominant above ~10 MeV). **Bremsstrahlung** (options 2 and 3) is the production of x-rays when charged particles are decelerated , it is a consequence of the secondary electrons produced by gamma interactions, not a mechanism by which gamma photons themselves produce ionization. **Excitation** (options 4 and 5) raises orbital electrons to higher energy levels without ejecting them , it does not produce ionization. **Coherent (Rayleigh) scattering** (option 6) involves photon deflection with negligible energy transfer and produces no ionization. (Bushberg et al., *Essential Physics of Medical Imaging*, 3rd ed., Ch. 3; Attix, *Introduction to Radiological Physics and Radiation Dosimetry*, Ch. 7; ICRU Report 33.)",
   "reward": 2
 }
-    ]
+    ],
 },
  "NRRC-R-01": {
       "author": "NRRC",
@@ -9781,7 +9781,7 @@ const DEFAULT_QUESTION_BANKS = {
   "explanation": "The primary goal of setting emergency reference levels is to ensure that doses remain below the threshold for severe deterministic effects (such as skin burns or bone marrow failure), while allowing the necessary risk to save lives.",
   "reward": 2
 }
-]
+],
 },
     "Fluoroscopy": {
       "author": "Abdulaziz Alharbi",
@@ -11722,7 +11722,7 @@ const DEFAULT_QUESTION_BANKS = {
   "explanation": "Comprehensive Image Quality testing requires evaluating the system across all standard operating modes (Low, Normal, High) to ensure performance is consistent regardless of the dose rate setting selected.",
   "reward": 2
 }
-      ]
+      ],
     },
     "Classification of Radiation": {
       "author": "Abdulaziz Alharbi",
@@ -12564,7 +12564,7 @@ const DEFAULT_QUESTION_BANKS = {
   "explanation": "Indirectly ionizing radiation (neutral) must first deposit its energy into the medium to release a charged particle (e.g., electron or proton), which then causes ionization.",
   "reward": 2
 }
-	 ]
+	 ],
     },
     "CT Instrumentation and Hardware": {
       "author": "Abdelaziz Abid Alharbi",
@@ -13739,7 +13739,7 @@ const DEFAULT_QUESTION_BANKS = {
   "explanation": "Collimation restricts the beam to the volume of interest, which reduces the irradiated volume and consequently the production of scattered radiation, thereby improving image contrast.",
   "reward": 2
 }
-	]
+	],
     },
     "Generations of CT Scanners.": {
       "author": "Abdulaziz Alharbi",
@@ -14667,7 +14667,7 @@ const DEFAULT_QUESTION_BANKS = {
   "explanation": "Third and fourth-generation scanners employ a wide fan beam geometry with an angular range of approximately 500 to 550 degrees, allowing the beam to encompass the entire patient cross-section.",
   "reward": 2
 }
-	]
+	],
     },
     "CT Physics and Principles": {
       "author": "Abdelaziz Abid Alharbi",
@@ -15770,7 +15770,7 @@ const DEFAULT_QUESTION_BANKS = {
   "explanation": "The couch top is made of carbon fiber composite specifically because it has low absorption and an excellent vibration damping feature.",
   "reward": 2
 }
-	]
+	],
     },
     "CT Data Acquisition and Image Reconstruction": {
       "author": "Abdelaziz Abid Alharbi",
@@ -17695,7 +17695,7 @@ const DEFAULT_QUESTION_BANKS = {
     "explanation": "Pre-processed raw data is filtered (convolved) and then back-projected onto the image matrix to create the displayed image.",
     "reward": 2
   }
-		]
+		],
     },
     "CT Image Characteristics and Manipulation": {
       "author": "Abdelaziz Abid Alharbi",
@@ -18735,7 +18735,7 @@ const DEFAULT_QUESTION_BANKS = {
   "explanation": "The text explicitly states that Hounsfield Units are also referred to as CT numbers or density values, representing the attenuation properties of the tissue.",
   "reward": 2
 }
-	]
+	],
     },
     "CT Image Quality: Resolution, Noise, and Calibration": {
       "author": "Abdelaziz Abid Alharbi",
@@ -20338,7 +20338,7 @@ const DEFAULT_QUESTION_BANKS = {
   "explanation": "While focal spot size affects resolution, the text states the *best possible* spatial resolution is limited by the pixel size. Focal spot blur (geometric unsharpness) is a contributing factor, but the digital sampling limit (pixel size) is the theoretical floor. This option is a distractor focusing on only one component.",
   "reward": 2
 }
-	]
+	],
     },
     "CT Artifacts": {
       "author": "Abdelaziz Abid Alharbi",
@@ -21995,7 +21995,7 @@ const DEFAULT_QUESTION_BANKS = {
   "explanation": "There is a trade-off: while faster scans (often higher pitch) reduce motion, higher pitch increases the distance between data points, requiring more interpolation and causing spiral artifacts.",
   "reward": 2
 }
-]
+],
 },
 "Spiral and Multidetectors CT": {
       "author": "Abdelaziz Abid Alharbi",
@@ -23039,7 +23039,7 @@ const DEFAULT_QUESTION_BANKS = {
   "explanation": "SSCT detector arrays are one dimensional, consisting of a large number (typically 750 or more) of detector elements in a single row across the irradiated slice.",
   "reward": 2
 }
-	]
+	],
     },
     "Radiation Physics and Dosimetry Instrumentation": {
       "author": "Abdelaziz Abid Alharbi",
@@ -28373,7 +28373,7 @@ const DEFAULT_QUESTION_BANKS = {
   "explanation": "Modern CT scanners use solid-state scintillation detectors (like Cadmium Tungstate or Ceramic Gadolinium Oxysulfide). These crystals convert X-rays into light very quickly and have almost no afterglow, which is essential for the high-speed rotation and data acquisition of multi-slice CT systems.",
   "reward": 2
 }
-	]
+	],
     },
     "Radiation Protection and Shielding Design": {
       "author": "Abdelaziz Abid Alharbi",
@@ -29566,7 +29566,7 @@ const DEFAULT_QUESTION_BANKS = {
   "explanation": "NRRC specifies that the 1 mSv limit for the embryo, fetus, or breastfed infant applies when the worker has notified the pregnancy. Before notification, the worker remains under standard occupational limits regardless of actual gestational age. Notification is the legal trigger, not medical confirmation or gestational milestone.",
   "reward": 2
 }
-	]
+	],
     },
     "X-ray Production": {
       "author": "Abdelaziz Abid Alharbi",
@@ -30849,7 +30849,7 @@ const DEFAULT_QUESTION_BANKS = {
           "explanation": "Tungsten (Z=74) has a significantly higher atomic number than Molybdenum (Z=42) and Rhodium (Z=45).",
           "reward": 2
         }
-	]
+	],
     },
 "اختبار عام جرعات اشعاعية": {
 "author": "Abdulaziz Alharbi",
@@ -32279,7 +32279,7 @@ const DEFAULT_QUESTION_BANKS = {
 "hint2": "It represents the statistically expected lifespan of any single atom in the sample before it undergoes disintegration.",
 "explanation": "In the decay formula N(t) = N₀e^(−t/τ), the constant τ (tau) represents the mean life, or average lifetime, of a radioactive atom. It is equal to 1/λ, making it approximately 1.44 times longer than the physical half-life."
 }
-]
+],
 },
 "RPO_2025": {
 "author": "Source: Talal Almutairi, Re-written and reproduced by Abdulaziz Alharbi.",
@@ -36183,7 +36183,7 @@ const DEFAULT_QUESTION_BANKS = {
 "hint2": "Values like 50 or 100 represent extremely high radiation fields that are never allowed in standard commercial mixed-freight transport.",
 "explanation": "Standard transport regulations restrict the Transport Index (TI) of any single package to a maximum of 10 for non-exclusive use shipments. This ensures that the accumulated dose rate during routine commercial handling by general freight workers remains within safe limits. Packages exceeding a TI of 10 must be shipped under strict 'exclusive use' controls."
 }
-]
+],
 },
 "التشخيصي": {
 "author": "Ahmed Muhammed Sobhi, Re-written by Abdulaziz Alharbi",
@@ -37349,7 +37349,7 @@ const DEFAULT_QUESTION_BANKS = {
 "hint2": "Convert both internal exposures to mSv: Ingestion = $0.4 \\times 20$, Inhalation = $(900 / 2000) \\times 20$. Subtract the sum from 20 mSv.",
 "explanation": "The total internal dose is 8 mSv from ingestion (0.4 × 20 mSv) plus 9 mSv from inhalation ((900 / 2000) × 20 mSv), creating a total committed dose of 17 mSv. Subtracting this from the 20 mSv annual limit leaves a 3 mSv remaining allowance for external exposure."
 }
-]
+],
 },
 "Mammography": {
 "author": "Abdulaziz Alharbi",
@@ -38799,7 +38799,7 @@ const DEFAULT_QUESTION_BANKS = {
 "hint2": "Conventional radiography targets are much larger to handle the heat of high mA settings, whereas mammography spots are specifically 0.3 mm and 0.1 mm.",
 "explanation": "Mammography utilizes a 0.3 mm focal spot for routine contact imaging and a 0.1 mm focal spot for magnification. These are significantly smaller than the 0.6 mm to 1.2 mm spots typically used in general radiography, which prioritizes heat capacity over extreme resolution."
 }
-]
+],
 },
 "Basic Principles of Radiation Protection for RPO(2016) Chapter 1, Prof.M.Farouk": {
 "author": "Abdulaziz Alharbi",
@@ -39263,7 +39263,7 @@ const DEFAULT_QUESTION_BANKS = {
 {
 "variants": [
 "In beta-negative decay, how do the mass number (A) and atomic number (Z) of the daughter radionuclide change compared to the parent?",
-"What happens to the mass and atomic numbers during $\beta^-$ decay?",
+"What happens to the mass and atomic numbers during beta-minus decay?",
 "Which statement correctly describes the changes to A and Z in electron decay?"
 ],
 "options": [
@@ -40902,7 +40902,7 @@ const DEFAULT_QUESTION_BANKS = {
 "hint2": "The Curie is a legacy unit based on the activity of a gram of Radium, whereas the SI unit is much smaller and defines exactly one transformation per second.",
 "explanation": "The Becquerel (Bq) is the International System of Units (SI) standard for radioactivity, strictly defined as exactly one nuclear disintegration (or decay) per second. Distractors like the Curie are classic legacy units, while Grays and Sieverts measure dose rather than raw activity."
 }
-]
+],
 },
 "Basic Principles of Radiation Protection for RPO(2016) Chapter 2, Prof.M.Farouk": {
 "author": "Abdulaziz Alharbi",
@@ -44904,7 +44904,7 @@ const DEFAULT_QUESTION_BANKS = {
 "hint2": "A higher energy makes photons more penetrating, while a higher Z-value provides more electron targets for interaction.",
 "explanation": "The linear attenuation coefficient $\\mu$ is dependent on both the gamma ray energy ($E_{\\gamma}$) and the atomic number (Z) of the material."
 }
-]
+],
 },
 "Basic Principles of Radiation Protection for RPO(2016) Chapter 3, Prof.M.Farouk": {
 "author": "Abdulaziz Alharbi",
@@ -48519,7 +48519,7 @@ const DEFAULT_QUESTION_BANKS = {
 "hint2": "One utilizes a solid crystal that is heated to read the dose, while the other utilizes a photographic emulsion.",
 "explanation": "Internationally, the recognized and recommended personal devices for monitoring the personal doses of radiation workers are the Thermo-Luminescent Dosimeter (TLD) and the Film badge."
 }
-]
+],
 },
 "Basic Principles of Radiation Protection for RPO(2016) Chapter 4, Prof.M.Farouk": {
 "author": "Abdulaziz Alharbi",
@@ -50880,7 +50880,7 @@ const DEFAULT_QUESTION_BANKS = {
 "hint2": "The standard deviation of the net rate is $\\sqrt{G/t_g^2 + B/t_b^2} = \\sqrt{5800/25 + 6000/1600} \\approx 15.35$ cpm. Multiply by 3 for the third confidence level.",
 "explanation": "The gross rate is 1160 cpm and background is 150 cpm, making the net rate 1010 cpm. The $1\\sigma$ error is $\\sqrt{5800/5^2 + 6000/40^2} = \\sqrt{232 + 3.75} \\approx 15.35$ cpm. For the third confidence level ($3\\sigma$), multiply by 3 to get $\\approx 46$ cpm. (Selecting $\\pm 15$ mistakenly leaves the error at the first confidence level)."
 }
-]
+],
 },
 "Basic Principles of Radiation Protection for RPO(2016) Chapter 5, Prof.M.Farouk": {
 "author": "Abdulaziz Alharbi",
@@ -52386,7 +52386,7 @@ const DEFAULT_QUESTION_BANKS = {
 "hint2": "Alpha (0.01 Gy $\times$ 20 = 0.2 Sv), Fast Neutrons (0.03 Gy $\times$ 10 = 0.3 Sv), Gamma (0.15 Gy $\times$ 1 = 0.15 Sv). Total $H_T$ = 0.65 Sv. Effective dose = 0.65 $\times$ 0.12.",
 "explanation": "Convert physical doses to Grays: 0.01 Gy (alpha), 0.03 Gy (neutrons), 0.15 Gy (gamma). Multiply by respective $W_R$ values (20, 10, and 1) to get equivalent doses: 0.20 Sv + 0.30 Sv + 0.15 Sv = 0.65 Sv total lung equivalent dose. Multiply by the lung's $W_T$ (0.12) to find the effective dose: $0.65 \times 0.12 = 0.078 \text{ Sv} = 78 \text{ mSv}$."
 }
-]
+],
 },
 "Basic Principles of Radiation Protection for RPO(2016) Chapter 6, Prof.M.Farouk": {
 "author": "Abdulaziz Alharbi",
@@ -54101,7 +54101,7 @@ const DEFAULT_QUESTION_BANKS = {
 "hint2": "At 10 Gy, irreversible ablation of the bone marrow has already occurred (7-8 Gy threshold), and the severe gastrointestinal syndrome sets in, making survival effectively impossible.",
 "explanation": "An acute whole-body dose of 10 Sv (10 Gy) far exceeds the irreversible bone marrow ablation threshold (7-8 Gy) and triggers severe gastrointestinal syndrome, making death within 1-2 weeks the most likely outcome for 100% of the group[cite: 2]."
 }
-]
+],
 },
 "Basic Principles of Radiation Protection for RPO(2016) Chapter 7, Prof.M.Farouk": {
 "author": "Abdulaziz Alharbi",
@@ -55949,7 +55949,7 @@ const DEFAULT_QUESTION_BANKS = {
 "hint2": "6 multiplied by 8 equals 48 $\\mu Sv$ per day. Multiply 48 by 250 to get the annual total in microSieverts, then convert to milliSieverts.",
 "explanation": "The daily accumulated dose is $6~\\mu Sv/h \times 8~h = 48~\\mu Sv/day$. Over a standard 250-day working year, this totals $12,000~\\mu Sv$, which converts directly to 12 mSv. Using a full 365-day calendar year incorrectly yields the 17.5 mSv distractor."
 }
-]
+],
 },
 "Basic Principles of Radiation Protection for RPO(2016) Chapter 8, Prof.M.Farouk": {
 "author": "Abdulaziz Alharbi",
@@ -57208,7 +57208,7 @@ const DEFAULT_QUESTION_BANKS = {
 "hint2": "The layers address hazards sequentially: kinetic energy first, then particle removal, and finally addressing the electromagnetic byproduct of that removal.",
 "explanation": "The proper principle for neutron shielding is a three-step process: first, moderate (slow down) the fast neutrons using light materials; second, capture the resulting thermal neutrons using specific isotopes like cadmium; and third, attenuate the highly penetrating gamma rays emitted during that capture process using a high-Z material like lead."
 }
-]
+],
 },
 "Basic Principles of Radiation Protection for RPO(2016) Organizational Aspects, Prof.M.Farouk": {
 "author": "Abdulaziz Alharbi",
@@ -64945,8 +64945,9 @@ text = text.replace(/\\text\{([^}]*)\}/g, '$1');
 text = text.replace(/\$\$(.*?)\$\$/g, function(_,m){return '<span class="math-block">'+m+'</span>';});
 text = text.replace(/\$(.*?)\$/g, function(_,m){return '<span class="math-inline">'+m+'</span>';});
 text = text.replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '<span style="display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;font-size:0.85em;line-height:1.2;margin:0 2px;"><span style="border-bottom:1px solid currentColor;padding:0 2px;">$1</span><span style="padding:0 2px;">$2</span></span>');
-text = text.replace(/\^{([^}]+)}/g, '<sup>$1</sup>');
+text = text.replace(/\\?\^{([^}]+)}/g, '<sup>$1</sup>');
 text = text.replace(/\^\[([^\]]+)\]/g, '<sup>$1</sup>');
+text = text.replace(/\^\(([^\)]+)\)/g, '<sup>($1)</sup>');
 text = text.replace(/\^([^\s\{\[])/g, '<sup>$1</sup>');
 text = text.replace(/\^\\{([^}]*)\\}/g, '<sup>$1</sup>');
 text = text.replace(/_{([^}]*)}/g, '<sub>$1</sub>');
@@ -65846,8 +65847,8 @@ const newExp = newQ.explanations ? newQ.explanations.join(' | ') : (newQ.explana
 if (oldExp !== newExp) {
 diffs.push({ field: 'Explanation', old: oldExp || '(none)', new: newExp || '(none)' });
 }
-if ((oldQ.hint1 || '') !== (newQ.hint1 || '')) diffs.push({ field: 'Hint 1', old: oldQ.hint1 || '(none)', new: newQ.hint1 || '(none)' });
-if ((oldQ.hint2 || '') !== (newQ.hint2 || '')) diffs.push({ field: 'Hint 2', old: oldQ.hint2 || '(none)', new: newQ.hint2 || '(none)' });
+if ((oldQ.hint || '') !== (newQ.hint || '')) diffs.push({ field: 'Hint', old: oldQ.hint || '(none)', new: newQ.hint || '(none)' });
+if ((oldQ.insight || '') !== (newQ.insight || '')) diffs.push({ field: 'Insight', old: oldQ.insight || '(none)', new: newQ.insight || '(none)' });
 if (JSON.stringify(oldQ.answerGroups || null) !== JSON.stringify(newQ.answerGroups || null)) {
 diffs.push({ field: 'Answer Groups', old: oldQ.answerGroups ? 'Present' : '(none)', new: newQ.answerGroups ? 'Present' : '(none)' });
 }
@@ -66912,8 +66913,8 @@ questionHTML: formatRichText(questionText),
 correctAnswer: correctDisplayText,
 shuffledOptions: finalShuffledOptions,
 explanation: explanation,
-hint1: qData.hint1 || null,
-hint2: qData.hint2 || null,
+hint: qData.hint || qData.hint1 || null,
+insight: qData.insight || qData.hint2 || null,
 variantIndex: variantIndex
 };
 }
@@ -67527,27 +67528,26 @@ resultEl.innerHTML = statusText + partyFlag + explText;
 resultEl.style.color = item.isCorrect ? 'var(--col-success)' : 'var(--col-error)';
 const _qs = item._progressiveID && knowledgeQuestionState[item._progressiveID];
 const _qd = _qs && _qs.questionData;
-if (_qd && (_qd.hint1 || _qd.hint2 || _qd.explanation)) {
+if (_qd && (_qd.hint || _qd.insight || _qd.explanation)) {
 let _hhtml = '<div class="kb-expl-block">';
-if (_qd.hint1 || _qd.hint2) {
-if (_qd.hint1) _hhtml += '<div class="hint-step-line">' + formatRichText(_qd.hint1) + '</div>';
-if (_qd.hint2) _hhtml += '<div class="hint-step-line hint-step-line--overseer">' + formatRichText(_qd.hint2) + '</div>';
-} else { _hhtml += '<div class="hint-step-line">' + formatRichText(_qd.explanation) + '</div>'; }
+if (_qd.hint || _qd.insight) {
+if (_qd.hint) _hhtml += '<div class="hint-step-line">' + formatRichText(_qd.hint) + '</div>';
+if (_qd.insight) _hhtml += '<div class="hint-step-line hint-step-line--overseer">' + formatRichText(_qd.insight) + '</div>';} else { _hhtml += '<div class="hint-step-line">' + formatRichText(_qd.explanation) + '</div>'; }
 currentHintsHTML = _hhtml + '</div>';
 } else { currentHintsHTML = item.hintsHTML || ""; }
 updateHintsDisplays();
 }
 function showKnowledgeExplanation(forceOpen = false) {
 const qEngine = window.currentKnowledgeData;
-if (!qEngine || (!qEngine.hint1 && !qEngine.hint2 && !qEngine.explanation)) {
+if (!qEngine || (!qEngine.hint && !qEngine.insight && !qEngine.explanation)) {
 if (forceOpen) alert('No explanation available for this question.');
 return;
 }
 let html = '';
 html += '<div class="kb-expl-block">';
-if (qEngine.hint1 || qEngine.hint2) {
-if (qEngine.hint1) html += '<div class="hint-step-line">' + formatRichText(qEngine.hint1) + '</div>';
-if (qEngine.hint2) html += '<div class="hint-step-line hint-step-line--overseer">' + formatRichText(qEngine.hint2) + '</div>';
+if (qEngine.hint || qEngine.insight) {
+if (qEngine.hint) html += '<div class="hint-step-line">' + formatRichText(qEngine.hint) + '</div>';
+if (qEngine.insight) html += '<div class="hint-step-line hint-step-line--overseer">' + formatRichText(qEngine.insight) + '</div>';
 } else {
 html += '<div class="hint-step-line">' + formatRichText(qEngine.explanation) + '</div>';
 }
@@ -75045,12 +75045,12 @@ resizeObserver.observe(hintsWidget);
 }
 });
 const APP_INFO = {
-version: '0.29',
-revisionDate: '21/04/2026',
+version: '0.31',
+revisionDate: '08/05/2026',
 changelog: [
-"Please note that some question banks still require tuning; most are not yet final",
+"Please note that some question banks still require revision; most are not yet final",
 "Project is on hold until further notice",
-"Hotfix: Corrected some LaTeX formatting"
+"Corrected some LaTeX formatting"
 ]
 };
 const versionFooterEl = document.getElementById('version-footer');
