@@ -7133,7 +7133,7 @@ const DEFAULT_QUESTION_BANKS = {
 ],
 "correct": "Activity concentrations do not exceed NRRC reference levels",
 "explanation": "The exemption for building materials with NORM is specifically tied to activity concentrations not exceeding established reference levels. Distractors confuse this with dose constraints, clearance, artificial source limits, and investigation levels."
-},
+},      
         {
           "variants": [
             "The NRRC retains the authority to revoke an exemption if:",
@@ -7202,7 +7202,7 @@ const DEFAULT_QUESTION_BANKS = {
 ],
 "correct": "Risk assessment, safety assessment, and environmental impact assessment",
 "explanation": "Regulatory approval requires a comprehensive safety case covering these three specific pillars: risk, technical safety, and environmental impact. While other elements like QA programs or emergency plans are required components of a facility's operations, the foundational assessments required in the application are risk, safety, and environmental."
-},
+},	       
         {
           "variants": [
             "Before commencing a practice, the licensee must ensure that:",
@@ -14624,7 +14624,7 @@ const DEFAULT_QUESTION_BANKS = {
     ["Pencil beam", "Pencil-shaped beam", "Thin linear beam"],
     ["Cone beam", "Cone-shaped beam", "Volumetric beam"],
     ["Narrow fan beam", "Small fan beam", "30-degree fan beam"],
-    ["Wide fan beam", "Large fan beam", "Full coverage fan beam"],
+    ["Wide fan beam", "Large fan beam", "Full coverage fan beam"], 
     ["Electron beam", "Particle beam", "High-speed electron stream"]
   ],
   "correct": "Fan beam",
@@ -17757,7 +17757,7 @@ const DEFAULT_QUESTION_BANKS = {
 {
   "variants": [
     "How does a narrow window width affect the appearance of a CT image?",
-    "What visual characteristic results from selecting a narrow window width?",
+    "What visual characteristic results from selecting a narrow window width?", 
     "Selecting a narrow window width primarily affects the image in which way?"
   ],
   "options": [
@@ -17793,7 +17793,7 @@ const DEFAULT_QUESTION_BANKS = {
 {
   "variants": [
     "How does Maximum Intensity Projection (MIP) generate an image?",
-    "What is the mechanism by which a MIP image is generated?",
+    "What is the mechanism by which a MIP image is generated?", 
     "In Maximum Intensity Projection, pixels are selected based on which criteria?"
   ],
   "options": [
@@ -17811,7 +17811,7 @@ const DEFAULT_QUESTION_BANKS = {
 {
   "variants": [
     "What is a primary characteristic of Volume Rendering (VR) in 3D imaging?",
-    "Which statement accurately describes Volume Rendering?",
+    "Which statement accurately describes Volume Rendering?", 
     "How does Volume Rendering differ from surface rendering techniques?"
   ],
   "options": [
@@ -70341,7 +70341,7 @@ var optsDiv = document.getElementById('pane-opts-' + slotIndex);
 qEngine.shuffledOptions.forEach(function(opt, idx) {
 var btn = document.createElement('button');
 btn.className = 'pane-opt-btn';
-btn.textContent = (idx + 1) + '. ' + opt.text;
+btn.innerHTML = (idx + 1) + '. ' + opt.text;
 btn.dataset.optIdx = idx;
 btn.onclick = function() {
 if (slot._paneAnswered) return;
@@ -70375,7 +70375,7 @@ var optsDiv = document.getElementById('pane-opts-' + slotIndex);
 qEngine.shuffledOptions.forEach(function(opt, idx) {
 var btn = document.createElement('button');
 btn.className = 'pane-opt-btn';
-btn.textContent = (idx + 1) + '. ' + opt.text;
+btn.innerHTML = (idx + 1) + '. ' + opt.text;
 btn.dataset.optIdx = idx;
 btn.onclick = function() {
 if (slot._paneAnswered) return;
@@ -75048,11 +75048,10 @@ resizeObserver.observe(hintsWidget);
 }
 });
 const APP_INFO = {
-version: '0.37',
-revisionDate: '08/05/2026',
+version: '0.38',
+revisionDate: '09/05/2026',
 changelog: [
 "Please note that some question banks still require revision; most are not yet final",
-"Project is on hold until further notice",
 "Corrected some LaTeX formatting"
 ]
 };
