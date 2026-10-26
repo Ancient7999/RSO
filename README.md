@@ -1,2 +1,2 @@
-Direct link:
-https://sonicunligmated.github.io/RSO/quiz.html
+Live site:
+https://Ancient7999.github.io/RSO/quiz.html
